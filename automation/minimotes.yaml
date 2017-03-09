@@ -151,9 +151,7 @@
         scene_id: 1
 
   action:
-    - service: script.turn_on
-      data:
-        entity_id: script.master_bedroom_night_time
+    - service: script.master_bedroom_night_time
 
 ##
 - alias: minimote 2 button 1 long
@@ -183,9 +181,7 @@
         scene_id: 3
 
   action:
-    - service: script.turn_on
-      data:
-        entity_id: script.cool_upstairs_120min
+    - service: script.cool_upstairs_120min
 
 ##
 - alias: minimote 2 button 2 long
@@ -199,9 +195,7 @@
         scene_id: 4
 
   action:
-    - service: script.turn_on
-      data:
-        entity_id: script.heat_upstairs_120min
+    - service: script.heat_upstairs_120min
 
 ##
 - alias: minimote 2 button 3 short
@@ -247,9 +241,7 @@
         scene_id: 7
 
   action:
-    - service: script.turn_on
-      data:
-        entity_id: script.cool_downstairs_120min
+    - service: script.cool_downstairs_120min
 
 ##
 - alias: minimote 2 button 4 long
@@ -263,9 +255,7 @@
         scene_id: 8
 
   action:
-    - service: script.turn_on
-      data:
-        entity_id: script.heat_downstairs_120min
+    - service: script.heat_downstairs_120min
 
 #####################################################################
 ### Aeotec zwave minimote #3: aeotec_dsa03202_minimote_31
