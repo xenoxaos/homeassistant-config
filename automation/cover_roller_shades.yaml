@@ -1,0 +1,65 @@
+#####################################################################
+### KITCHEN - Raise Shade
+#####################################################################
+
+- alias: kitchen shade raised schedule
+  hide_entity: True
+  trigger:
+    - platform: sun
+      event: sunrise
+
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      above: 16
+
+  action:
+    - service: cover.close_cover
+      entity_id: cover.somfy_unknown_type5a52_id5401_level_39_0
+
+#####################################################################
+### KITCHEN - Lower Shade
+#####################################################################
+
+- alias: kitchen shade lowered schedule
+  hide_entity: True
+  trigger:
+    - platform: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      above: 2.75
+
+    - platform: time
+      after: '19:59:59'
+
+  action:
+    - service: cover.stop_cover
+      entity_id: cover.somfy_unknown_type5a52_id5401_level_39_0
+
+#####################################################################
+### MASTER BATH - Raise Shade
+#####################################################################
+
+- alias: master bath shade raised schedule
+  hide_entity: True
+  trigger:
+    - platform: time
+      after: '10:59:59'
+
+  action:
+    - service: cover.close_cover
+      entity_id: cover.somfy_unknown_type5a52_id5402_level_37_0
+
+#####################################################################
+### MASTER BATH - Lower Shade
+#####################################################################
+
+- alias: master bath shade lowered schedule
+  hide_entity: True
+  trigger:
+    - platform: time
+      after: '18:59:59'
+
+  action:
+    - service: cover.open_cover
+      entity_id: cover.somfy_unknown_type5a52_id5402_level_37_0

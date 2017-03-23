@@ -1,4 +1,89 @@
 #####################################################################
+### ROOMS VIEW
+#####################################################################
+
+## LIVING ROOM
+  group.living_room:
+    order: 1
+    haaska_hidden: true
+
+## ENTRYWAY LIGHTS
+  group.entry_lighting:
+    order: 2
+    haaska_hidden: true
+
+## ACCENT LIGHTS
+  group.accent_lights:
+    friendly_name: "Accent Lights"
+    order: 3
+
+## KITCHEN
+  group.kitchen:
+    order: 4
+    haaska_hidden: true
+
+## DINING ROOM
+  group.dining_room:
+    order: 5
+    haaska_hidden: true
+
+## MASTER BEDROOM
+  group.master_bedroom:
+    friendly_name: "Master Bedroom"
+    haaska_name: "Master Bedroom Lights"
+    order: 6
+
+## Master Bath Roller Shades
+  cover.somfy_unknown_type5a52_id5402_level_37_0:
+    friendly_name: "Master Bathroom Shade"
+    homebridge_cover_type: rollershutter
+    icon: mdi:blinds
+    haaska_name: "Master Bedroom Lights"
+    order: 7
+
+## Master Bath Roller Shade State (hidden)
+  cover.somfy_unknown_type5a52_id5402_switch_37_0:
+    friendly_name: "Bathroom Shade State"
+    icon: mdi:blinds
+
+## BILLIARDS ROOM
+  group.billiards_room:
+    friendly_name: "Billiards Room"
+    haaska_name: "Billiards Room Lights"
+    order: 8
+
+## OFFICE
+  group.office:
+    friendly_name: "Office"
+    haaska_name: "Office Lights"
+    order: 9
+
+#####################################################################
+### CLIMATE VIEW
+#####################################################################
+
+  group.climate_status:
+    order: 1
+
+  group.upstairs_climate:
+    order: 6
+
+  group.downstairs_climate:
+    order: 7
+
+  group.upstairs_heating:
+    order: 4
+
+  group.upstairs_cooling:
+    order: 2
+
+  group.downstairs_heating:
+    order: 5
+
+  group.downstairs_cooling:
+    order: 3
+
+#####################################################################
 ### Device Trackers
 #####################################################################
 
@@ -13,8 +98,8 @@
     haaska_hidden: true
 
   device_tracker.iphwn666:
-#      friendly_name: "Rick"
-#      entity_picture: /local/rick.jpg
+    friendly_name: "Rick"
+    entity_picture: /local/rick.jpg
     haaska_hidden: true
 
   device_tracker.megs_iphone7:
@@ -28,7 +113,7 @@
     haaska_hidden: true
 
 #####################################################################
-### SWITCHES (zwave)
+### SWITCHES
 #####################################################################
 
 ## Outdoor GE Zwave Outlet (Christmas Lights, etc.)
@@ -64,36 +149,42 @@
     friendly_name: "Front Porch Lights"
     icon: mdi:white-balance-incandescent
 
-#####################################################################
-### SWITCHES (RF)
-#####################################################################
-
+## Outdoor Speakers
   switch.outdoor_speakers:
     friendly_name: "Outdoor Speakers"
     entity_picture: /local/music.ico
+#    persistent: true
 
+## Humidifier
   switch.humidifier:
     friendly_name: "Humidifier"
     icon: mdi:cup-water
+#    persistent: true
 
+## Accent - Staircase Lamp
   switch.staircase_lamp:
     friendly_name: "Staircase Lamp"
     icon: mdi:lamp
+#    persistent: true
 
+## Accent - Wine Room Lamp Spare
   switch.wine_room_spare:
     hidden: true
     haaska_hidden: true
     friendly_name: "Wine Room Lamp"
     icon: mdi:lamp
+#    persistent: true
 
+## Accent - Spare
   switch.staircase_spare:
     hidden: true
     haaska_hidden: true
     friendly_name: "Staircase Christmas Lights"
     icon: mdi:stocking
+#    persistent: true
 
 #####################################################################
-### LIGHTS
+### LIGHTS & Dimmers
 #####################################################################
 
 ## MBR Chandelier
@@ -109,47 +200,54 @@
 
 ## Dining Room Chandelier
   light.ge_12724_3way_dimmer_switch_level_34_0:
-    friendly_name: "Dining Room Lights"
+    friendly_name: "Dining Room Chandelier"
+    haaska_name: "Dining Room Light"
     icon: mdi:ceiling-light
 
 ## Flux RGB bulb
   light.flux_rgb:
     friendly_name: "Desk Lamp"
     icon: mdi:lamp
+#    persistent: true
 
 #####################################################################
 ### PHILIPS HUE (hidden from Alexa due to native integration)
 #####################################################################
 
+## Living Room Lamp
   light.living_room_lamp:
     haaska_hidden: true
     icon: mdi:lamp
 
+## Entryway Lights
   light.south_entry:
     haaska_hidden: true
     icon: mdi:white-balance-incandescent
+
   light.kitchen_entry:
     haaska_hidden: true
     icon: mdi:white-balance-incandescent
+
   light.center_entry:
     haaska_hidden: true
     icon: mdi:white-balance-incandescent
+
+## Ceiling Lights
   light.northeast_ceiling:
     haaska_hidden: true
     icon: mdi:white-balance-incandescent
-#      entity_picture: /local/hue_white.png
+
   light.northwest_ceiling:
     haaska_hidden: true
     icon: mdi:white-balance-incandescent
-#      entity_picture: /local/hue_white.png
+
   light.southeast_ceiling:
     haaska_hidden: true
     icon: mdi:white-balance-incandescent
-#      entity_picture: /local/hue_white.png
+
   light.southwest_ceiling:
     haaska_hidden: true
     icon: mdi:white-balance-incandescent
-#      entity_picture: /local/hue_white.png
 
 #####################################################################
 ### LOCKS
@@ -164,10 +262,24 @@
     haaska_hidden: true
 
 #####################################################################
-### THERMOSTATS
+### ROLLER SHADES
 #####################################################################
 
-# downstairs
+## Kitchen Roller Shade Control
+  cover.somfy_unknown_type5a52_id5401_level_39_0:
+    friendly_name: "Kitchen Shade"
+    homebridge_cover_type: rollershutter
+    icon: mdi:blinds
+## Kitchen Roller Shade State (hidden)
+  cover.somfy_unknown_type5a52_id5401_switch_39_0:
+    friendly_name: "Kitchen Shade State"
+    icon: mdi:blinds
+
+#####################################################################
+### CLIMATE - Devices & Sensors
+#####################################################################
+
+## downstairs
   sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1:
     friendly_name: "Downstairs Temp"
 
@@ -189,7 +301,7 @@
     icon: mdi:fire
     haaska_hidden: true
 
-# upstairs
+## upstairs
   sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1:
     friendly_name: "Upstairs Temp"
 
@@ -212,9 +324,66 @@
     haaska_hidden: true
 
 #####################################################################
+### CLIMATE - SCRIPTS
+#####################################################################
+
+  script.heat_downstairs_60min:
+    friendly_name: "Downstairs Quick Heating"
+    entity_picture: /local/flame.png
+
+  script.heat_upstairs_60min:
+    friendly_name: "Upstairs Quick Heating"
+    entity_picture: /local/flame.png
+
+  script.heat_downstairs_120min:
+    friendly_name: "Downstairs Max Heating"
+    icon: mdi:fire
+
+  script.heat_upstairs_120min:
+    friendly_name: "Upstairs Max Heating"
+    icon: mdi:fire
+
+  script.heat_downstairs_180min:
+    friendly_name: "Downstairs Auto Heating"
+    icon: mdi:fire
+    haaska_hidden: true
+
+  script.heat_upstairs_180min:
+    friendly_name: "Upstairs Auto Heating"
+    icon: mdi:fire
+    haaska_hidden: true
+
+  script.cool_downstairs_60min:
+    friendly_name: "Downstairs Quick Cooling"
+    entity_picture: /local/snowflake.png
+
+  script.cool_upstairs_60min:
+    friendly_name: "Upstairs Quick Cooling"
+    entity_picture: /local/snowflake.png
+
+  script.cool_downstairs_120min:
+    friendly_name: "Downstairs Max Cooling"
+    icon: mdi:snowflake
+
+  script.cool_upstairs_120min:
+    friendly_name: "Upstairs Max Cooling"
+    icon: mdi:snowflake
+
+  script.cool_downstairs_180min:
+    friendly_name: "Downstairs Auto Cooling"
+    icon: mdi:snowflake
+    haaska_hidden: true
+
+  script.cool_upstairs_180min:
+    friendly_name: "Upstairs Auto Cooling"
+    icon: mdi:snowflake
+    haaska_hidden: true
+
+#####################################################################
 ### MEDIA PLAYERS
 #####################################################################
 
+## Kodi Players
   media_player.kodi_office:
     friendly_name: "Office Kodi"
     haaska_hidden: true
@@ -235,105 +404,6 @@
 ## Chromecast
   media_player.rnmcast:
     friendly_name: Chromecast
-    haaska_hidden: true
-
-#####################################################################
-## GROUPS (for Alexa friendly names)
-#####################################################################
-
-  group.all_lights:
-    friendly_name: "All Lights"
-
-  group.all_switches:
-    friendly_name: "All Switches"
-    haaska_hidden: true
-
-  group.porch:
-    friendly_name: "Porch"
-    haaska_name: "Porch Lights"
-
-  group.accent_lights:
-    friendly_name: "Accent Lights"
-    haaska_name: "Accent Lights"
-
-  group.master_bedroom:
-    friendly_name: "Master Bedroom"
-    haaska_name: "Master Bedroom Lights"
-
-  group.wine_room:
-    friendly_name: "Wine Room"
-    haaska_name: "Wine Room Lights"
-
-  group.billiards_room:
-    friendly_name: "Billiards Room"
-    haaska_name: "Billiards Room Lights"
-
-  group.office:
-    friendly_name: "Office"
-    haaska_name: "Office Lights"
-
-#####################################################################
-### SCRIPTS (heating and cooling)
-#####################################################################
-
-### HEAT ###
-
-  script.heat_downstairs_60min:
-    friendly_name: "Downstairs Quick Heating"
-    entity_picture: /local/flame.png
-
-  script.heat_upstairs_60min:
-    friendly_name: "Upstairs Quick Heating"
-    entity_picture: /local/flame.png
-
-  script.heat_downstairs_120min:
-    friendly_name: "Downstairs Max Heating"
-    icon: mdi:fire
-#      haaska_hidden: true
-
-  script.heat_upstairs_120min:
-    friendly_name: "Upstairs Max Heating"
-    icon: mdi:fire
-#      haaska_hidden: true
-
-  script.heat_downstairs_180min:
-    friendly_name: "Downstairs Auto Heating"
-    icon: mdi:fire
-    haaska_hidden: true
-
-  script.heat_upstairs_180min:
-    friendly_name: "Upstairs Auto Heating"
-    icon: mdi:fire
-    haaska_hidden: true
-
-### COOL ###
-
-  script.cool_downstairs_60min:
-    friendly_name: "Downstairs Quick Cooling"
-    entity_picture: /local/snowflake.png
-
-  script.cool_upstairs_60min:
-    friendly_name: "Upstairs Quick Cooling"
-    entity_picture: /local/snowflake.png
-
-  script.cool_downstairs_120min:
-    friendly_name: "Downstairs Max Cooling"
-    icon: mdi:snowflake
-#      haaska_hidden: true
-
-  script.cool_upstairs_120min:
-    friendly_name: "Upstairs Max Cooling"
-    icon: mdi:snowflake
-#      haaska_hidden: true
-
-  script.cool_downstairs_180min:
-    friendly_name: "Downstairs Auto Cooling"
-    icon: mdi:snowflake
-    haaska_hidden: true
-
-  script.cool_upstairs_180min:
-    friendly_name: "Upstairs Auto Cooling"
-    icon: mdi:snowflake
     haaska_hidden: true
 
 #####################################################################
@@ -522,23 +592,28 @@
     haaska_hidden: true
 
 #####################################################################
-### BOOLEANS (and stuff)
+### BOOLEANS SLIDERS & INPUT SELECTS
 #####################################################################      
 
   input_boolean.visitor_mode:
     haaska_hidden: true
+#    persistent: true
 
   input_boolean.peak_hours:
     haaska_hidden: true
+#    persistent: true
 
   input_boolean.rain:
     haaska_hidden: true
+#    persistent: true
 
   input_boolean.state_change_test:
     haaska_hidden: true
+#    persistent: true
 
   input_boolean.after_hours:
     haaska_hidden: true
+#    persistent: true
 
   input_slider.downstairs_heat:
     icon: mdi:nest-thermostat
@@ -557,29 +632,22 @@
     haaska_hidden: true
 
 #####################################################################
-### SENSORS (batteries)
+### SENSORS
 #####################################################################
 
 ## Door Lock Batteries
   sensor.lock_beach_battery:
     icon: mdi:battery-charging
-
   sensor.lock_south_battery:
     icon: mdi:battery-charging
 
-### Phone Batteries
-#  sensor.iphone_battery_rick:
-#    icon: mdi:cellphone-iphone
-#
-#  sensor.iphone_battery_megs:
-#    icon: mdi:cellphone-iphone
-
-#####################################################################
-### SENSORS (security)
-#####################################################################
+## Phone Batteries
+  sensor.iphone_battery_rick:
+    icon: mdi:cellphone-iphone
+  sensor.iphone_battery_megs:
+    icon: mdi:cellphone-iphone
 
 ## Fibaro Motion
-#    sensor.fibaro_system_fgms001_motion_sensor_burglar_22_10:
   sensor.fibaro_state:
     friendly_name: "Fibaro Motion Status"
     icon: mdi:run
@@ -840,7 +908,7 @@
     friendly_name: "Visibility"
 
 #####################################################################
-### Other Haaska Masking
+### HAASKA HIDDEN
 #####################################################################
 
   group.default_view:
@@ -849,29 +917,11 @@
   group.cameras:
     order: 2
 
-  group.upstairs_climate:
-    order: 6
-
-  group.downstairs_climate:
-    order: 7
-
   group.weather_summary:
     order: 1
 
   group.weather_details:
     order: 2
-
-  group.upstairs_heating:
-    order: 4
-
-  group.upstairs_cooling:
-    order: 2
-
-  group.downstairs_heating:
-    order: 5
-
-  group.downstairs_cooling:
-    order: 3
 
   group.precipitation:
     order: 3
@@ -897,34 +947,9 @@
   group.living_room_tv:
     haaska_hidden: true
 
-  group.living_room_fan:
-    haaska_hidden: true
-
-  group.master_bedroom_fan:
-    haaska_hidden: true
-
-## Overrides
-
   group.security_override:
     order: 1
 
-  group.climate_status:
-    order: 1
-
-## "All" Groups
-  group.all_locks:
-    haaska_hidden: true
-
-  group.all_devices:
-    haaska_hidden: true
-
-  group.all_automations:
-    haaska_hidden: true
-
-  group.all_scripts:
-    haaska_hidden: true
-
-## Scripts
   script.hvac_operating_mode:
     haaska_hidden: true
 
@@ -932,62 +957,16 @@
     haaska_hidden: true
 
 #####################################################################
-### Ceiling Fan Controls
+## ALEXA FRIENDLY NAMES
 #####################################################################
 
-## MBR Fan
-#  switch.master_bed_fan_power:
-#    friendly_name: "Fan Power"
-#    icon: mdi:power-settings
-#  switch.master_bed_fan_1:
-#    friendly_name: "Master Ceiling Fan Speed 1"
-#    icon: mdi:fan
-#    haaska_hidden: true
-#  switch.master_bed_fan_2:
-#    friendly_name: "Master Ceiling Fan Speed 2"
-#    icon: mdi:fan
-#    haaska_hidden: true
-#  switch.master_bed_fan_3:
-#    friendly_name: "Master Ceiling Fan Speed 3"
-#    icon: mdi:fan
-#    haaska_hidden: true
-#  switch.master_bed_fan_4:
-#    friendly_name: "Master Ceiling Fan Speed 4"
-#    icon: mdi:fan
-#    haaska_hidden: true
-#  switch.master_bed_fan_5:
-#    friendly_name: "Master Ceiling Fan Speed 5"
-#    icon: mdi:fan
-#    haaska_hidden: true
-#  switch.master_bed_fan_6:
-#    friendly_name: "Master Ceiling Fan Speed 6"
-#    icon: mdi:fan
-#    haaska_hidden: true
-#  switch.master_bed_fan_variable:
-#    friendly_name: "Master Ceiling Fan Random"
-#    icon: mdi:fan
-#    haaska_hidden: true
-#  switch.master_bed_fan_vacation:
-#    friendly_name: "Master Ceiling Fan Vacation"
-#    icon: mdi:airplane
-#    haaska_hidden: true
-#  switch.master_bed_fan_light:
-#    friendly_name: "Master Ceiling Fan Light"
-#    icon: mdi:lightbulb
-#    haaska_hidden: true
-#  switch.master_bed_fan_timer:
-#    friendly_name: "Master Ceiling Fan Timer"
-#    icon: mdi:timer-sand
-#    haaska_hidden: true
-#  switch.master_bed_fan_2h:
-#    friendly_name: "Master Ceiling Fan 2 Hour"
-#    icon: mdi:clock
-#    haaska_hidden: true
-#  switch.master_bed_fan_4h:
-#    friendly_name: "Master Ceiling Fan 4 Hour"
-#    icon: mdi:clock
-#    haaska_hidden: true
-#  switch.master_bed_fan_8h:
-#    friendly_name: "Master Ceiling Fan 8 Hour"
-#    icon: mdi:clock
-#    haaska_hidden: true
+  group.all_lights:
+    friendly_name: "All Lights"
+
+  group.porch:
+    friendly_name: "Porch"
+    haaska_name: "Porch Lights"
+
+#  group.wine_room:
+#    friendly_name: "Wine Room"
+#    haaska_name: "Wine Room Lights"

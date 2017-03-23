@@ -31,7 +31,7 @@
     - platform: numeric_state
       entity_id: sun.sun
       value_template: '{{ state.attributes.elevation }}'
-      above: 1.95
+      above: 6
 
   condition:
     - condition: state
@@ -45,6 +45,11 @@
   action:
     - service: homeassistant.turn_off
       entity_id: group.interior_lights
+
+## hit the RF outlets again, to ensure they change state
+    - delay: 3
+    - service: homeassistant.turn_off
+      entity_id: group.accent_lights
 
 #####################################################################
 ### Turn on some lights when we get home

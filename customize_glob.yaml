@@ -19,7 +19,14 @@
   "script.hvac_operating_mode,morning_weekday,script.kodi_time_and_temp,script.away,script.unlock_megs,script.pool*":
     haaska_hidden: true
 
-## Hide Groups
+#####################################################################
+### Haaska Hidden
+#####################################################################
+  "group.all*":
+    haaska_hidden: true
+
+  "group.hass":
+    haaska_hidden: true
 
   "group.*climate*":
     haaska_hidden: true
@@ -27,10 +34,10 @@
   "group.*cool*":
     haaska_hidden: true
 
-  "group.*device*":
+  "group.*heat*":
     haaska_hidden: true
 
-  "group.*heat*":
+  "group.*device*":
     haaska_hidden: true
 
   "group.*hvac*":
@@ -52,18 +59,6 @@
     haaska_hidden: true
 
   "group.*weather*":
-    haaska_hidden: true
-
-  "group.all_automations":
-    haaska_hidden: true
-
-  "group.all_devices":
-    haaska_hidden: true
-
-  "group.all_locks":
-    haaska_hidden: true
-
-  "group.all_scripts":
     haaska_hidden: true
 
   "group.breaches":
@@ -157,6 +152,9 @@
     haaska_hidden: true
 
   "script.*test*":
+    haaska_hidden: true
+
+  "script.kitchen*":
     haaska_hidden: true
 
   "script.morning_weekday":

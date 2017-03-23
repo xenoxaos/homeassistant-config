@@ -13,6 +13,12 @@
     - service: light.turn_off
       entity_id: light.flux_rgb
 
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
 #####################################################################
 ### Reset input selection when lamp is turned off
 #####################################################################
@@ -46,7 +52,7 @@
   condition:
     condition: state
     entity_id: input_select.rgb_light
-    state: "Off"
+    state: "Select an option..."
 
   action:
     - service: input_select.select_option
@@ -73,6 +79,12 @@
         color_temp: 200
         rgb_color: [255,255,255]
 
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
 #####################################################################
 ### RGB Select Warm
 #####################################################################
@@ -91,6 +103,12 @@
         brightness: 255
         color_temp: 370
 
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
 #####################################################################
 ### RGB Select Warm Dim
 #####################################################################
@@ -108,6 +126,12 @@
         entity_id: light.flux_rgb
         brightness: 15
         color_temp: 390
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
 
 #####################################################################
 ### RGB Select Blue
@@ -128,6 +152,12 @@
         color_temp: 255
         rgb_color: [0,0,255]
 
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
 #####################################################################
 ### RGB Select Cyan
 #####################################################################
@@ -146,6 +176,12 @@
         brightness: 255
         color_temp: 255
         rgb_color: [0,255,255]
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
 
 #####################################################################
 ### RGB Select Green
@@ -166,6 +202,12 @@
         color_temp: 255
         rgb_color: [0,225,0]
 
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
 #####################################################################
 ### RGB Select Pink
 #####################################################################
@@ -184,6 +226,12 @@
         brightness: 255
         color_temp: 255
         rgb_color: [255,0,255]
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
 
 #####################################################################
 ### RGB Select Red
@@ -204,6 +252,12 @@
         color_temp: 255
         rgb_color: [255,0,0]
 
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
 #####################################################################
 ### RGB Select Violet
 #####################################################################
@@ -222,6 +276,12 @@
         brightness: 255
         color_temp: 255
         rgb_color: [125,0,255]
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
 
 #####################################################################
 ### RGB Select Yellow
@@ -242,6 +302,12 @@
         color_temp: 255
         rgb_color: [255,255,0]
 
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
 #####################################################################
 ### RGB Select Random
 #####################################################################
@@ -258,7 +324,13 @@
       state: "Random"
 
   action:
-    service: light.turn_on
-    data:
-      entity_id: light.flux_rgb
-      effect: random
+    - service: light.turn_on
+      data:
+        entity_id: light.flux_rgb
+        effect: random
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...

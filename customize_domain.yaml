@@ -1,0 +1,9 @@
+#####################################################################
+### CUSTOMIZATIONS - ENTIRE DOMAIN
+#####################################################################
+
+  scene:
+    icon: mdi:play-circle
+
+  automation:
+    icon: mdi:timetable

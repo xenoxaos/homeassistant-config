@@ -10,18 +10,18 @@
       to: 'on'
 
   condition:
-    - condition: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
-      below: 72
-
-    - condition: time
-      weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-        - sun
+#    - condition: numeric_state
+#      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
+#      below: 72
+#
+#    - condition: time
+#      weekday:
+#        - mon
+#        - tue
+#        - wed
+#        - thu
+#        - fri
+#        - sun
 
     - condition: state
       entity_id: input_boolean.condition_3

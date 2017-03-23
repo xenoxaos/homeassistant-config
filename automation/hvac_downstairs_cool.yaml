@@ -1,15 +1,40 @@
 #####################################################################
-### AC - Downstairs Limit Reached
+### AC - Downstairs Upper Limit Reached
 #####################################################################
 
 - alias: cool downstairs if too hot
   trigger:
-    - platform: template
-      value_template: "{{ states.sensor['2gig_technologies_ct101_thermostat_iris_temperature_18_1'].state > '84.5' }}"
+    - platform: numeric_state
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
+      above: 84
 
 # kick the AC on for 3 hours
   action:
     - service: script.cool_downstairs_180min
+
+#####################################################################
+### AC - Downstairs Lower Limit Reached
+#####################################################################
+
+- alias: turn ac off once comfortable
+  trigger:
+    - platform: numeric_state
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
+      below: 77
+
+  condition:
+    - condition: state
+      entity_id: script.cool_downstairs_180min
+      state: 'on'
+
+  action:
+    - service: script.turn_off
+      entity_id: script.cool_downstairs_180min
+
+    - service: climate.set_temperature
+      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
+      data:
+        temperature: 82
 
 #####################################################################
 ### AC - Downstairs trigger on temperature
@@ -17,8 +42,12 @@
 
 - alias: downstairs cooling triggered
   trigger:
-    - platform: template
-      value_template: "{{ states.sensor['2gig_technologies_ct101_thermostat_iris_temperature_18_1'].state > '79.5' }}"
+    - platform: numeric_state
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
+      above: 79.5
+
+    - platform: time
+      after: '17:59:59'
 
 #    - platform: template
 #      value_template: "{% if is_state('sensor.hvac_downstairs_climate', 'Hot') %}true{% endif %}"
@@ -31,10 +60,6 @@
     - condition: state
       entity_id: sensor.hvac_downstairs_climate
       state: 'Hot'
-
-    - condition: state
-      entity_id: script.cool_downstairs_180min
-      state: 'off'
 
     - condition: state
       entity_id: input_boolean.peak_hours
@@ -193,10 +218,6 @@
     - condition: state
       entity_id: sensor.hvac_downstairs_climate
       state: 'Hot'
-
-    - condition: state
-      entity_id: input_boolean.peak_hours
-      state: 'off'
 
   action:
     - service: script.cool_downstairs_120min

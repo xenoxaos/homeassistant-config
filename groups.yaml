@@ -6,6 +6,7 @@ default_view:
   name: Home
   view: yes
   entities:
+    - group.device_status
     - group.travel_megs
     - group.travel_rick
 
@@ -55,12 +56,11 @@ climate:
   entities:
     - group.climate_status
     - group.downstairs_climate
-    - group.downstairs_heating
-#    - group.downstairs_cooling
     - group.upstairs_climate
-    - group.upstairs_heating
-#    - group.upstairs_cooling
-
+    - group.downstairs_cooling
+    - group.upstairs_cooling
+#    - group.upstairs_heating
+#    - group.downstairs_heating
 #####################################################################
 ### EXTERIOR DEVICES VIEW
 #####################################################################
@@ -95,7 +95,7 @@ weather:
 
 scenes:
   name: Scenes
-  icon: mdi:home-variant
+  icon: mdi:creation
   view: yes
   entities:
     - group.lighting_scenes
@@ -163,9 +163,9 @@ Family:
   - input_boolean.megs_home
   - input_boolean.rick_home
 
-#Device Status:
-#  - sensor.iphone_battery_rick
-#  - sensor.iphone_battery_megs
+Device Status:
+  - sensor.iphone_battery_rick
+  - sensor.iphone_battery_megs
 
 Travel Rick:
   - device_tracker.iphwn666
@@ -255,23 +255,20 @@ Entry Lighting:
 
 Kitchen:
   - light.ge_12724_3way_dimmer_switch_level_33_0
+  ## Kitchen Somfy
+  - cover.somfy_unknown_type5a52_id5401_level_39_0
+#    - cover.somfy_unknown_type5a52_id5401_switch_39_0
 
 Dining Room:
   - light.ge_12724_3way_dimmer_switch_level_34_0
 
 Living Room:
-  - light.living_room_lamp
-  - group.living_room_ceiling
-
-Living Room Fan:
   control: hidden
   entities:
-  - input_select.living_room_fan_speed
-#  - switch.living_room_fan_low
-#  - switch.living_room_fan_medium
-#  - switch.living_room_fan_high
-#  - switch.living_room_fan_off
+  - light.living_room_lamp
+  - group.living_room_ceiling
   - switch.living_room_fan_light
+  - input_select.living_room_fan_speed
 
 Living Room Ceiling:
   - light.northeast_ceiling
@@ -286,31 +283,17 @@ Office:
 Master Bedroom:
   control: hidden
   entities:
-  - light.ge_12724_3way_dimmer_switch_level_8_0
   - script.master_bedroom_night_time
   - script.mbr_night_light
-  - switch.humidifier
-
-Master Bedroom Fan:
-  control: hidden
-  entities:
+  - light.ge_12724_3way_dimmer_switch_level_8_0
+  - switch.master_bedroom_fan_light
   - input_select.master_bedroom_fan_speed
   - input_select.master_bedroom_fan_options
-#  - switch.master_bedroom_fan_summer_mode
-#  - switch.master_bedroom_fan_off
-  - switch.master_bedroom_fan_light
   - switch.master_bedroom_fan_delay
-#  - switch.master_bedroom_fan_vacation
-#  - switch.master_bedroom_fan_2_hour
-#  - switch.master_bedroom_fan_4_hour
-#  - switch.master_bedroom_fan_8_hour
-#  - switch.master_bedroom_fan_random
-#  - switch.master_bedroom_fan_1
-#  - switch.master_bedroom_fan_2
-#  - switch.master_bedroom_fan_3
-#  - switch.master_bedroom_fan_4
-#  - switch.master_bedroom_fan_5
-#  - switch.master_bedroom_fan_6
+  - switch.humidifier
+## Master Bath Somfy
+  - cover.somfy_unknown_type5a52_id5402_level_37_0
+#    - cover.somfy_unknown_type5a52_id5402_switch_37_0
 
 Billiards Room:
   - switch.ge_45609_onoff_relay_switch_switch_2_0
@@ -514,9 +497,6 @@ Living Room TV:
   - switch.living_room_tv_mute
   - input_select.living_room_tv_input
   - media_player.kodi_living_room
-#  - switch.directv
-#  - switch.fire_tv
-#  - switch.chromecast
 
 DirecTV:
   control: hidden
@@ -531,10 +511,6 @@ Onkyo Amp:
   - switch.amp_volume
   - switch.amp_mute
   - input_select.onkyo_amp_input
-#  - switch.amp_input_movie
-#  - switch.amp_input_tv
-#  - switch.amp_input_dvd
-#  - switch.amp_input_ipod
   - switch.amp_movie_mode
   - switch.amp_music_mode
 
@@ -544,20 +520,6 @@ Media Players:
   - media_player.apple_tv
 #  - media_player.rnmcast
 #  - media_player.directv
-
-#Office Kodi:
-#  - sensor.office_kodi_mediatype
-#  - sensor.office_kodi_playback_state
-#  - sensor.office_kodi_playbackstate
-#  - sensor.office_kodi_progress
-#  - sensor.office_kodi_title
-#
-#Living Room Kodi:
-#  - sensor.living_room_kodi_mediatype
-#  - sensor.living_room_kodi_playback_state
-#  - sensor.living_room_kodi_playbackstate
-#  - sensor.living_room_kodi_progress
-#  - sensor.living_room_kodi_title
 
 #####################################################################
 ### SYSTEM GROUPS

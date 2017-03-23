@@ -1,0 +1,73 @@
+#####################################################################
+### Company Mode ON
+#####################################################################
+
+company_mode_on:
+  sequence:
+  - service: switch.turn_on
+    entity_id: switch.outdoor_speakers
+
+  - service: scene.turn_on
+    entity_id: scene.living_room_bright
+
+  - service: lock.unlock
+
+## turn on the kitchen Lights
+  - service: light.turn_on
+    entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+    data:
+      brightness: 175
+
+## turn on the dining room light
+  - service: light.turn_on
+    entity_id: light.ge_12724_3way_dimmer_switch_level_34_0
+    data:
+      brightness: 130
+
+## turn on the Billiards Room lights
+  - service: switch.turn_on
+    entity_id: switch.ge_45609_onoff_relay_switch_switch_2_0
+
+## turn on the party lights
+  - service: switch.turn_on
+    entity_id: switch.ge_Unknown_type4f50_id3031_switch_23_0
+
+## turn on the pool light
+  - service: switch.turn_on
+    entity_id: switch.ge_12722_onoff_relay_switch_switch_25_0
+
+#####################################################################
+### Company Mode OFF
+#####################################################################
+
+company_mode_off:
+  sequence:
+  - service: switch.turn_off
+    entity_id: switch.outdoor_speakers
+
+  - service: scene.turn_on
+    entity_id: scene.living_room_normal
+
+## turn on the kitchen Lights
+  - service: light.turn_on
+    entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+    data:
+      brightness: 100
+
+## turn on the dining room light
+  - service: light.turn_off
+    entity_id: light.ge_12724_3way_dimmer_switch_level_34_0
+
+## turn on the Billiards Room lights
+  - service: switch.turn_off
+    entity_id: switch.ge_45609_onoff_relay_switch_switch_2_0
+
+## turn on the party lights
+  - service: switch.turn_off
+    entity_id: switch.ge_Unknown_type4f50_id3031_switch_23_0
+
+## turn on the pool light
+  - service: switch.turn_off
+    entity_id: switch.ge_12722_onoff_relay_switch_switch_25_0
+
+  - service: lock.lock

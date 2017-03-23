@@ -1,7 +1,8 @@
 rgb_light:
   name: RGB Light
-  initial: "Off"
+  initial: "Select an option..."
   options:
+    - "Select an option..."
     - "Off"
     - "Random"
     - "Cool"
@@ -17,9 +18,9 @@ rgb_light:
 
 pool_scene:
   name: Pool Scene
-  initial: "None"
+  initial: "Select an option..."
   options:
-    - "None"
+    - "Select an option..."
     - "Cycle"
     - "Party"
     - "Romance"
@@ -30,9 +31,9 @@ pool_scene:
 
 pool_color:
   name: Pool Color
-  initial: "None"
+  initial: "Select an option..."
   options:
-    - "None"
+    - "Select an option..."
     - "Blue"
     - "Green"
     - "Red"
