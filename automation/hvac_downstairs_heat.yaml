@@ -20,7 +20,7 @@
   trigger:
     - platform: numeric_state
       entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-      below: 69.5
+      below: 69
 
 #    - platform: state
 #      entity_id: sensor.hvac_downstairs_climate

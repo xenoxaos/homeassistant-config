@@ -7,3 +7,6 @@
 
   automation:
     icon: mdi:timetable
+
+  device_tracker:
+    homebridge_hidden: true

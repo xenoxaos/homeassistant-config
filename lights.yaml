@@ -4,8 +4,8 @@
     192.168.10.37:
       name: flux_rgb
 
-#    192.168.10.39:
-#      name: example_second_bulb
+    192.168.10.39:
+      name: under_bed_lights
 
 - platform: hue
   host: 192.168.10.38

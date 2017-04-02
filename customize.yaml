@@ -44,6 +44,8 @@
 ## Master Bath Roller Shade State (hidden)
   cover.somfy_unknown_type5a52_id5402_switch_37_0:
     friendly_name: "Bathroom Shade State"
+    haaska_hidden: true
+    homebridge_hidden: true
     icon: mdi:blinds
 
 ## BILLIARDS ROOM
@@ -193,6 +195,11 @@
     haaska_name: "Master Bedroom Chandelier"
     icon: mdi:ceiling-light
 
+## MBR Bed Lights
+  light.under_bed_lights:
+    friendly_name: "Bed Lights"
+    icon: mdi:led-on
+
 ## Kitchen Lights
   light.ge_12724_3way_dimmer_switch_level_33_0:
     friendly_name: "Kitchen Lights"
@@ -273,6 +280,8 @@
 ## Kitchen Roller Shade State (hidden)
   cover.somfy_unknown_type5a52_id5401_switch_39_0:
     friendly_name: "Kitchen Shade State"
+    haaska_hidden: true
+    homebridge_hidden: true
     icon: mdi:blinds
 
 #####################################################################
@@ -377,6 +386,16 @@
   script.cool_upstairs_180min:
     friendly_name: "Upstairs Auto Cooling"
     icon: mdi:snowflake
+    haaska_hidden: true
+
+  script.mbr_fan_speed_step_low:
+    friendly_name: "Master Bedroom Fan Auto Low"
+    icon: mdi:fan
+    haaska_hidden: true
+
+  script.mbr_fan_speed_step_high:
+    friendly_name: "Master Bedroom Fan Auto High"
+    icon: mdi:fan
     haaska_hidden: true
 
 #####################################################################
@@ -801,27 +820,22 @@
 
   input_boolean.condition_1:
     friendly_name: "Test Condition 1"
-    haaska_hidden: true
     icon: mdi:checkbox-marked-circle
 
   input_boolean.condition_2:
     friendly_name: "Test Condition 2"
-    haaska_hidden: true
     icon: mdi:checkbox-marked-circle
 
   input_boolean.condition_3:
     friendly_name: "Test Condition 3"
-    haaska_hidden: true
     icon: mdi:checkbox-marked-circle
 
   input_boolean.condition_4:
     friendly_name: "Test Condition 4"
-    haaska_hidden: true
     icon: mdi:checkbox-marked-circle
 
   input_boolean.condition_5:
     friendly_name: "Test Condition 5"
-    haaska_hidden: true
     icon: mdi:checkbox-marked-circle
 
 #####################################################################
@@ -914,7 +928,11 @@
   group.default_view:
     haaska_hidden: true
 
+  group.interior:
+    haaska_hidden: true
+
   group.cameras:
+    haaska_hidden: true
     order: 2
 
   group.weather_summary:

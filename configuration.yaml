@@ -149,6 +149,7 @@ sun:
 conversation:
 frontend:
 #discovery:
+config:
 
 #####################################################################
 ### LOGGER
@@ -241,6 +242,7 @@ logbook:
     domains:
       - camera
       - media_player
+#      - zwave
 
     entities:
       - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor_22_0

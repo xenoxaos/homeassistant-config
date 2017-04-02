@@ -13,10 +13,8 @@
         scene_id: 1
 
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.rgb_light
-        option: "Warm"
+    - service: scene.turn_on
+      entity_id: scene.living_room_normal
 
 ###
 - alias: minimote 1 button 1 long
@@ -30,10 +28,8 @@
         scene_id: 2
 
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.rgb_light
-        option: "Warm Dim"
+    - service: scene.turn_on
+      entity_id: scene.living_room_bright
 
 ###
 - alias: minimote 1 button 2 short
@@ -47,10 +43,12 @@
         scene_id: 3
 
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.rgb_light
-        option: "Off"
+    - service: scene.turn_on
+      entity_id: scene.movie_time
+
+## turn kitchen light off
+    - service: light.turn_off
+      entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
 
 ###
 - alias: minimote 1 button 2 long
@@ -64,10 +62,8 @@
         scene_id: 4
 
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.rgb_light
-        option: "Cool"
+    - service: scene.turn_on
+      entity_id: scene.living_room_dim
 
 ###
 - alias: minimote 1 button 3 short
@@ -81,10 +77,11 @@
         scene_id: 5
 
   action:
-    - service: input_select.select_option
+    - service: light.turn_on
       data:
-        entity_id: input_select.rgb_light
-        option: "Blue"
+        entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+        transition: 5
+        brightness: 150
 
 ###
 - alias: minimote 1 button 3 long
@@ -98,10 +95,11 @@
         scene_id: 6
 
   action:
-    - service: input_select.select_option
+    - service: light.turn_on
       data:
-        entity_id: input_select.rgb_light
-        option: "Violet"
+        entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+        transition: 5
+        brightness: 255
 
 ###
 - alias: minimote 1 button 4 short
@@ -115,10 +113,9 @@
         scene_id: 7
 
   action:
-    - service: input_select.select_option
+    - service: light.turn_off
       data:
-        entity_id: input_select.rgb_light
-        option: "Red"
+        entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
 
 ###
 - alias: minimote 1 button 4 long
@@ -132,10 +129,8 @@
         scene_id: 8
 
   action:
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.rgb_light
-        option: "Green"
+    - service: script.bedtime
+
 #####################################################################
 ### Aeotec zwave minimote #2: aeotec_dsa03202_minimote_32
 #####################################################################
@@ -153,6 +148,10 @@
   action:
     - service: script.master_bedroom_night_time
 
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+
 ##
 - alias: minimote 2 button 1 long
   initial_state: True
@@ -169,6 +168,10 @@
       data:
         entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
 
+    - service: light.turn_off
+      data:
+        entity_id: light.under_bed_lights
+
 ##
 - alias: minimote 2 button 2 short
   initial_state: True
@@ -181,7 +184,7 @@
         scene_id: 3
 
   action:
-    - service: script.cool_upstairs_120min
+    - service: script.mbr_night_light
 
 ##
 - alias: minimote 2 button 2 long
@@ -195,7 +198,9 @@
         scene_id: 4
 
   action:
-    - service: script.heat_upstairs_120min
+    - service: scene.turn_on
+      data:
+        entity_id: script.bedtime
 
 ##
 - alias: minimote 2 button 3 short
@@ -227,7 +232,7 @@
   action:
     - service: scene.turn_on
       data:
-        entity_id: scene.living_room_normal
+        entity_id: script.cool_upstairs_120min
 
 ##
 - alias: minimote 2 button 4 short
@@ -241,7 +246,7 @@
         scene_id: 7
 
   action:
-    - service: script.cool_downstairs_120min
+    - service: script.mbr_fan_speed_step_low
 
 ##
 - alias: minimote 2 button 4 long
@@ -255,7 +260,7 @@
         scene_id: 8
 
   action:
-    - service: script.heat_downstairs_120min
+    - service: script.mbr_fan_speed_step_high
 
 #####################################################################
 ### Aeotec zwave minimote #3: aeotec_dsa03202_minimote_31

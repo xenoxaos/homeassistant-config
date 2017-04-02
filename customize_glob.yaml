@@ -160,5 +160,28 @@
   "script.morning_weekday":
     haaska_hidden: true
 
-  "switch.*spare*":
+  "switch.*_spare":
     haaska_hidden: true
+    homebridge_hidden: true
+
+  "switch.living_room_tv_*":
+    haaska_hidden: true
+    homebridge_hidden: true
+
+  "switch.directv_*":
+    haaska_hidden: true
+    homebridge_hidden: true
+
+  "switch.amp_*":
+    haaska_hidden: true
+    homebridge_hidden: true
+
+  "input_boolean.condition_*":
+    haaska_hidden: true
+    homebridge_hidden: true
+
+  "sensor.pws_*":
+    homebridge_hidden: true
+
+  "sensor.dark_sky_*":
+    homebridge_hidden: true

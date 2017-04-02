@@ -59,8 +59,9 @@ climate:
     - group.upstairs_climate
     - group.downstairs_cooling
     - group.upstairs_cooling
-#    - group.upstairs_heating
-#    - group.downstairs_heating
+    - group.upstairs_heating
+    - group.downstairs_heating
+
 #####################################################################
 ### EXTERIOR DEVICES VIEW
 #####################################################################
@@ -286,9 +287,12 @@ Master Bedroom:
   - script.master_bedroom_night_time
   - script.mbr_night_light
   - light.ge_12724_3way_dimmer_switch_level_8_0
+  - light.under_bed_lights
   - switch.master_bedroom_fan_light
   - input_select.master_bedroom_fan_speed
   - input_select.master_bedroom_fan_options
+  - script.mbr_fan_speed_step_low
+  - script.mbr_fan_speed_step_high
   - switch.master_bedroom_fan_delay
   - switch.humidifier
 ## Master Bath Somfy

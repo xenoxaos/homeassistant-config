@@ -33,7 +33,13 @@ bedtime:
   - delay:
       minutes: 5
 
-  # dim master bed chandelier
+### Turn on the bed lights
+  - service: light.turn_on
+    data:
+      entity_id: light.under_bed_lights
+      rgb_color: [0,55,55]
+
+### dim master bed chandelier
   - service: light.turn_on
     entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
     data:

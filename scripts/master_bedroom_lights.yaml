@@ -18,11 +18,13 @@ mbr_night_light:
   sequence:
   - service: light.turn_on
     data:
-      entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
-      brightness: 48
+      entity_id: light.under_bed_lights
+#      brightness: 127
+#      color_temp: 200
+      rgb_color: [0,55,55]
 
   - delay:
-      minutes: 7
+      minutes: 6
 
   - service: light.turn_off
-    entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+    entity_id: light.under_bed_lights
