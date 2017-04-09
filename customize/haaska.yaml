@@ -1,0 +1,234 @@
+
+#####################################################################
+### HAASKA HIDDEN
+#####################################################################
+
+### GROUPS ###
+  group.breaches:
+    haaska_hidden: true
+
+  group.cameras:
+    haaska_hidden: true
+
+  group.default_view:
+    haaska_hidden: true
+
+  group.dining_room:
+    haaska_hidden: true
+
+  group.directv:
+    haaska_hidden: true
+
+  group.door_locks:
+    haaska_hidden: true
+
+  group.downloads:
+    haaska_hidden: true
+
+  group.exterior:
+    haaska_hidden: true
+
+  group.family:
+    haaska_hidden: true
+
+  group.ha_status:
+    haaska_hidden: true
+
+  group.hass:
+    haaska_hidden: true
+
+  group.interior:
+    haaska_hidden: true
+
+  group.kitchen:
+    haaska_hidden: true
+
+  group.lab:
+    haaska_hidden: true
+
+  group.light_and_switch_override:
+    haaska_hidden: true
+
+  group.lighting_scenes:
+    haaska_hidden: true
+
+  group.living_room:
+    haaska_hidden: true
+
+  group.living_room_tv:
+    haaska_hidden: true
+
+  group.master_bedroom:
+    haaska_hidden: true
+
+  group.office:
+    haaska_hidden: true
+
+  group.onkyo_amp:
+    haaska_hidden: true
+
+  group.pool:
+    haaska_hidden: true
+
+  group.precipitation:
+    haaska_hidden: true
+
+  group.scenes:
+    haaska_hidden: true
+
+  group.sensors:
+    haaska_hidden: true
+
+  group.stateless_lights:
+    haaska_hidden: true
+
+  group.system:
+    haaska_hidden: true
+
+  group.triggers:
+    haaska_hidden: true
+
+  group.upstairs_climate:
+    haaska_hidden: true
+
+  group.upstairs_climate_override:
+    haaska_hidden: true
+
+  group.upstairs_cooling:
+    haaska_hidden: true
+
+  group.upstairs_heating:
+    haaska_hidden: true
+
+  group.weather:
+    haaska_hidden: true
+
+  group.weather_details:
+    haaska_hidden: true
+
+  group.weather_summary:
+    haaska_hidden: true
+
+
+### SCRIPTS ###
+  script.hvac_operating_mode:
+    haaska_hidden: true
+
+  script.kodi_time_and_temp:
+    haaska_hidden: true
+
+### SWITCHES ###
+  switch.amp_input_dvd:
+    haaska_hidden: true
+
+  switch.amp_input_ipod:
+    haaska_hidden: true
+
+  switch.amp_input_movie:
+    haaska_hidden: true
+
+  switch.amp_input_tv:
+    haaska_hidden: true
+
+  switch.amp_movie_mode:
+    haaska_hidden: true
+
+  switch.amp_music_mode:
+    haaska_hidden: true
+
+  switch.amp_mute:
+    haaska_hidden: true
+
+  switch.amp_volume:
+    haaska_hidden: true
+
+  switch.directv_play:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_1:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_2:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_2_hour:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_3:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_4:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_4_hour:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_5:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_6:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_8_hour:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_delay:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_light:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_random:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_summer_mode:
+    haaska_hidden: true
+
+  switch.master_bedroom_fan_vacation:
+    haaska_hidden: true
+
+  switch.somfy_unknown_type5a52_id5401_switch_39_0:
+    haaska_hidden: true
+
+  switch.somfy_unknown_type5a52_id5402_switch_37_0:
+    haaska_hidden: true
+
+  switch.tv_mute:
+    haaska_hidden: true
+
+  switch.tv_volume:
+    haaska_hidden: true
+
+#####################################################################
+## ALEXA FRIENDLY NAMES
+#####################################################################
+
+### GROUPS ###
+  group.porch:
+    haaska_name: "Porch Lights"
+  group.yard:
+    haaska_name: "Backyard"
+  group.interior_lights:
+    haaska_name: "Interior Lights"
+  group.exterior_lights:
+    haaska_name: "Exterior Lights"
+
+### SWITCHES ###
+  switch.tv_power:
+    haaska_name: "TV"
+  switch.amp_power:
+    haaska_name: "Onkyo Amp"
+  switch.directv_power:
+    haaska_name: "Direct TV"
+  switch.living_room_fan_high:
+    haaska_name: "Fan High"
+  switch.living_room_fan_light:
+    haaska_name: "Fan Light"
+  switch.living_room_fan_low:
+    haaska_name: "Fan Low"
+  switch.living_room_fan_medium:
+    haaska_name: "Fan Medium"
+  switch.living_room_fan_off:
+    haaska_name: "Fan Off"
+  switch.master_bedroom_fan_off:
+    haaska_name: "Bedroom Fan"

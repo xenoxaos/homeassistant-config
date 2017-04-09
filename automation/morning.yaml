@@ -8,7 +8,7 @@
       event_type: good_morning
 
     - platform: time
-      after: '05:44:59'
+      after: '05:49:59'
 
   condition:
     - condition: state

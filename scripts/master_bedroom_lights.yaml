@@ -10,7 +10,7 @@ master_bedroom_night_time:
       brightness: 50
 
 #####################################################################
-### Master Bedroom Chandelier - Night Light; 7 min timer
+### Master Bedroom Night Light; 6 min timer
 #####################################################################
 
 mbr_night_light:

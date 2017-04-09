@@ -1,0 +1,736 @@
+#####################################################################
+### Turn off the lights when OFF is selected
+#####################################################################
+
+- alias: Under Bed Select Off
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: input_select.mbr_under_bed_color
+      state: "Off"
+
+    - platform: state
+      entity_id: input_select.mbr_under_bed_effect
+      state: "Off"
+
+    - platform: state
+      entity_id: input_select.mbr_under_bed_strobe
+      state: "Off"
+
+  action:
+    - service: light.turn_off
+      entity_id: light.under_bed_lights
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Reset input selection when lamp is turned off
+#####################################################################
+
+- alias: Under Bed Reset Off
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: light.under_bed_lights
+      from: 'on'
+      to: 'off'
+
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.mbr_under_bed_color
+        option: Select an option...
+
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.mbr_under_bed_effect
+        option: Select an option...
+
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.mbr_under_bed_strobe
+        option: Select an option...
+
+#####################################################################
+### Default to Crystal if turned on with no selection
+#####################################################################
+
+- alias: Under Bed Default Crystal
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: light.under_bed_lights
+      from: 'off'
+      to: 'on'
+
+  condition:
+    condition: state
+    entity_id: input_select.mbr_under_bed_color
+    state: "Select an option..."
+
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.mbr_under_bed_color
+        option: "Crystal"
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Select Blue
+#####################################################################
+
+- alias: Under Bed Blue
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_color
+    state: "Blue"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        brightness: 255
+        rgb_color: [0,0,255]
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Select Cyan
+#####################################################################
+
+- alias: Under Bed Cyan
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_color
+    state: "Cyan"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        brightness: 255
+        rgb_color: [0,255,255]
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Select Crystal
+#####################################################################
+
+- alias: Under Bed Crystal
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_color
+    state: "Crystal"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        rgb_color: [0,55,55]
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Select Green
+#####################################################################
+
+- alias: Under Bed Green
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_color
+    state: "Green"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        brightness: 255
+        rgb_color: [0,225,0]
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Select Pink
+#####################################################################
+
+- alias: Under Bed Pink
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_color
+    state: "Pink"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        brightness: 255
+        rgb_color: [255,0,255]
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Select Red
+#####################################################################
+
+- alias: Under Bed Red
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_color
+    state: "Red"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        brightness: 255
+        rgb_color: [255,0,0]
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Select Violet
+#####################################################################
+
+- alias: Under Bed Violet
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_color
+    state: "Violet"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        brightness: 255
+        rgb_color: [125,0,255]
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Select Yellow
+#####################################################################
+
+- alias: Under Bed Yellow
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_color
+    state: "Yellow"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        brightness: 255
+        rgb_color: [255,255,0]
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  Color Loop
+#####################################################################
+
+- alias: Under Bed Color Loop
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "Color Loop"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: colorloop
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  Color Jump
+#####################################################################
+
+- alias: Under Bed Color Jump
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "Color Jump"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: colorjump
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  Random
+#####################################################################
+
+- alias: Under Bed Random
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "Random"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: random
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  Red Fade
+#####################################################################
+
+- alias: Under Bed Red Fade
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "Red Fade"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: red_fade
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  Green Fade
+#####################################################################
+
+- alias: Under Bed Green Fade
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "Green Fade"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: green_fade
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  Blue Fade
+#####################################################################
+
+- alias: Under Bed Blue Fade
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "Blue Fade"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: blue_fade
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  Yellow Fade
+#####################################################################
+
+- alias: Under Bed Yellow Fade
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "Yellow Fade"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: yellow_fade
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  Purple Fade
+#####################################################################
+
+- alias: Under Bed Purple Fade
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "Purple Fade"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: purple_fade
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  White Fade
+#####################################################################
+
+- alias: Under Bed Cyan Fade
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "White Fade"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: white_fade
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  Red/Green Cross Fade
+#####################################################################
+
+- alias: Under Bed RG Cross Fade
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "RG Cross Fade"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: rg_cross_fade
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  Red/Blue Cross Fade
+#####################################################################
+
+- alias: Under Bed RB Cross Fade
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "RB Cross Fade"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: rb_cross_fade
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Effects -  Green/Blue Cross Fade
+#####################################################################
+
+- alias: Under Bed GB Cross Fade
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_effect
+    state: "GB Cross Fade"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: gb_cross_fade
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Strobe -  Color Strobe
+#####################################################################
+
+- alias: Under Bed Color Strobe
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_strobe
+    state: "Color Strobe"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: colorstrobe
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Strobe -  Red Strobe
+#####################################################################
+
+- alias: Under Bed Red Strobe
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_strobe
+    state: "Red"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: red_strobe
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Strobe -  Green Strobe
+#####################################################################
+
+- alias: Under Bed Color Strobe
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_strobe
+    state: "Green"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: green_strobe
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Strobe -  Blue Strobe
+#####################################################################
+
+- alias: Under Bed Blue Strobe
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_strobe
+    state: "Blue"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: blue_strobe
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Strobe -  Yellow Strobe
+#####################################################################
+
+- alias: Under Bed Yellow Strobe
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_strobe
+    state: "Yellow"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: yellow_strobe
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Strobe -  Cyan Strobe
+#####################################################################
+
+- alias: Under Bed Cyan Strobe
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_strobe
+    state: "Cyan"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: cyan_strobe
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Strobe -  Purple Strobe
+#####################################################################
+
+- alias: Under Bed Purple Strobe
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_strobe
+    state: "Purple"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: purple_strobe
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
+
+#####################################################################
+### Under Bed Strobe -  White Strobe
+#####################################################################
+
+- alias: Under Bed White Strobe
+  hide_entity: True
+  trigger:
+    platform: state
+    entity_id: input_select.mbr_under_bed_strobe
+    state: "White"
+
+  action:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        effect: white_strobe
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...

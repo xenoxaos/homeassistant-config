@@ -200,7 +200,7 @@
 
     - condition: numeric_state
       entity_id: sensor.hvac_upstairs_ac_setpoint
-      above: 80
+      above: 82
 
   # kick the AC on for 3 hours
   action:

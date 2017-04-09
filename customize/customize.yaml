@@ -5,12 +5,10 @@
 ## LIVING ROOM
   group.living_room:
     order: 1
-    haaska_hidden: true
 
 ## ENTRYWAY LIGHTS
   group.entry_lighting:
     order: 2
-    haaska_hidden: true
 
 ## ACCENT LIGHTS
   group.accent_lights:
@@ -20,25 +18,21 @@
 ## KITCHEN
   group.kitchen:
     order: 4
-    haaska_hidden: true
 
 ## DINING ROOM
   group.dining_room:
     order: 5
-    haaska_hidden: true
 
 ## MASTER BEDROOM
   group.master_bedroom:
-    friendly_name: "Master Bedroom"
     haaska_name: "Master Bedroom Lights"
     order: 6
 
 ## Master Bath Roller Shades
   cover.somfy_unknown_type5a52_id5402_level_37_0:
-    friendly_name: "Master Bathroom Shade"
+    friendly_name: "Master Bath Shades"
     homebridge_cover_type: rollershutter
     icon: mdi:blinds
-    haaska_name: "Master Bedroom Lights"
     order: 7
 
 ## Master Bath Roller Shade State (hidden)
@@ -51,13 +45,11 @@
 ## BILLIARDS ROOM
   group.billiards_room:
     friendly_name: "Billiards Room"
-    haaska_name: "Billiards Room Lights"
     order: 8
 
 ## OFFICE
   group.office:
     friendly_name: "Office"
-    haaska_name: "Office Lights"
     order: 9
 
 #####################################################################
@@ -169,10 +161,9 @@
     icon: mdi:lamp
 #    persistent: true
 
-## Accent - Wine Room Lamp Spare
-  switch.wine_room_spare:
-    hidden: true
-    haaska_hidden: true
+## Accent - Wine Room Lamp
+  switch.wine_room_lamp:
+#    haaska_hidden: true
     friendly_name: "Wine Room Lamp"
     icon: mdi:lamp
 #    persistent: true
@@ -432,43 +423,36 @@
     hidden: true
     friendly_name: "Pool Blue"
     icon: mdi:lightbulb
-    haaska_hidden: true
 
   script.pool_green:
     hidden: true
     friendly_name: "Pool Green"
     icon: mdi:lightbulb
-    haaska_hidden: true
 
   script.pool_color_magenta:
     hidden: true
     friendly_name: "Pool Magenta"
     icon: mdi:lightbulb
-    haaska_hidden: true
 
   script.pool_red:
     hidden: true
     friendly_name: "Pool Red"
     icon: mdi:lightbulb
-    haaska_hidden: true
 
   script.pool_color_white:
     hidden: true
     friendly_name: "Pool White"
     icon: mdi:lightbulb
-    haaska_hidden: true
 
   script.pool_caribbean:
     hidden: true
     friendly_name: "Pool Caribbean"
     icon: mdi:lightbulb
-    haaska_hidden: true
 
   script.pool_cycle:
     hidden: true
     friendly_name: "Pool Cycle"
     icon: mdi:lightbulb
-    haaska_hidden: true
 
   script.pool_party:
     hidden: true
@@ -479,25 +463,21 @@
     hidden: true
     friendly_name: "Pool Patriotic"
     icon: mdi:lightbulb
-    haaska_hidden: true
 
   script.pool_romance:
     hidden: true
     friendly_name: "Pool Romance"
     icon: mdi:lightbulb
-    haaska_hidden: true
 
   script.pool_royal:
     hidden: true
     friendly_name: "Pool Royal"
     icon: mdi:lightbulb
-    haaska_hidden: true
 
   script.pool_sunset:
     hidden: true
     friendly_name: "Pool Sunset"
     icon: mdi:lightbulb
-    haaska_hidden: true
 
 #####################################################################
 ### SCRIPTS (other)
@@ -507,36 +487,30 @@
   script.restart_ha:
     friendly_name: "Restart Home Assistant"
     icon: mdi:recycle
-    haaska_hidden: true
 
   script.script_test:
     friendly_name: "Test Script"
     icon: mdi:play-circle
-    haaska_hidden: true
 
   script.morning_weekday:
     friendly_name: "Weekday Morning"
     hidden: true
     icon: mdi:play-circle
-    haaska_hidden: true
 
   script.away:
     friendly_name: "Away Mode"
     hidden: true
     icon: mdi:play-circle
-    haaska_hidden: true
 
   script.unlock_megs:
     friendly_name: "Unlock Door for Megan"
     hidden: true
     icon: mdi:play-circle
-    haaska_hidden: true
 
   script.time_temp:
     friendly_name: "Time and Temp"
     hidden: true
     icon: mdi:play-circle
-    haaska_hidden: true
 
   script.mbr_night_light:
 #    friendly_name: "Night Light"
@@ -545,6 +519,10 @@
   script.tv_power_off:
     friendly_name: "TV Shutdown"
     icon: mdi:power
+
+  script.company_mode:
+    friendly_name: "Company Mode"
+    icon: mdi:play-circle
 
 #####################################################################
 ### SCENARIOS
@@ -580,6 +558,7 @@
 
 ## Living Room Cloudy
   scene.living_room_cloudy:
+    friendly_name: "Living Room Cloudy"
     icon: mdi:play-circle
 
 ## Movie Dim
@@ -920,71 +899,3 @@
     icon: mdi:sunglasses
   sensor.pws_visibility_mi:
     friendly_name: "Visibility"
-
-#####################################################################
-### HAASKA HIDDEN
-#####################################################################
-
-  group.default_view:
-    haaska_hidden: true
-
-  group.interior:
-    haaska_hidden: true
-
-  group.cameras:
-    haaska_hidden: true
-    order: 2
-
-  group.weather_summary:
-    order: 1
-
-  group.weather_details:
-    order: 2
-
-  group.precipitation:
-    order: 3
-
-  group.sensors:
-    order: 3
-    haaska_hidden: true
-
-  group.breaches:
-    order: 5
-    haaska_hidden: true
-
-  group.door_locks:
-    order: 4
-    haaska_hidden: true
-
-  group.directv:
-    haaska_hidden: true
-
-  group.onkyo_amp:
-    haaska_hidden: true
-
-  group.living_room_tv:
-    haaska_hidden: true
-
-  group.security_override:
-    order: 1
-
-  script.hvac_operating_mode:
-    haaska_hidden: true
-
-  script.kodi_time_and_temp:
-    haaska_hidden: true
-
-#####################################################################
-## ALEXA FRIENDLY NAMES
-#####################################################################
-
-  group.all_lights:
-    friendly_name: "All Lights"
-
-  group.porch:
-    friendly_name: "Porch"
-    haaska_name: "Porch Lights"
-
-#  group.wine_room:
-#    friendly_name: "Wine Room"
-#    haaska_name: "Wine Room Lights"

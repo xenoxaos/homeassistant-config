@@ -1,4 +1,29 @@
 #####################################################################
+### Turn off the Pool Light and Reset Selection
+#####################################################################
+
+- alias: pool light reset selections
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: switch.ge_12722_onoff_relay_switch_switch_25_0
+      from: 'on'
+      to: 'off'
+      for:
+        seconds: 10
+
+  action:
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.pool_scene
+        option: Select an option...
+
+    - service: input_select.select_option
+      data:
+        entity_id: input_select.pool_color
+        option: Select an option...
+
+#####################################################################
 ### Pool Light Scene Selection
 #####################################################################
 
@@ -25,7 +50,15 @@
             script.pool_sunset
           {% elif is_state('input_select.pool_scene', 'Royal') %}
             script.pool_royal
+          {% else %}
+            script.pool_cycle
           {% endif %}
+
+    # Reset the Input Select to "Select an option..."
+    - service: input_select.select_option
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...
 
 #####################################################################
 ### Pool Light Color Selection
@@ -50,29 +83,12 @@
             script.pool_white
           {% elif is_state('input_select.pool_color', 'Magenta') %}
             script.pool_magenta
+          {% else %}
+            script.pool_cycle
           {% endif %}
 
-#####################################################################
-### Turn off the Pool Light
-#####################################################################
-
-- alias: pool light reset selections
-  hide_entity: True
-  trigger:
-    - platform: state
-      entity_id: switch.ge_12722_onoff_relay_switch_switch_25_0
-      from: 'on'
-      to: 'off'
-      for:
-        seconds: 10
-
-  action:
+    # Reset the Input Select to "Select an option..."
     - service: input_select.select_option
-      data:
-        entity_id: input_select.pool_scene
-        option: "None"
-
-    - service: input_select.select_option
-      data:
-        entity_id: input_select.pool_color
-        option: "None"
+      data_template:
+        entity_id: "{{ trigger.to_state.entity_id }}"
+        option: Select an option...

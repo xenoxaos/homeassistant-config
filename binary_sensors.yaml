@@ -1,3 +1,7 @@
+- platform: workday
+  country: US
+
+
 #- platform: template
 #  sensors:
 #    motionsensor2:

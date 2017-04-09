@@ -22,7 +22,7 @@ morning_weekday:
     entity_id: group.accent_lights
 
   - delay:
-      minutes: 5
+      minutes: 7
 
 # turn on the living room lamp
   - service: light.turn_on
@@ -32,7 +32,7 @@ morning_weekday:
       transition: 60
 
   - delay:
-      minutes: 5
+      minutes: 7
 
 # turn on the living room lights
   - service: light.turn_on
@@ -44,7 +44,7 @@ morning_weekday:
       transition: 120
 
   - delay:
-      minutes: 5
+      minutes: 7
 
 # turn on the kitchen lights
   - service: light.turn_on

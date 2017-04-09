@@ -14,7 +14,7 @@
       above: 16
 
   action:
-    - service: cover.close_cover
+    - service: cover.open_cover
       entity_id: cover.somfy_unknown_type5a52_id5401_level_39_0
 
 #####################################################################
@@ -47,7 +47,7 @@
       after: '10:59:59'
 
   action:
-    - service: cover.close_cover
+    - service: cover.open_cover
       entity_id: cover.somfy_unknown_type5a52_id5402_level_37_0
 
 #####################################################################
@@ -61,5 +61,5 @@
       after: '18:59:59'
 
   action:
-    - service: cover.open_cover
+    - service: cover.close_cover
       entity_id: cover.somfy_unknown_type5a52_id5402_level_37_0

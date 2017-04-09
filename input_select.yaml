@@ -16,6 +16,57 @@ rgb_light:
     - "Violet"
     - "Yellow"
 
+mbr_under_bed_color:
+  name: Under Bed Color
+  initial: "Select an option..."
+  options:
+    - "Select an option..."
+    - "Off"
+    - "Crystal"
+    - "White"
+    - "Red"
+    - "Blue"
+    - "Green"
+    - "Cyan"
+    - "Pink"
+    - "Violet"
+    - "Yellow"
+
+mbr_under_bed_effect:
+  name: Under Bed Effect
+  initial: "Select an option..."
+  options:
+    - "Select an option..."
+    - "Off"
+    - "Color Loop"
+    - "Color Jump"
+    - "Random"
+    - "Red Fade"
+    - "Green Fade"
+    - "Blue Fade"
+    - "Yellow Fade"
+    - "Cyan Fade"
+    - "Purple Fade"
+    - "White Fade"
+    - "RG Cross Fade"
+    - "RB Cross Fade"
+    - "GB Cross Fade"
+
+mbr_under_bed_strobe:
+  name: Under Bed Strobe
+  initial: "Select an option..."
+  options:
+    - "Select an option..."
+    - "Off"
+    - "Color Strobe"
+    - "Red"
+    - "Green"
+    - "Blue"
+    - "Yellow"
+    - "Cyan"
+    - "Purple"
+    - "White"
+
 pool_scene:
   name: Pool Scene
   initial: "Select an option..."

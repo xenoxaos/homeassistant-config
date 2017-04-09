@@ -9,7 +9,7 @@ homeassistant:
 #####################################################################
 ### CUSTOMIZATION
 #####################################################################
-  customize: !include customize.yaml
+  customize: !include_dir_merge_named customize
   packages: !include_dir_named packages
   customize_glob: !include customize_glob.yaml
   customize_domain: !include customize_domain.yaml
@@ -54,21 +54,17 @@ zwave:
   polling_interval: 60000
 
 ## Device config
-  device_config:
-    cover.somfy_unknown_type5a52_id5401_switch_39_0:
-      ignored: true
-    cover.somfy_unknown_type5a52_id5402_switch_37_0:
-      ignored: true
+  device_config: !include zwave_device_config.yaml
 
 ## Domain config
 #  device_config_domain:
-
 
 ## Global config
   device_config_glob:
     "light.ge_12724_3way_dimmer_switch_*":
       refresh_value: true
       delay: 5
+
 
 #####################################################################
 ### HTTP CONFIG

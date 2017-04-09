@@ -43,13 +43,27 @@
       before: '08:00:00'
 
   action:
+
     - service: scene.turn_on
       entity_id: scene.living_room_bright
 
+## kitchen max brightness
     - service: light.turn_on
       entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
       data:
         brightness: 255
+
+## turn off the master bedroom chandelier
+    - service: light.turn_off
+      entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+
+## turn off the accent lights
+    - service: homeassistant.turn_off
+      entity_id: group.accent_lights
+## hit the RF outlets again
+    - delay: 3
+    - service: homeassistant.turn_off
+      entity_id: group.accent_lights
 
 #####################################################################
 ### Turn off the lights after the sun is up high
@@ -75,11 +89,6 @@
   action:
     - service: homeassistant.turn_off
       entity_id: group.interior_lights
-
-## hit the RF outlets again, to ensure they change state
-    - delay: 3
-    - service: homeassistant.turn_off
-      entity_id: group.accent_lights
 
 #####################################################################
 ### Turn on some lights when we get home
@@ -116,8 +125,14 @@
     - service: scene.turn_on
       entity_id: scene.living_room_bright
 
+## kitchen max brightness
+    - service: light.turn_on
+      entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+      data:
+        brightness: 255
+
     - delay:
-        minutes: 5
+        minutes: 3
 
     - service: scene.turn_on
       entity_id: scene.living_room_normal

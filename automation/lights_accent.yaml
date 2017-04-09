@@ -1,4 +1,7 @@
-# Turn Accent Lights ON
+#####################################################################
+### Turn Accent Lights ON
+#####################################################################
+
 - alias: turn on accent lights at sunset
   trigger:
     - platform: sun
@@ -7,9 +10,17 @@
 
   action:
     - service: switch.turn_on
-      entity_id: switch.staircase_lamp
+      entity_id: group.accent_lights
+## hit RF switches a second time
+    - delay:
+        seconds: 3
+    - service: switch.turn_on
+      entity_id: group.accent_lights
 
-# Turn Accent Lights OFF weekdays
+#####################################################################
+### Turn Accent Lights OFF weekdays
+#####################################################################
+
 - alias: turn off accent lights weekdays
   trigger:
     platform: time
@@ -26,9 +37,17 @@
 
   action:
     - service: switch.turn_off
-      entity_id: switch.staircase_lamp
+      entity_id: group.accent_lights
+## hit RF switches a second time
+    - delay:
+        seconds: 3
+    - service: switch.turn_off
+      entity_id: group.accent_lights
 
-# Turn Accent Lights OFF weekends
+#####################################################################
+### Turn Accent Lights OFF weekends
+#####################################################################
+
 - alias: turn off accent lamps weekends
   trigger:
     platform: time
@@ -42,4 +61,9 @@
 
   action:
     - service: switch.turn_off
-      entity_id: switch.staircase_lamp
+      entity_id: group.accent_lights
+## hit RF switches a second time
+    - delay:
+        seconds: 3
+    - service: switch.turn_off
+      entity_id: group.accent_lights

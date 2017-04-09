@@ -76,7 +76,6 @@
       data:
         entity_id: light.flux_rgb
         brightness: 255
-        color_temp: 200
         rgb_color: [255,255,255]
 
     # Reset the Input Select to "Select an option..."
@@ -101,7 +100,6 @@
       data:
         entity_id: light.flux_rgb
         brightness: 255
-        color_temp: 370
 
     # Reset the Input Select to "Select an option..."
     - service: input_select.select_option
@@ -125,7 +123,6 @@
       data:
         entity_id: light.flux_rgb
         brightness: 15
-        color_temp: 390
 
     # Reset the Input Select to "Select an option..."
     - service: input_select.select_option
@@ -149,7 +146,6 @@
       data:
         entity_id: light.flux_rgb
         brightness: 255
-        color_temp: 255
         rgb_color: [0,0,255]
 
     # Reset the Input Select to "Select an option..."
@@ -174,7 +170,6 @@
       data:
         entity_id: light.flux_rgb
         brightness: 255
-        color_temp: 255
         rgb_color: [0,255,255]
 
     # Reset the Input Select to "Select an option..."
@@ -199,7 +194,6 @@
       data:
         entity_id: light.flux_rgb
         brightness: 255
-        color_temp: 255
         rgb_color: [0,225,0]
 
     # Reset the Input Select to "Select an option..."
@@ -224,7 +218,6 @@
       data:
         entity_id: light.flux_rgb
         brightness: 255
-        color_temp: 255
         rgb_color: [255,0,255]
 
     # Reset the Input Select to "Select an option..."
@@ -249,7 +242,6 @@
       data:
         entity_id: light.flux_rgb
         brightness: 255
-        color_temp: 255
         rgb_color: [255,0,0]
 
     # Reset the Input Select to "Select an option..."
@@ -274,7 +266,6 @@
       data:
         entity_id: light.flux_rgb
         brightness: 255
-        color_temp: 255
         rgb_color: [125,0,255]
 
     # Reset the Input Select to "Select an option..."
@@ -299,7 +290,6 @@
       data:
         entity_id: light.flux_rgb
         brightness: 255
-        color_temp: 255
         rgb_color: [255,255,0]
 
     # Reset the Input Select to "Select an option..."
@@ -315,13 +305,9 @@
 - alias: random_flux_rgb
   hide_entity: True
   trigger:
-    - platform: time
-      seconds: '/45'
-
-  condition:
-    - condition: state
-      entity_id: input_select.rgb_light
-      state: "Random"
+    platform: state
+    entity_id: input_select.rgb_light
+    state: "Random"
 
   action:
     - service: light.turn_on

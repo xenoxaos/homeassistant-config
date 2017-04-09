@@ -1,0 +1,13 @@
+  - platform: crimereports
+    name: Crime
+    radius: 4000
+    exclude:
+    - Disorder
+    - Drugs
+    - Other
+    - Pedestrian Stop
+    - Proactive Policing
+    - Quality of Life
+    - Traffic
+    - Vehicle Recovery
+    - Vehicle Stop

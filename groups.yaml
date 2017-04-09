@@ -246,7 +246,7 @@ Things:
 
 Accent Lights:
   - switch.staircase_lamp
-#  - switch.wine_room_lamp
+  - switch.wine_room_lamp
 #  - switch.staircase_xmas
 
 Entry Lighting:
@@ -288,6 +288,9 @@ Master Bedroom:
   - script.mbr_night_light
   - light.ge_12724_3way_dimmer_switch_level_8_0
   - light.under_bed_lights
+  - input_select.mbr_under_bed_color
+  - input_select.mbr_under_bed_effect
+  - input_select.mbr_under_bed_strobe
   - switch.master_bedroom_fan_light
   - input_select.master_bedroom_fan_speed
   - input_select.master_bedroom_fan_options
@@ -336,6 +339,7 @@ Sensors:
   - sensor.kitchen_ptz_motion_detected
   - sensor.north_ptz_motion_detected
   - sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
+  - sensor.crime
 #  - sensor.fibaro_system_fgms001_motion_sensor_burglar_22_10
 #  - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor_22_0
 #  - sensor.fibaro_system_fgms001_motion_sensor_general_22_0
@@ -345,9 +349,11 @@ Sensors:
 #  - sensor.fibaro_system_fgms001_motion_sensor_sourcenodeid_22_2
 #  - sensor.fibaro_system_fgms001_motion_sensor_temperature_22_1
 
-Breaches:
-  - sensor.breaches_ricknmegsgmailcom
-  - sensor.breaches_rixjunkcoxnet
+#Breaches:
+#  - sensor.breaches_ricknmegsgmailcom
+#  - sensor.breaches_rixjunkcoxnet
+
+
 
 #####################################################################
 ### CLIMATE GROUPS

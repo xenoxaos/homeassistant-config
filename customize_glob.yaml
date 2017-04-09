@@ -1,31 +1,40 @@
 #####################################################################
-### CUSTOMIZATION (global)
+### CUSTOMIZATION (global - wildcards)
 #####################################################################
+
+  "*.*test*":
+    haaska_hidden: true
+
+  "*.*_spare":
+    haaska_hidden: true
+    homebridge_hidden: true
+
+  "input_boolean.condition*":
+    haaska_hidden: true
+    homebridge_hidden: true
+    icon: mdi:checkbox-marked-circle
+
+### SENSORS ###
+
+  "sensor.pws*":
+    homebridge_hidden: true
+
+  "sensor.dark_sky*":
+    homebridge_hidden: true
 
   "sensor.*battery*":
     icon: mdi:battery-charging
 
   "sensor.breaches*":
+    homebridge_hidden: true
     icon: mdi:email-secure
 
   "sensor.hvac*mode":
     icon: mdi:nest-thermostat
 
-  "input_boolean.condition*":
-    haaska_hidden: true
-    icon: mdi:checkbox-marked-circle
+### GROUPS ###
 
-## Hide Scripts
-  "script.hvac_operating_mode,morning_weekday,script.kodi_time_and_temp,script.away,script.unlock_megs,script.pool*":
-    haaska_hidden: true
-
-#####################################################################
-### Haaska Hidden
-#####################################################################
   "group.all*":
-    haaska_hidden: true
-
-  "group.hass":
     haaska_hidden: true
 
   "group.*climate*":
@@ -43,9 +52,6 @@
   "group.*hvac*":
     haaska_hidden: true
 
-  "group.*lock*":
-    haaska_hidden: true
-
   "group.*media*":
     haaska_hidden: true
 
@@ -61,92 +67,10 @@
   "group.*weather*":
     haaska_hidden: true
 
-  "group.breaches":
+  "group.*travel*":
     haaska_hidden: true
 
-  "group.cameras":
-    haaska_hidden: true
-
-  "group.default_view":
-    haaska_hidden: true
-
-  "group.dining_room":
-    haaska_hidden: true
-
-  "group.downloads":
-    haaska_hidden: true
-
-  "group.entry_lighting":
-    haaska_hidden: true
-
-  "group.family":
-    haaska_hidden: true
-
-  "group.ha_status":
-    haaska_hidden: true
-
-  "group.kitchen":
-    haaska_hidden: true
-
-  "group.lab":
-    haaska_hidden: true
-
-  "group.light_and_switch_override":
-    haaska_hidden: true
-
-  "group.lighting_scenes":
-    haaska_hidden: true
-
-  "group.pool":
-    haaska_hidden: true
-
-  "group.porch":
-    haaska_hidden: true
-
-  "group.precipitation":
-    haaska_hidden: true
-
-  "group.rooms":
-    haaska_hidden: true
-
-  "group.scenes":
-    haaska_hidden: true
-
-  "group.sensors":
-    haaska_hidden: true
-
-  "group.speedtest":
-    haaska_hidden: true
-
-  "group.system":
-    haaska_hidden: true
-
-  "group.things":
-    haaska_hidden: true
-
-  "group.travel*":
-    haaska_hidden: true
-
-  "group.triggers":
-    haaska_hidden: true
-
-  "group.yard":
-    haaska_hidden: true
-
-  "input_boolean.*test*":
-    haaska_hidden: true
-
-  "input_boolean.rick":
-    haaska_hidden: true
-
-  "scene.movie_ended":
-    haaska_hidden: true
-
-  "scene.movie_paused":
-    haaska_hidden: true
-
-  "script.*iphone":
-    haaska_hidden: true
+### SCRIPTS ###
 
   "script.*temp*":
     haaska_hidden: true
@@ -154,34 +78,15 @@
   "script.*test*":
     haaska_hidden: true
 
-  "script.kitchen*":
+  "script.light_*":
     haaska_hidden: true
 
-  "script.morning_weekday":
-    haaska_hidden: true
-
-  "switch.*_spare":
-    haaska_hidden: true
-    homebridge_hidden: true
+### SWITCHES ###
 
   "switch.living_room_tv_*":
     haaska_hidden: true
     homebridge_hidden: true
 
-  "switch.directv_*":
+  "switch.tv_input*":
     haaska_hidden: true
-    homebridge_hidden: true
-
-  "switch.amp_*":
-    haaska_hidden: true
-    homebridge_hidden: true
-
-  "input_boolean.condition_*":
-    haaska_hidden: true
-    homebridge_hidden: true
-
-  "sensor.pws_*":
-    homebridge_hidden: true
-
-  "sensor.dark_sky_*":
     homebridge_hidden: true

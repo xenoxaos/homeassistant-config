@@ -4,32 +4,38 @@
 
 - platform: rpi_rf
   gpio: 17
+
   switches:
+## RF Outlet - 1:
     outdoor_speakers:
       protocol: 1
       pulselength: 186
       code_on: !secret code1_on
       code_off: !secret code1_off
 
+## RF Outlet - 2:
     humidifier:
       protocol: 1
       pulselength: 186
       code_on: !secret code2_on
       code_off: !secret code2_off
 
+## RF Outlet - 3:
     staircase_spare:
       protocol: 1
       pulselength: 186
       code_on: !secret code3_on
       code_off: !secret code3_off
 
+## RF Outlet - 4:
     staircase_lamp:
       protocol: 1
       pulselength: 186
       code_on: !secret code4_on
       code_off: !secret code4_off
 
-    wine_room_spare:
+## RF Outlet - 5:
+    wine_room_lamp:
       protocol: 1
       pulselength: 186
       code_on: !secret code5_on
@@ -48,29 +54,29 @@
 #### Living Room TV
 ######################################################################
     living_room_tv_power:
-      friendly_name: "Living Room TV Power"
+      friendly_name: "TV Power"
       command_on: 'JgBQAAABKZIUEBUQFTQVEBUQFBAVEBUQFDUUNhMRFDUVNBU0FTQVNBUQFRAVEBQ2FBAVEBUQFBAVNBU0FTQVEBU1FDUVNBU0FQAFJAABKkcUAA0FAAAAAAAAAAA='
       command_off: 'JgBQAAABKZIUEBUQFTQVEBUQFBAVEBUQFDUUNhMRFDUVNBU0FTQVNBUQFRAVEBQ2FBAVEBUQFBAVNBU0FTQVEBU1FDUVNBU0FQAFJAABKkcUAA0FAAAAAAAAAAA='
 
     living_room_tv_volume:
-      friendly_name: "TVLiving Room TV Volume"
+      friendly_name: "TV Volume"
       command_on: 'JgBQAAABKJIUEBUQFTQVEBQQFRAVEBUQFDUUNhQQFTQVNBU0FTQVNRQRFDUUERQQFRAVEBUQFBAVNBUQFTQVNRQ1FDUVNBU0FQAFJQABKEcVAA0FAAAAAAAAAAA='
       command_off: 'JgBQAAABKZEVEBUPFjQVEBUQFBEUEBUQFTQVNBUQFDUVNBU1FDUUNRQ1FDUUEBUQFRAVEBUQFRAVEBQQFTQVNBU0FTQVNBY0FQAFJAABKUcWAA0FAAAAAAAAAAA='
 
     living_room_tv_mute:
-      friendly_name: "Living Room TV Mute"
+      friendly_name: "TV Mute"
       command_on: 'JgBYAAABKZEVEBQQFTUUERQRFBEUEBUQFTQVNBUQFDUUNRQ2FDUUNRQ1FBAVEBU0FRAVEBQRFBEUERM2FDUUEBU0FTQVNBU1FAAFJQABKUcVAAxMAAEpRxUADQU='
 
     living_room_tv_input_directv:
-      friendly_name: "Living Room TV Input DirecTV"
+      friendly_name: "TV Input DirecTV"
       command_on: 'JgBQAAABKJIUERQSEzUVEBQRFBAVEBQQFTQVNBURFDUUNRQ1FTQVNBUQFTQVEBQRFBEUERMRFDUVNBURFDQVNBU1FDUUNRUQFQAFJAABKEgVAA0FAAAAAAAAAAA='
 
     living_room_tv_input_firetv:
-      friendly_name: "Living Room TV Input Fire TV"
+      friendly_name: "TV Input Fire TV"
       command_on: 'JgBQAAABKZIUEBQRFTQVEBQQFRAVEBUQFDUUNRQRFDUUNRU0FTQVNBU0FREUERMRFBEUEhMRFDUUEBU0FTQVNRQ1FDUVNBUQFQAFJAABKUgUAA0FAAAAAAAAAAA='
 
     living_room_tv_input_chromecast:
-      friendly_name: "Living Room TV Input Chromecast"
+      friendly_name: "TV Input Chromecast"
       command_on: 'JgBQAAABKZEUERQQFTQVEBUQFBEUERQRFDUUNRQRFDUUNRQ1FDUUNhQ1FDUUEBUQFRAUEBUQFTQVEBQRFDYUNRQ1FDUUNRQQFQAFJQABKUcUAA0FAAAAAAAAAAA='
 
 ######################################################################
@@ -159,7 +165,7 @@
       command_off: 'sgDoAAQEEA4EBBQOGg4ZDhkODRsZDgwbGg4MGwwbDRsMGwwcDBsZDg0bDBsMGxoODBsZDhoOGQ4ZDhoOGQ4MGxoOGQ4aDQ0bGQ4MAANKDQ0NDQ0ODA4NDQ0NDQ4MDg0NDQ0NDgyrGg4ZDg0aDRsaDRoNDRsMGxoNGg4aDQ0aGg0OGg0aGg0bDQ0aGg0bDRoNDRoOGhoNDRsNGhoNGg4aDQ0aGg4aDRoNGg4aDRoNGw0NGhoNDRsaDQ0aDRsNGg0aDRsNGhoNDRsNGg0aGw0NGhoNGw0aDRoOGg0aDQ0bGg0aDRoNDhoaDQ0ABdw='
 
     living_room_fan_light:
-      friendly_name: "Living room fan light"
+      friendly_name: "Living Room Fan Light"
       command_on: 'sgDcAg0aGg4aDRoNDRsNGhoNDRsNGhoNGw0aDQ0aGw0aDRoNGw0aDRoNGw0NGhoNDhoaDQ0aDhoNGhoNDhoNGg0bDRoNGg0bDRoNGhoOGg0aDQ0bGg0aDRsNGg0aDRsNGg0aDQ0AA0oNDQ0NDQ0NDg0NDQ0NDQ0NDg0NDQ0NDasaDRoNDhoNGhoOGg0NGg0bGg0aDRoODRoaDQ0bDRoaDRsNDRoaDRoOGg0NGg0bGg0NGg0bGg0aDRsNDRoaDRsNGg0bDBsNGg0aDQ4aGg0NGxoNDRoNGg4aGg0OGQ4aDRoNGw0aDRoNGw0aGg0aDhoNDRobDRoNGg0bDRoNGg0bDRoNDQADSQ0ODQ0NDQ0NDQ0ODQ0NDQ0NDQ4NDQ0NqhsNGg0NGg4aGg0aDg0aDRoaDRsNGg0NGxoNDRoNGhsNGg0NGxoNGg0bDQ0aDRobDQ0aDRobDRoNGg0OGhoNGg0bDRoNGwwbDRoNDRobDQ0aGg0OGg0aDRsaDQ0aDhoNGg0aDhoNGg0aDRobDRoOGg0NGhoNGw0aDRsMGw0aDRoNGwwOAAOnDQ0NDQ4NDQ0NDQ0NDgwODQ0NDQ0NDQ6qGg0bDQ0aDRobDRoNDRsNGhoNGg4aDQ0aGwwNGw0aGw0aDQ0aGg0bDRoNDRoOGhoNDRoOGhoNGwwbDQ0aGw0aDRoNGg4aDRoNGw0NGhoODRoaDQ0aDRsNGg0bDRoNGhoNDhoNGhsMGw0NGhsMGw0aDRoNGw0aDQ0bGg0aDQ0aDhoaDQ0AA0kODQ0NDQ0ODQ0NDQ0NDQ0NDQ4NDQ0NDasaDRoNDhoNGhoNGw0NGg0bGg0aDRoNDRsaDQ0bDRoaDRsMDhoaDRoNGw0NGg0aGw0NGg0aGw0aDRoNDhoaDRoOGg0aDRoOGg0aDQ0bGg0NGhsNDRoNGg0bDRoNGg0bGg0NGg0bGg0aDQ0bGg0aDRsNGg0aDRsNDRoaDRsNDRoNGhsNDQAF3A0aDhoaDQ0AA0kODQ=='
 
       command_off: 'sgDcAg0aGg4aDRoNDRsNGhoNDRsNGhoNGw0aDQ0aGw0aDRoNGw0aDRoNGw0NGhoNDhoaDQ0aDhoNGhoNDhoNGg0bDRoNGg0bDRoNGhoOGg0aDQ0bGg0aDRsNGg0aDRsNGg0aDQ0AA0oNDQ0NDQ0NDg0NDQ0NDQ0NDg0NDQ0NDasaDRoNDhoNGhoOGg0NGg0bGg0aDRoODRoaDQ0bDRoaDRsNDRoaDRoOGg0NGg0bGg0NGg0bGg0aDRsNDRoaDRsNGg0bDBsNGg0aDQ4aGg0NGxoNDRoNGg4aGg0OGQ4aDRoNGw0aDRoNGw0aGg0aDhoNDRobDRoNGg0bDRoNGg0bDRoNDQADSQ0ODQ0NDQ0NDQ0ODQ0NDQ0NDQ4NDQ0NqhsNGg0NGg4aGg0aDg0aDRoaDRsNGg0NGxoNDRoNGhsNGg0NGxoNGg0bDQ0aDRobDQ0aDRobDRoNGg0OGhoNGg0bDRoNGwwbDRoNDRobDQ0aGg0OGg0aDRsaDQ0aDhoNGg0aDhoNGg0aDRobDRoOGg0NGhoNGw0aDRsMGw0aDRoNGwwOAAOnDQ0NDQ4NDQ0NDQ0NDgwODQ0NDQ0NDQ6qGg0bDQ0aDRobDRoNDRsNGhoNGg4aDQ0aGwwNGw0aGw0aDQ0aGg0bDRoNDRoOGhoNDRoOGhoNGwwbDQ0aGw0aDRoNGg4aDRoNGw0NGhoODRoaDQ0aDRsNGg0bDRoNGhoNDhoNGhsMGw0NGhsMGw0aDRoNGw0aDQ0bGg0aDQ0aDhoaDQ0AA0kODQ0NDQ0ODQ0NDQ0NDQ0NDQ4NDQ0NDasaDRoNDhoNGhoNGw0NGg0bGg0aDRoNDRsaDQ0bDRoaDRsMDhoaDRoNGw0NGg0aGw0NGg0aGw0aDRoNDhoaDRoOGg0aDRoOGg0aDQ0bGg0NGhsNDRoNGg0bDRoNGg0bGg0NGg0bGg0aDQ0bGg0aDRsNGg0aDRsNDRoaDRsNDRoNGhsNDQAF3A0aDhoaDQ0AA0kODQ=='

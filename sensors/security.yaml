@@ -102,9 +102,10 @@
 
 #####################################################################
 ###  Breached email accounts
+### possibly broken in 0.42
 #####################################################################
 
-- platform: haveibeenpwned
-  email: 
-    - !secret haveibeenpwned_email1
-    - !secret haveibeenpwned_email2
+#- platform: haveibeenpwned
+#  email: 
+#    - !secret haveibeenpwned_email1
+#    - !secret haveibeenpwned_email2

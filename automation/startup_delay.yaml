@@ -5,8 +5,8 @@
 - alias: Startup Notification
   hide_entity: True
   trigger:
-    platform: event
-    event_type: homeassistant_start
+    platform: homeassistant
+    event: start
 
   action:
   - service: notify.pushbullet
@@ -23,32 +23,33 @@
 
 #####################################################################
 ### Delay automations that trigger on restart; i.e. presence-detection
+### presumably this is no longer needed if running 0.42
 #####################################################################
 
-- alias: delay on restart
-  hide_entity: True
-  trigger:
-    platform: event
-    event_type: homeassistant_start
-
-  action:
-    - service: automation.turn_off
-      entity_id: automation.unlock_door_for_megs
-    - service: automation.turn_off
-      entity_id: automation.turn_on_lights_upon_arrival
-    - service: automation.turn_off
-      entity_id: automation.away_mode
-    - service: automation.turn_off
-      entity_id: automation.heat_downstairs_upon_arrival
-
-    - delay:
-        minutes: 3
-
-    - service: automation.turn_on
-      entity_id: automation.unlock_door_for_megs
-    - service: automation.turn_on
-      entity_id: automation.turn_on_lights_upon_arrival
-    - service: automation.turn_on
-      entity_id: automation.away_mode
-    - service: automation.turn_on
-      entity_id: automation.heat_downstairs_upon_arrival
+#- alias: delay on restart
+#  hide_entity: True
+#  trigger:
+#    platform: event
+#    event_type: homeassistant_start
+#
+#  action:
+#    - service: automation.turn_off
+#      entity_id: automation.unlock_door_for_megs
+#    - service: automation.turn_off
+#      entity_id: automation.turn_on_lights_upon_arrival
+#    - service: automation.turn_off
+#      entity_id: automation.away_mode
+#    - service: automation.turn_off
+#      entity_id: automation.heat_downstairs_upon_arrival
+#
+#    - delay:
+#        minutes: 3
+#
+#    - service: automation.turn_on
+#      entity_id: automation.unlock_door_for_megs
+#    - service: automation.turn_on
+#      entity_id: automation.turn_on_lights_upon_arrival
+#    - service: automation.turn_on
+#      entity_id: automation.away_mode
+#    - service: automation.turn_on
+#      entity_id: automation.heat_downstairs_upon_arrival

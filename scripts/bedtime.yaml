@@ -8,21 +8,13 @@ bedtime:
 ### Lock the doors
   - service: lock.lock
 
-### Turn off the living room fan
-  - service: switch.turn_off
-    entity_id: switch.living_room_fan_off
-
-### Turn off the TV
-  - service: script.turn_on
-    entity_id: script.tv_power_off
-
 ### Turn off outlets and devices
   - service: homeassistant.turn_off
     entity_id: group.things
 
-### Turn off the interior lights minus staircase_lamp
+### Turn off the billiards room lights
   - service: switch.turn_off
-    entity_id: group.billiards_room
+    entity_id: switch.billiards_room
 
 ### Set master bedroom chandelier to dim
   - service: light.turn_on
@@ -30,14 +22,14 @@ bedtime:
     data:
       brightness: 50
 
-  - delay:
-      minutes: 5
-
-### Turn on the bed lights
+### Turn on the under-bed lights
   - service: light.turn_on
     data:
       entity_id: light.under_bed_lights
       rgb_color: [0,55,55]
+
+  - delay:
+      minutes: 5
 
 ### dim master bed chandelier
   - service: light.turn_on
@@ -50,11 +42,29 @@ bedtime:
 
 ### Turn off remaining accent lights
   - service: switch.turn_off
-    entity_id: switch.staircase_lamp
+    entity_id: group.accent_lights
+
+  - delay:
+      seconds: 3
+### Double-tap the accent lights
+  - service: switch.turn_off
+    entity_id: group.accent_lights
 
   - delay:
       minutes: 2
+### turn_off master bed chandelier
+  - service: light.turn_off
+    entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+    data:
+      transition: 60
 
   # turn off all remaining lights
   - service: homeassistant.turn_off
     entity_id: group.interior_lights
+
+  - delay:
+      minutes: 1.5
+
+### Turn off the under-bed lights
+  - service: light.turn_off
+    entity_id: light.under_bed_lights
