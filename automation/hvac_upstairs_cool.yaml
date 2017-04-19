@@ -1,43 +1,62 @@
 #####################################################################
-### AC - Upstairs Limit Reached
+### AC - Upstairs Upper Limit Reached
 #####################################################################
-
 - alias: cool upstairs if too hot
   trigger:
     - platform: numeric_state
       entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
       above: 87
 
-  # kick the AC on for 3 hours
   action:
-    - service: script.cool_upstairs_180min
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 77
+
+    - delay: 00:60:00
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 85
 
 #####################################################################
-### AC - Upstairs trigger on temperature
+### AC - Upstairs Comfort Zone Reached
 #####################################################################
-
-- alias: upstairs cooling triggered
+- alias: upstairs comfort zone reached
   trigger:
     - platform: numeric_state
       entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
-      above: 82.5
+      below: 81
 
   condition:
     - condition: state
       entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
       state: 'Cool'
 
-    - condition: state
-      entity_id: sensor.hvac_upstairs_climate
-      state: 'Hot'
+  action:
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 83
 
-    - condition: state
-      entity_id: script.cool_upstairs_180min
-      state: 'off'
+#####################################################################
+### AC - Upstairs Cooling Trigger
+#####################################################################
+- alias: upstairs cooling triggered
+  trigger:
+    - platform: state
+      entity_id: sensor.us_climate_control
+      to: 'Hot'
 
-    - condition: state
+    - platform: state
       entity_id: input_boolean.peak_hours
-      state: 'off'
+      to: 'off'
+
+  condition:
+    - condition: state
+      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
+      state: 'Cool'
 
     - condition: or
       conditions:
@@ -49,14 +68,15 @@
           entity_id: input_boolean.visitor_mode
           state: 'on'
 
-  # kick the AC on for 3 hours
   action:
-    - service: script.cool_upstairs_180min
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 82
 
 #####################################################################
 ### AC - Upstairs Weekday Mornings
 #####################################################################
-
 - alias: upstairs cooling weekday mornings
   trigger:
     - platform: time
@@ -66,14 +86,6 @@
     - condition: state
       entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
       state: 'Cool'
-
-    - condition: state
-      entity_id: sensor.hvac_upstairs_climate
-      state: 'Hot'
-
-    - condition: state
-      entity_id: script.cool_upstairs_180min
-      state: 'off'
 
     - condition: time
       weekday:
@@ -93,31 +105,24 @@
           entity_id: input_boolean.visitor_mode
           state: 'on'
 
-  # kick the AC on for 3 hours
   action:
-    - service: script.cool_upstairs_180min
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 82
 
 #####################################################################
 ### AC - Upstairs Weekday Nights
 #####################################################################
-
 - alias: upstairs cooling weekday nights
   trigger:
     - platform: time
-      after: '20:44:59'
+      after: '20:29:59'
 
   condition:
     - condition: state
       entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
       state: 'Cool'
-
-    - condition: state
-      entity_id: sensor.hvac_upstairs_climate
-      state: 'Hot'
-
-    - condition: state
-      entity_id: script.cool_upstairs_180min
-      state: 'off'
 
     - condition: time
       weekday:
@@ -137,15 +142,23 @@
           entity_id: input_boolean.visitor_mode
           state: 'on'
 
-  # kick the AC on for 3 hours
   action:
-    - service: script.cool_upstairs_180min
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 77
+
+    - delay: 02:00:00
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 82
 
 #####################################################################
 ### AC - Upstairs Weekends
 #####################################################################
-
-- alias: upstairs cooling weekday nights
+- alias: upstairs cooling weekend nights
   trigger:
     - platform: time
       after: '22:29:59'
@@ -154,14 +167,6 @@
     - condition: state
       entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
       state: 'Cool'
-
-    - condition: state
-      entity_id: sensor.hvac_upstairs_climate
-      state: 'Hot'
-
-    - condition: state
-      entity_id: script.cool_upstairs_180min
-      state: 'off'
 
     - condition: time
       weekday:
@@ -178,30 +183,15 @@
           entity_id: input_boolean.visitor_mode
           state: 'on'
 
-  # kick the AC on for 3 hours
   action:
-    - service: script.cool_upstairs_180min
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 77
 
-#####################################################################
-### AC - Upstairs Cool when Bedtime is triggered if not already running
-#####################################################################
+    - delay: 02:00:00
 
-- alias: cool upstairs bedtime
-  trigger:
-    - platform: state
-      entity_id: script.bedtime
-      from: 'off'
-      to: 'on'
-
-  condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
-      state: 'Cool'
-
-    - condition: numeric_state
-      entity_id: sensor.hvac_upstairs_ac_setpoint
-      above: 82
-
-  # kick the AC on for 3 hours
-  action:
-    - service: script.cool_upstairs_120min
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 82

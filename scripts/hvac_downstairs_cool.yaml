@@ -1,7 +1,6 @@
 #####################################################################
 ### Cool for 1 hour
 #####################################################################
-
 cool_downstairs_60min:
   sequence:
     - service: climate.set_operation_mode
@@ -9,16 +8,11 @@ cool_downstairs_60min:
       data:
         operation_mode: 'Cool'
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      data:
-        temperature: 76
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.downstairs_ac
+        value: 76
 
-#    - service: notify.pushbullet
-#      data:
-#        title: "HVAC Event"
-#        target: "device/Chrome"
-#        message: "Downstairs Cool_60 started at {{ states('sensor.date__time') }}"
 # notify iOS
     - service: notify.ios_iphwn666
       data:
@@ -27,15 +21,14 @@ cool_downstairs_60min:
 
     - delay: 01:00
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      data:
-        temperature: 85
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.downstairs_ac
+        value: 80
 
 #####################################################################
 ### Cool for 2 hours
 #####################################################################
-
 cool_downstairs_120min:
   sequence:
     - service: climate.set_operation_mode
@@ -43,16 +36,11 @@ cool_downstairs_120min:
       data:
         operation_mode: 'Cool'
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      data:
-        temperature: 76
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.downstairs_ac
+        value: 76
 
-#    - service: notify.pushbullet
-#      data:
-#        title: "HVAC Event"
-#        target: "device/Chrome"
-#        message: "Downstairs Cool_120 started at {{ states('sensor.date__time') }}"
 # notify iOS
     - service: notify.ios_iphwn666
       data:
@@ -61,15 +49,14 @@ cool_downstairs_120min:
 
     - delay: 02:00
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      data:
-        temperature: 85
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.downstairs_ac
+        value: 81
 
 #####################################################################
 ### Cool for 3 hours
 #####################################################################
-
 cool_downstairs_180min:
   sequence:
     - service: climate.set_operation_mode
@@ -77,16 +64,11 @@ cool_downstairs_180min:
       data:
         operation_mode: 'Cool'
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      data:
-        temperature: 76
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.downstairs_ac
+        value: 76
 
-#    - service: notify.pushbullet
-#      data:
-#        title: "HVAC Event"
-#        target: "device/Chrome"
-#        message: "Downstairs Cool_180 started at {{ states('sensor.date__time') }}"
 # notify iOS
     - service: notify.ios_iphwn666
       data:
@@ -95,7 +77,7 @@ cool_downstairs_180min:
 
     - delay: 03:00
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      data:
-        temperature: 85
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.downstairs_ac
+        value: 82

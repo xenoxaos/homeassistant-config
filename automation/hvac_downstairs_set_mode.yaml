@@ -1,0 +1,88 @@
+#####################################################################
+### HVAC DOWNSTAIRS; Turn off the system if the weather is awesome!
+#####################################################################
+- alias: hvac downstairs off if awesome weather
+  trigger:
+    - platform: state
+      entity_id: sensor.season
+      to: 'Awesome'
+
+    - platform: template
+      value_template: "{% if is_state('sensor.season', 'Awesome') %}true{% endif %}"
+
+  condition:
+    - condition: state
+      entity_id: sensor.ds_climate_control
+      state: 'Comfy'
+
+  action:
+    - service: climate.set_operation_mode
+      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
+      data:
+        operation_mode: 'Off'
+
+#####################################################################
+### HVAC DOWNSTAIRS; SET COOL
+#####################################################################
+- alias: hvac downstairs mode cool
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: sensor.season
+      to: 'Summer'
+
+    - platform: template
+      value_template: "{% if is_state('sensor.season', 'Summer') %}true{% endif %}"
+
+    - platform: state
+      entity_id: sensor.ds_climate_control
+      to: 'Hot'
+
+  action:
+    - service: group.set_visibility
+      entity_id: group.downstairs_cooling
+      data:
+        visible: True
+
+    - service: group.set_visibility
+      entity_id: group.downstairs_heating
+      data:
+        visible: False
+
+    - service: climate.set_operation_mode
+      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
+      data:
+        operation_mode: 'Cool'
+
+#####################################################################
+### HVAC DOWNSTAIRS; SET HEAT
+#####################################################################
+- alias: hvac downstairs mode heat
+  hide_entity: True
+  trigger:
+    - platform: state
+      entity_id: sensor.season
+      to: 'Winter'
+
+    - platform: template
+      value_template: "{% if is_state('sensor.season', 'Winter') %}true{% endif %}"
+
+    - platform: state
+      entity_id: sensor.ds_climate_control
+      to: 'Cold'
+
+  action:
+    - service: group.set_visibility
+      entity_id: group.downstairs_heating
+      data:
+        visible: True
+
+    - service: group.set_visibility
+      entity_id: group.downstairs_cooling
+      data:
+        visible: False
+
+    - service: climate.set_operation_mode
+      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
+      data:
+        operation_mode: 'Heat'

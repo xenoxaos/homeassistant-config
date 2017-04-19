@@ -1,7 +1,6 @@
 #####################################################################
 ### Downstairs Input slider temperature adjustment
 #####################################################################
-
 - alias: downstairs ac temperature adjustment
   trigger:
     platform: state
@@ -10,13 +9,12 @@
   action:
     - service: climate.set_temperature
       data_template:
-        entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_1
+        entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
         temperature: '{{ trigger.to_state.state | int }}'
 
 #####################################################################
 ### Upstairs Input slider temperature adjustment
 #####################################################################
-
 - alias: upstairs ac temperature adjustment
   trigger:
     platform: state
@@ -25,13 +23,12 @@
   action:
     - service: climate.set_temperature
       data_template:
-        entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_1
+        entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
         temperature: '{{ trigger.to_state.state | int }}'
 
 #####################################################################
 ### Downstairs - Change Input slider adjust to match temperature (downstairs ac)
 #####################################################################
-
 - alias: downstairs ac input slider
   hide_entity: True
   trigger:
@@ -47,7 +44,6 @@
 #####################################################################
 ### Upstairs - Change Input slider adjust to match temperature (upstairs ac)
 #####################################################################
-
 - alias: upstairs ac input slider
   hide_entity: True
   trigger:

@@ -7,11 +7,7 @@
   trigger:
     - platform: sun
       event: sunrise
-
-    - platform: numeric_state
-      entity_id: sun.sun
-      value_template: '{{ state.attributes.elevation }}'
-      above: 16
+      offset: '-00:15:00'
 
   action:
     - service: cover.open_cover
@@ -24,13 +20,8 @@
 - alias: kitchen shade lowered schedule
   hide_entity: True
   trigger:
-    - platform: numeric_state
-      entity_id: sun.sun
-      value_template: '{{ state.attributes.elevation }}'
-      above: 2.75
-
     - platform: time
-      after: '19:59:59'
+      after: '20:59:59'
 
   action:
     - service: cover.stop_cover
@@ -57,8 +48,9 @@
 - alias: master bath shade lowered schedule
   hide_entity: True
   trigger:
-    - platform: time
-      after: '18:59:59'
+    - platform: sun
+      event: sunset
+      offset: '00:15:00'
 
   action:
     - service: cover.close_cover

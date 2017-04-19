@@ -1,19 +1,22 @@
 #####################################################################
 ### HOME VIEW (DEFAULT)
 #####################################################################
-
 default_view:
   name: Home
   view: yes
+  icon: mdi:castle
   entities:
-    - group.device_status
+    - group.living_room
+    - group.entry_lighting
+    - group.living_room_fan
+    - group.kitchen
     - group.travel_megs
     - group.travel_rick
+    - group.device_status
 
 #####################################################################
 ### SECURITY VIEW
 #####################################################################
-
 security:
   name: Security
   view: yes
@@ -26,50 +29,43 @@ security:
     - group.breaches
 
 #####################################################################
-### INTERIOR DEVICES VIEW
+### DOWNSTAIRS VIEW
 #####################################################################
-
-interior:
-  name: Interior
+downstairs:
+  name: Downstairs
   view: yes
-  icon: mdi:home-variant
+  icon: mdi:arrow-down-bold-circle-outline
   entities:
-    - group.living_room
-    - group.living_room_fan
-    - group.kitchen
+    - group.downstairs_climate
+    - group.downstairs_cooling
+    - group.downstairs_heating
     - group.dining_room
-    - group.entry_lighting
     - group.accent_lights
     - group.office
-    - group.master_bedroom
-    - group.master_bedroom_fan
     - group.billiards_room
 
 #####################################################################
-### CLIMATE VIEW
+### UPSTAIRS VIEW
 #####################################################################
-
-climate:
-  name: Climate
+upstairs:
+  name: Upstairs
   view: yes
-  icon: mdi:air-conditioner
+  icon: mdi:arrow-up-bold-circle-outline
   entities:
-    - group.climate_status
-    - group.downstairs_climate
     - group.upstairs_climate
-    - group.downstairs_cooling
     - group.upstairs_cooling
     - group.upstairs_heating
-    - group.downstairs_heating
+    - group.master_bedroom
+    - group.master_bedroom_fan
+    - media_player.kodi_bedroom
 
 #####################################################################
 ### EXTERIOR DEVICES VIEW
 #####################################################################
-
 exterior:
   name: Exterior
   view: yes
-  icon: mdi:theme-light-dark
+  icon: mdi:tree
   entities:
     - group.porch
     - group.yard
@@ -78,7 +74,6 @@ exterior:
 #####################################################################
 ### WEATHER VIEW
 #####################################################################
-
 weather:
   name: Weather
   view: yes
@@ -86,6 +81,7 @@ weather:
   entities:
     - sun.sun
     - sensor.moon
+    - group.climate_status
     - group.weather_summary
     - group.weather_details
     - group.precipitation
@@ -93,7 +89,6 @@ weather:
 #####################################################################
 ### SCENES VIEW
 #####################################################################
-
 scenes:
   name: Scenes
   icon: mdi:creation
@@ -107,7 +102,6 @@ scenes:
 #####################################################################
 ### MEDIA VIEW
 #####################################################################
-
 media:
   name: Media
   view: yes
@@ -117,12 +111,10 @@ media:
     - group.directv
     - group.onkyo_amp
     - group.media_players
-    - group.downloads
 
 #####################################################################
 ### SYSTEM VIEW
 #####################################################################
-
 system:
   name: System
   icon: mdi:server
@@ -131,11 +123,11 @@ system:
     - updater.updater
     - group.ha_status
     - group.speedtest
+    - group.downloads
 
 #####################################################################
 ### TEST LAB VIEW
 #####################################################################
-
 lab:
   name: Lab
   view: yes
@@ -146,17 +138,18 @@ lab:
     - group.test_conditions
     - group.hvac_downstairs
     - group.hvac_upstairs
+    - input_boolean.holiday
 
 #####################################################################
 #####################################################################
 #################         GROUP CONFIGURATION           ###################
+#####################################################################
 #####################################################################
 #VVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVVV
 
 #####################################################################
 ### DEVICE TRACKERS GROUPS
 #####################################################################
-
 Family:
   icon: mdi:account-multiple
   control: hidden
@@ -183,7 +176,6 @@ Travel Megs:
 #####################################################################
 ### SCENES GROUPS
 #####################################################################
-
 Lighting Scenes:
   control: hidden
   entities:
@@ -199,7 +191,6 @@ Lighting Scenes:
 #####################################################################
 ### INTERIOR LIGHTS
 #####################################################################
-
 Interior Lights:
   - group.accent_lights
   - group.entry_lighting
@@ -223,7 +214,6 @@ Stateless Lights:
 #####################################################################
 ### EXTERIOR LIGHTS (excluding Porch Lights)
 #####################################################################
-
 Exterior Lights:
 # patio lights
   - switch.ge_12722_onoff_relay_switch_switch_7_0
@@ -233,7 +223,6 @@ Exterior Lights:
 #####################################################################
 ### THINGS (appliances, outlets, etc.) that are not lights
 #####################################################################
-
 Things:
   - switch.humidifier
 # Fountains
@@ -243,7 +232,6 @@ Things:
 #####################################################################
 ### ROOMS GROUPS
 #####################################################################
-
 Accent Lights:
   - switch.staircase_lamp
   - switch.wine_room_lamp
@@ -308,7 +296,6 @@ Billiards Room:
 #####################################################################
 ### SECURITY GROUPS
 #####################################################################
-
 Security Override:
   control: hidden
   entities:
@@ -358,7 +345,6 @@ Sensors:
 #####################################################################
 ### CLIMATE GROUPS
 #####################################################################
-
 Downstairs Climate Override:
   control: hidden
   entities:
@@ -384,48 +370,43 @@ Climate Status:
 
 Downstairs Climate:
   - sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-  - sensor.hvac_downstairs_climate
+  - sensor.ds_climate_control
   - sensor.hvac_downstairs_mode
   - sensor.hvac_downstairs_fan
 
 Upstairs Climate:
   - sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
-  - sensor.hvac_upstairs_climate
+  - sensor.us_climate_control
   - sensor.hvac_upstairs_mode
   - sensor.hvac_upstairs_fan
 
 Downstairs Heating:
   - sensor.hvac_downstairs_heat_setpoint
+  - input_slider.ds_low
   - input_slider.downstairs_heat
   - script.heat_downstairs_60min
 
 Upstairs Heating:
   - sensor.hvac_upstairs_heat_setpoint
+  - input_slider.us_low
   - input_slider.upstairs_heat
   - script.heat_upstairs_60min
 
 Downstairs Cooling:
   - sensor.hvac_downstairs_ac_setpoint
+  - input_slider.ds_high
   - input_slider.downstairs_ac
   - script.cool_downstairs_60min
 
 Upstairs Cooling:
   - sensor.hvac_upstairs_ac_setpoint
+  - input_slider.us_high
   - input_slider.upstairs_ac
   - script.cool_upstairs_60min
-
-#HVAC Downstairs:
-#  - climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-#  - climate.2gig_technologies_ct101_thermostat_iris_heating_1_18_1
-
-#HVAC Upstairs:
-#  - climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
-#  - climate.2gig_technologies_ct101_thermostat_iris_heating_1_24_1
 
 #####################################################################
 ### OUTDOOR GROUPS
 #####################################################################
-
 Yard:
   control: hidden
   entities:
@@ -452,8 +433,10 @@ Porch:
 #####################################################################
 ### WEATHER GROUPS
 #####################################################################
-
 Weather Summary:
+  - sensor.season
+  - input_slider.season_summer
+  - input_slider.season_winter
   - sensor.pws_weather
   - sensor.dark_sky_daily_summary
   - sensor.pws_temp_f
@@ -481,7 +464,6 @@ Weather Details:
 #####################################################################
 ### AUTOMATION GROUPS
 #####################################################################
-
 Light and Switch Override:
   control: hidden
   entities:
@@ -498,7 +480,6 @@ Light and Switch Override:
 #####################################################################
 ### MEDIA PLAYERS
 #####################################################################
-
 Living Room TV:
   control: hidden
   entities:
@@ -526,7 +507,6 @@ Onkyo Amp:
 
 Media Players:
   - media_player.kodi_office
-  - media_player.kodi_bedroom
   - media_player.apple_tv
 #  - media_player.rnmcast
 #  - media_player.directv
@@ -534,7 +514,6 @@ Media Players:
 #####################################################################
 ### SYSTEM GROUPS
 #####################################################################
-
 Speedtest:
   - sensor.speedtest_ping
   - sensor.speedtest_download
@@ -560,7 +539,6 @@ HA Status:
 #####################################################################
 ### TEST LAB GROUPS
 #####################################################################
-
 Triggers:
   control: hidden
   entities:

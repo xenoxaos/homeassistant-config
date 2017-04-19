@@ -39,7 +39,6 @@
       state: 'on'
 
     - condition: time
-      after: '04:00:00'
       before: '08:00:00'
 
   action:
@@ -75,7 +74,7 @@
     - platform: numeric_state
       entity_id: sun.sun
       value_template: '{{ state.attributes.elevation }}'
-      above: 11
+      above: 14
 
   condition:
     - condition: state
@@ -83,7 +82,6 @@
       state: 'on'
 
     - condition: time
-      after: '04:00:00'
       before: '08:00:00'
 
   action:
@@ -107,12 +105,7 @@
       state: 'below_horizon'
 
   action:
-# notify Chrome
-    - service: notify.pushbullet
-      data:
-        title: "Welcome Home"
-        target: "device/Chrome"
-        message: "Turning on some lights"
+
 # notify iOS
     - service: notify.ios_iphwn666
       data:

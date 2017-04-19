@@ -18,23 +18,16 @@
 
 - alias: downstairs heating triggered
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-      below: 69
+    - platform: state
+      entity_id: sensor.ds_climate_control
+      to: 'Cold'
 
-#    - platform: state
-#      entity_id: sensor.hvac_downstairs_climate
-#      to: 'Cold'
+### old value
+#    - platform: numeric_state
+#      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
+#      below: 69
 
   condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      state: 'Heat'
-
-    - condition: state
-      entity_id: script.heat_downstairs_180min
-      state: 'off'
-
     - condition: state
       entity_id: input_boolean.peak_hours
       state: 'off'
@@ -53,7 +46,7 @@
           entity_id: input_boolean.visitor_mode
           state: 'on'
 
-  # kick the heat on for 3 hours
+### kick the heat on for 3 hours
   action:
     - service: script.heat_downstairs_180min
 
@@ -68,16 +61,8 @@
 
   condition:
     - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      state: 'Heat'
-
-    - condition: state
-      entity_id: sensor.hvac_downstairs_climate
+      entity_id: sensor.ds_climate_control
       state: 'Cold'
-
-    - condition: state
-      entity_id: script.heat_downstairs_180min
-      state: 'off'
 
     - condition: time
       weekday:
@@ -99,6 +84,15 @@
 
   # kick the heat on for 3 hours
   action:
+### Reset script if already on; wait 10 seconds and then re-trigger
+    - service: script.turn_off
+      entity_id: script.heat_downstairs_180min
+
+    - service: script.turn_off
+      entity_id: script.heat_downstairs_120min
+
+    - delay: 10
+### kick the AC on for 3 hours
     - service: script.heat_downstairs_180min
 
 #####################################################################
@@ -112,16 +106,8 @@
 
   condition:
     - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      state: 'Heat'
-
-    - condition: state
-      entity_id: sensor.hvac_downstairs_climate
+      entity_id: sensor.ds_climate_control
       state: 'Cold'
-
-    - condition: state
-      entity_id: script.heat_downstairs_180min
-      state: 'off'
 
     - condition: time
       weekday:
@@ -143,6 +129,15 @@
 
   # kick the heat on for 3 hours
   action:
+### Reset script if already on; wait 10 seconds and then re-trigger
+    - service: script.turn_off
+      entity_id: script.heat_downstairs_180min
+
+    - service: script.turn_off
+      entity_id: script.heat_downstairs_120min
+
+    - delay: 10
+### kick the AC on for 3 hours
     - service: script.heat_downstairs_180min
 
 #####################################################################
@@ -191,7 +186,7 @@
 
   condition:
     - condition: state
-      entity_id: sensor.hvac_downstairs_climate
+      entity_id: sensor.ds_climate_control
       state: 'Cold'
 
     - condition: state

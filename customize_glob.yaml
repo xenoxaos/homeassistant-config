@@ -9,6 +9,9 @@
     haaska_hidden: true
     homebridge_hidden: true
 
+  "zone.*":
+    track_ios: true
+
   "input_boolean.condition*":
     haaska_hidden: true
     homebridge_hidden: true

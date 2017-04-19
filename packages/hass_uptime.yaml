@@ -1,3 +1,6 @@
+#####################################################################
+### Configure Sensors
+#####################################################################
 sensor:
   - platform: command_line
     name: HA Current Version
@@ -13,19 +16,29 @@ sensor:
 #        value_template: '{{ as_timestamp(states.automation.startup_notification.attributes.last_triggered) | timestamp_custom("%b %d %X") }}'
 #        friendly_name: HA Last Restart
 
+#####################################################################
+### Auto Notify when HA has an update available
+#####################################################################
 automation:
-  - alias: Update Available Notification
-    hide_entity: true
-    trigger:
-      platform: state
-      entity_id: updater.updater
+- alias: notify update
+  trigger:
+    platform: state
+    entity_id: updater.updater
 
-    action:
-      service: notify.ios_iphwn666
+  action:
+    - service: persistent_notification.create
       data:
-        title: "Update Available"
-        message: "An update for Home Assistant is available."
+        title:   "New Update"
+        message: "Update for Home Assistant is available."
 
+    - service: notify.ios_iphwn666
+      data:
+        title: "New Update"
+        message: "Update for Home Assistant is available."
+
+#####################################################################
+### Add sensors to groups
+#####################################################################
 group:
   hass:
     name: HomeAssistant

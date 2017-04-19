@@ -1,7 +1,6 @@
 #####################################################################
 ### Heat for 1 hour
 #####################################################################
-
 heat_upstairs_60min:
   sequence:
     - service: climate.set_operation_mode
@@ -9,16 +8,11 @@ heat_upstairs_60min:
       data:
         operation_mode: 'Heat'
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_24_1
-      data:
-        temperature: 86
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_heat
+        value: 86
 
-#    - service: notify.pushbullet
-#      data:
-#        title: "HVAC Event"
-#        target: "device/Chrome"
-#        message: "Upstairs Quick Heat started at {{ states('sensor.date__time') }}"
 # notify iOS
     - service: notify.ios_iphwn666
       data:
@@ -27,15 +21,14 @@ heat_upstairs_60min:
 
     - delay: 01:00
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_24_1
-      data:
-        temperature: 63
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_heat
+        value: 66
 
 #####################################################################
 ### Heat for 2 hours
 #####################################################################
-
 heat_upstairs_120min:
   sequence:
     - service: climate.set_operation_mode
@@ -43,33 +36,27 @@ heat_upstairs_120min:
       data:
         operation_mode: 'Heat'
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_24_1
-      data:
-        temperature: 84
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_heat
+        value: 85
 
-#    - service: notify.pushbullet
-#      data:
-#        title: "HVAC Event"
-#        target: "device/Chrome"
-#        message: "Upstairs Heat_120 started at {{ states('sensor.date__time') }}"
-## notify iOS
-#    - service: notify.ios_iphwn666
-#      data:
-#        title: "HVAC Event"
-#        message: "Upstairs Heat_120 started at {{ states('sensor.date__time') }}"
+# notify iOS
+    - service: notify.ios_iphwn666
+      data:
+        title: "HVAC Event"
+        message: "Upstairs Heat_120 started at {{ states('sensor.date__time') }}"
 
     - delay: 02:00
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_24_1
-      data:
-        temperature: 63
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_heat
+        value: 66
 
 #####################################################################
 ### Heat for 3 hours
 #####################################################################
-
 heat_upstairs_180min:
   sequence:
     - service: climate.set_operation_mode
@@ -77,25 +64,20 @@ heat_upstairs_180min:
       data:
         operation_mode: 'Heat'
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_24_1
-      data:
-        temperature: 86
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_heat
+        value: 86
 
-#    - service: notify.pushbullet
-#      data:
-#        title: "HVAC Event"
-#        target: "device/Chrome"
-#        message: "Upstairs Heat_180 started at {{ states('sensor.date__time') }}"
-## notify iOS
-#    - service: notify.ios_iphwn666
-#      data:
-#        title: "HVAC Event"
-#        message: "Upstairs Heat_180 started at {{ states('sensor.date__time') }}"
+# notify iOS
+    - service: notify.ios_iphwn666
+      data:
+        title: "HVAC Event"
+        message: "Upstairs Heat_180 started at {{ states('sensor.date__time') }}"
 
     - delay: 03:00
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_24_1
-      data:
-        temperature: 63
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_heat
+        value: 65

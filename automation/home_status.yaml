@@ -1,7 +1,6 @@
 #####################################################################
 ### Megs Away
 #####################################################################
-
 - alias: 'set megs away'
   trigger:
 ## iCloud tracker
@@ -12,12 +11,6 @@
       for:
         minutes: 5
 
-## Owntracks tracker
-    - platform: state
-      entity_id: device_tracker.megs_iphone7
-      from: 'home'
-      to: 'not_home'
-
   action:
     - service: homeassistant.turn_off
       entity_id: input_boolean.megs_home
@@ -25,16 +18,10 @@
 #####################################################################
 ### Megs home
 #####################################################################
-
 - alias: 'set megs home'
   trigger:
     - platform: state
       entity_id: device_tracker.iphone7
-      from: 'not_home'
-      to: 'home'
-
-    - platform: state
-      entity_id: device_tracker.megs_iphone7
       from: 'not_home'
       to: 'home'
 
@@ -45,7 +32,6 @@
 #####################################################################
 ### Rick Away
 #####################################################################
-
 - alias: 'set rick away'
   trigger:
     - platform: state
@@ -62,7 +48,6 @@
 #####################################################################
 ### Rick home
 #####################################################################
-
 - alias: 'set rick home'
   trigger:
     - platform: state

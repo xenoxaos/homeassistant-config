@@ -1,8 +1,7 @@
 #####################################################################
-### HEAT - Turn down the heat if nobody is home or during peak hours
+### Set Temperature Thresholds on peak hours or away
 #####################################################################
-
-- alias: heat global peak or away
+- alias: set temperature thresholds on peak or away
   trigger:
     - platform: state
       entity_id: group.family
@@ -18,58 +17,83 @@
 
   condition:
     - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      state: 'Heat'
-
-    - condition: state
       entity_id: input_boolean.visitor_mode
       state: 'off'
 
   action:
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_18_1
-      data:
-        temperature: 62
+## Set Summer and Winter thresholds
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.season_summer
+        value: 86
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_24_1
-      data:
-        temperature: 62
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.season_winter
+        value: 50
+
+## Set Temperature thresholds
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.ds_high
+        value: 83
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.us_high
+        value: 87
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.ds_low
+        value: 66
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.us_low
+        value: 66
 
 #####################################################################
-### AC - Turn up the AC if nobody is home or during peak hours
+### Set Temperature Thresholds upon return
 #####################################################################
-
-- alias: ac global peak or away
+- alias: set temperature thresholds on arrival
   trigger:
-    - platform: state
-      entity_id: group.family
-      from: 'on'
-      to: 'off'
-      for:
-        minutes: 15
-
-    - platform: state
-      entity_id: input_boolean.peak_hours
-      from: 'off'
-      to: 'on'
-
-  condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      state: 'Cool'
-
-    - condition: state
-      entity_id: input_boolean.visitor_mode
-      state: 'off'
+    platform: state
+    entity_id: group.family
+    from: 'off'
+    to: 'on'
+    for:
+      minutes: 2
 
   action:
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_1
-      data:
-        temperature: 85
+## Set Summer and Winter thresholds
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.season_summer
+        value: 83
 
-    - service: climate.set_temperature
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
-      data:
-        temperature: 87
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.season_winter
+        value: 50
+
+## Set Temperature thresholds
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.ds_high
+        value: 79
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.us_high
+        value: 83
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.ds_low
+        value: 69
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.us_low
+        value: 68

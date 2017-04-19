@@ -133,7 +133,10 @@
         entity_id: input_select.rgb_light
         option: "Violet"
 
-####################################################
+#####################################################################
+### Condition Boolean OFF
+#####################################################################
+
 - alias: test input_boolean off
   trigger:
     - platform: state

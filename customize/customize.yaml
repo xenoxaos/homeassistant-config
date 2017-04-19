@@ -58,23 +58,17 @@
 
   group.climate_status:
     order: 1
-
   group.upstairs_climate:
-    order: 6
-
+    order: 1
   group.downstairs_climate:
-    order: 7
-
-  group.upstairs_heating:
-    order: 4
-
+    order: 1
   group.upstairs_cooling:
     order: 2
-
-  group.downstairs_heating:
-    order: 5
-
+  group.upstairs_heating:
+    order: 3
   group.downstairs_cooling:
+    order: 2
+  group.downstairs_heating:
     order: 3
 
 #####################################################################
@@ -678,6 +672,9 @@
     icon: mdi:email-secure
   sensor.breaches_rixjunkcoxnet:
     icon: mdi:email-secure
+
+  sensor.crime:
+    icon: mdi:bomb
 
 #####################################################################
 ### SENSORS (climate)
