@@ -12,13 +12,6 @@ unlock_megs:
     data:
       entity_id: script.away
 
-## and notify Rick that Megs is home
-  - service: notify.pushbullet
-    data:
-      title: "Arrived"
-      target: "device/Chrome"
-      message: "Megs is home!"
-
 ## notify iOS
   - service: notify.ios_iphwn666
     data:

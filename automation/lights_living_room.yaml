@@ -31,7 +31,7 @@
     - platform: numeric_state
       entity_id: sun.sun
       value_template: '{{ state.attributes.elevation }}'
-      above: 4.25
+      above: 4.5
 
   condition:
     - condition: state
@@ -71,18 +71,18 @@
 - alias: turn off lights once sun is up high enough
   hide_entity: True
   trigger:
-    - platform: numeric_state
-      entity_id: sun.sun
-      value_template: '{{ state.attributes.elevation }}'
-      above: 14
+    - platform: time
+      after: '07:15:00'
 
   condition:
     - condition: state
       entity_id: group.all_lights
       state: 'on'
 
-    - condition: time
-      before: '08:00:00'
+    - condition: numeric_state
+      entity_id: sun.sun
+      value_template: '{{ state.attributes.elevation }}'
+      above: 12
 
   action:
     - service: homeassistant.turn_off

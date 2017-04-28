@@ -83,8 +83,8 @@ us_high:
 #####################################################################
 season_summer:
   name: "Summer"
-  initial: 84
-  min: 70
+#  initial: 84
+  min: 60
   max: 100
   step: 1
 
@@ -93,7 +93,7 @@ season_summer:
 #####################################################################
 season_winter:
   name: "Winter"
-  initial: 50
+#  initial: 50
   min: 40
-  max: 70
+  max: 80
   step: 1

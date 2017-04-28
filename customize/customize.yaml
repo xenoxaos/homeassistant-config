@@ -283,6 +283,10 @@
   climate.2gig_technologies_ct101_thermostat_iris_heating_1_18_1:
     friendly_name: "Downstairs Heating Setpoint"
 
+  sensor.hvac_downstairs_op_state:
+    icon: mdi:air-conditioner
+    haaska_hidden: true
+
   sensor.hvac_downstairs_fan:
     icon: mdi:fan
     haaska_hidden: true
@@ -304,6 +308,10 @@
 
   climate.2gig_technologies_ct101_thermostat_iris_heating_1_24_1:
     friendly_name: "Upstairs Heating Setpoint"
+
+  sensor.hvac_upstairs_op_state:
+    icon: mdi:air-conditioner
+    haaska_hidden: true
 
   sensor.hvac_upstairs_fan:
     icon: mdi:fan
@@ -634,9 +642,9 @@
     icon: mdi:battery-charging
 
 ## Phone Batteries
-  sensor.iphone_battery_rick:
+  sensor.iphwn666_battery_level:
     icon: mdi:cellphone-iphone
-  sensor.iphone_battery_megs:
+  sensor.iphone7_battery_level:
     icon: mdi:cellphone-iphone
 
 ## Fibaro Motion

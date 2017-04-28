@@ -11,7 +11,7 @@ cool_downstairs_60min:
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.downstairs_ac
-        value: 76
+        value: 75
 
 # notify iOS
     - service: notify.ios_iphwn666
@@ -24,7 +24,7 @@ cool_downstairs_60min:
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.downstairs_ac
-        value: 80
+        value: 79
 
 #####################################################################
 ### Cool for 2 hours
@@ -52,7 +52,7 @@ cool_downstairs_120min:
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.downstairs_ac
-        value: 81
+        value: 79
 
 #####################################################################
 ### Cool for 3 hours
@@ -80,4 +80,4 @@ cool_downstairs_180min:
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.downstairs_ac
-        value: 82
+        value: 79

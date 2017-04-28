@@ -1,25 +1,50 @@
 #####################################################################
-### HVAC UPSTAIRS; SET OFF; Turn off the system if the weather is awesome!
+### HVAC UPSTAIRS; SET AWESOME
 #####################################################################
-- alias: hvac upstairs off if awesome weather
+- alias: hvac upstairs awesome
   trigger:
     - platform: state
       entity_id: sensor.season
       to: 'Awesome'
 
-    - platform: template
-      value_template: "{% if is_state('sensor.season', 'Awesome') %}true{% endif %}"
-
   condition:
-    - condition: state
-      entity_id: sensor.us_climate_control
-      state: 'Comfy'
+    - condition: numeric_state
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
+      below: 81
+
+    - condition: numeric_state
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
+      above: 66
 
   action:
-    - service: climate.set_operation_mode
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
+    - service: script.turn_off
+      entity_id:
+        - script.cool_upstairs_60min
+        - script.cool_upstairs_120min
+        - script.cool_upstairs_180min
+        - script.heat_upstairs_60min
+        - script.heat_upstairs_120min
+        - script.heat_upstairs_180min
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 81
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_heat
+        value: 67
+
+    - service: group.set_visibility
+      entity_id: group.upstairs_cooling
       data:
-        operation_mode: 'Off'
+        visible: True
+
+    - service: group.set_visibility
+      entity_id: group.upstairs_heating
+      data:
+        visible: True
 
 #####################################################################
 ### HVAC UPSTAIRS; SET COOL
@@ -33,10 +58,6 @@
 
     - platform: template
       value_template: "{% if is_state('sensor.season', 'Summer') %}true{% endif %}"
-
-    - platform: state
-      entity_id: sensor.us_climate_control
-      to: 'Hot'
 
   action:
     - service: group.set_visibility
@@ -66,10 +87,6 @@
 
     - platform: template
       value_template: "{% if is_state('sensor.season', 'Winter') %}true{% endif %}"
-
-    - platform: state
-      entity_id: sensor.us_climate_control
-      to: 'Cold'
 
   action:
     - service: group.set_visibility

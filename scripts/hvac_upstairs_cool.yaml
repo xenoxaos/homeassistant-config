@@ -4,7 +4,6 @@
 
 cool_upstairs_60min:
   sequence:
-
     - service: climate.set_operation_mode
       entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
       data:
@@ -13,20 +12,20 @@ cool_upstairs_60min:
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.upstairs_ac
-        value: 76
+        value: 75
 
 # notify iOS
     - service: notify.ios_iphwn666
       data:
         title: "HVAC Event"
-        message: "Upstairs Cool_120 started at {{ states('sensor.date__time') }}"
+        message: "Cooling Upstairs for 1 hour starting at {{ states('sensor.date__time') }}"
 
     - delay: 01:00
 
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.upstairs_ac
-        value: 85
+        value: 82
 
 #####################################################################
 ### Cool for 2 hours
@@ -34,7 +33,6 @@ cool_upstairs_60min:
 
 cool_upstairs_120min:
   sequence:
-
     - service: climate.set_operation_mode
       entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
       data:
@@ -49,14 +47,14 @@ cool_upstairs_120min:
     - service: notify.ios_iphwn666
       data:
         title: "HVAC Event"
-        message: "Upstairs Cool_120 started at {{ states('sensor.date__time') }}"
+        message: "Cooling Upstairs for 2 hours starting at {{ states('sensor.date__time') }}"
 
     - delay: 02:00
 
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.upstairs_ac
-        value: 85
+        value: 82
 
 #####################################################################
 ### Cool for 3 hours
@@ -64,7 +62,6 @@ cool_upstairs_120min:
 
 cool_upstairs_180min:
   sequence:
-
     - service: climate.set_operation_mode
       entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
       data:
@@ -79,11 +76,11 @@ cool_upstairs_180min:
     - service: notify.ios_iphwn666
       data:
         title: "HVAC Event"
-        message: "Upstairs Cool_180 started at {{ states('sensor.date__time') }}"
+        message: "Cooling Upstairs for 3 hours starting at {{ states('sensor.date__time') }}"
 
     - delay: 03:00
 
     - service: climate.set_temperature
       entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
       data:
-        temperature: 85
+        temperature: 82

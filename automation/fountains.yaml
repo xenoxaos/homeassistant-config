@@ -16,11 +16,7 @@
   condition:
     - condition: numeric_state
       entity_id: sensor.pws_wind_mph
-      below: 8
-
-    - condition: numeric_state
-      entity_id: sensor.dark_sky_precip_probability
-      below: 70
+      below: 10
 
     - condition: state
       entity_id: input_boolean.rain

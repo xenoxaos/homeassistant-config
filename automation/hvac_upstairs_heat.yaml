@@ -1,224 +1,73 @@
 #####################################################################
-### HEAT - Upstairs Limit Reached
+### HEAT - Upstairs Heating Schedule
 #####################################################################
-
-- alias: heat upstairs if too cold
+- alias: upstairs heating schedule
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
-      below: 66
+    - platform: time
+      after: '03:59:59'
 
-  # kick the heat on for 3 hours
+  condition:
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: group.family
+          state: 'on'
+
+        - condition: state
+          entity_id: input_boolean.visitor_mode
+          state: 'on'
+
   action:
-    - service: script.heat_upstairs_180min
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_heat
+        value: 69
 
 #####################################################################
-### HEAT - Upstairs trigger on temperature
+### HEAT - Upstairs - Off Peak
 #####################################################################
-
-- alias: upstairs heating triggered
+- alias: upstairs heating off peak
   trigger:
-    - platform: numeric_state
+    - platform: state
+      entity_id: input_boolean.peak_hours
+      from: 'on'
+      to: 'off'
+
+  condition:
+    - condition: numeric_state
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
+      below: 68
+
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: group.family
+          state: 'on'
+
+        - condition: state
+          entity_id: input_boolean.visitor_mode
+          state: 'on'
+
+  action:
+    - service: script.heat_upstairs_60min
+
+#####################################################################
+### HEAT - Upstairs Bedtime
+#####################################################################
+- alias: upstairs heating bedtime
+  trigger:
+    - platform: state
+      entity_id: script.bedtime
+      to: 'on'
+
+  condition:
+    - condition: numeric_state
       entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
       below: 69
 
-  condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
-      state: 'Heat'
+    - condition: numeric_state
+      entity_id: sensor.pws_temp_f
+      below: 57
 
-    - condition: state
-      entity_id: sensor.hvac_upstairs_climate
-      state: 'Cold'
-
-    - condition: state
-      entity_id: script.heat_upstairs_180min
-      state: 'off'
-
-    - condition: state
-      entity_id: input_boolean.peak_hours
-      state: 'off'
-
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'on'
-
-        - condition: state
-          entity_id: input_boolean.visitor_mode
-          state: 'on'
-
-  # kick the heat on for 3 hours
   action:
-    - service: script.heat_upstairs_180min
-
-#####################################################################
-### HEAT - Upstairs Weekday Mornings
-#####################################################################
-
-- alias: upstairs heating weekday mornings
-  trigger:
-    - platform: time
-      after: '03:44:59'
-
-  condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
-      state: 'Heat'
-
-    - condition: state
-      entity_id: sensor.hvac_upstairs_climate
-      state: 'Cold'
-
-    - condition: state
-      entity_id: script.heat_upstairs_180min
-      state: 'off'
-
-    - condition: time
-      weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'on'
-
-        - condition: state
-          entity_id: input_boolean.visitor_mode
-          state: 'on'
-
-  # kick the heat on for 3 hours
-  action:
-    - service: script.heat_upstairs_180min
-
-#####################################################################
-### HEAT - Upstairs Weekday Nights
-#####################################################################
-
-- alias: upstairs heating weekday night
-  trigger:
-    - platform: time
-      after: '20:44:59'
-
-  condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
-      state: 'Heat'
-
-    - condition: state
-      entity_id: sensor.hvac_upstairs_climate
-      state: 'Cold'
-
-    - condition: state
-      entity_id: script.heat_upstairs_180min
-      state: 'off'
-
-    - condition: time
-      weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - sun
-
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'on'
-
-        - condition: state
-          entity_id: input_boolean.visitor_mode
-          state: 'on'
-
-# kick the heat on for 3 hours
-  action:
-    - service: script.heat_upstairs_180min
-
-#####################################################################
-### HEAT - Upstairs Weekends
-#####################################################################
-
-- alias: upstairs heating weekend nights
-  trigger:
-    - platform: time
-      after: '21:59:59'
-
-  condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
-      state: 'Heat'
-
-    - condition: state
-      entity_id: sensor.hvac_upstairs_climate
-      state: 'Cold'
-
-    - condition: state
-      entity_id: script.heat_upstairs_180min
-      state: 'off'
-
-    - condition: time
-      weekday:
-        - fri
-        - sat
-
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'on'
-
-        - condition: state
-          entity_id: input_boolean.visitor_mode
-          state: 'on'
-
-  # kick the heat on for 3 hours
-  action:
-    - service: script.heat_upstairs_180min
-
-#####################################################################
-### HEAT - Upstairs Weekend Mornings
-#####################################################################
-
-- alias: upstairs heating weekend mornings
-  trigger:
-    - platform: time
-      after: '06:59:59'
-
-  condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
-      state: 'Heat'
-
-    - condition: state
-      entity_id: sensor.hvac_upstairs_climate
-      state: 'Cold'
-
-    - condition: state
-      entity_id: script.heat_upstairs_180min
-      state: 'off'
-
-    - condition: time
-      weekday:
-        - sat
-        - sun
-
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'on'
-
-        - condition: state
-          entity_id: input_boolean.visitor_mode
-          state: 'on'
-
-  # kick the heat on for 3 hours
-  action:
-    - service: script.heat_upstairs_180min
+    - service: script.heat_upstairs_60min

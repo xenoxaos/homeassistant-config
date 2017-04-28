@@ -1,76 +1,42 @@
 #####################################################################
-### HEAT - Downstairs Limit Reached
+### HEAT - Downstairs Heating Schedule
 #####################################################################
-
-- alias: heat downstairs if too cold
+- alias: downstairs heating schedule
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-      below: 66.5
-
-  # kick the heat on for 3 hours
-  action:
-    - service: script.heat_downstairs_180min
-
-#####################################################################
-### HEAT - Downstairs trigger on temperature
-#####################################################################
-
-- alias: downstairs heating triggered
-  trigger:
-    - platform: state
-      entity_id: sensor.ds_climate_control
-      to: 'Cold'
-
-### old value
-#    - platform: numeric_state
-#      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-#      below: 69
+    - platform: time
+      after: '05:59:59'
 
   condition:
-    - condition: state
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: group.family
+          state: 'on'
+
+        - condition: state
+          entity_id: input_boolean.visitor_mode
+          state: 'on'
+
+  action:
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.downstairs_heat
+        value: 71
+
+#####################################################################
+### HEAT - Downstairs - Off Peak
+#####################################################################
+- alias: downstairs heating off peak
+  trigger:
+    - platform: state
       entity_id: input_boolean.peak_hours
-      state: 'off'
-
-    - condition: time
-      after: '08:29:59'
-      before: '22:00:00'
-
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'on'
-
-        - condition: state
-          entity_id: input_boolean.visitor_mode
-          state: 'on'
-
-### kick the heat on for 3 hours
-  action:
-    - service: script.heat_downstairs_180min
-
-#####################################################################
-### HEAT - downstairs weekday mornings
-#####################################################################
-
-- alias: heat downstairs weekday mornings
-  trigger:
-    - platform: time
-      after: '04:14:59'
+      from: 'on'
+      to: 'off'
 
   condition:
-    - condition: state
-      entity_id: sensor.ds_climate_control
-      state: 'Cold'
-
-    - condition: time
-      weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
+    - condition: numeric_state
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
+      below: 70
 
     - condition: or
       conditions:
@@ -82,77 +48,21 @@
           entity_id: input_boolean.visitor_mode
           state: 'on'
 
-  # kick the heat on for 3 hours
   action:
-### Reset script if already on; wait 10 seconds and then re-trigger
-    - service: script.turn_off
-      entity_id: script.heat_downstairs_180min
-
-    - service: script.turn_off
-      entity_id: script.heat_downstairs_120min
-
-    - delay: 10
-### kick the AC on for 3 hours
-    - service: script.heat_downstairs_180min
+    - service: script.heat_downstairs_60min
 
 #####################################################################
-### HEAT - downstairs evenings
+### HEAT - Lower temp at bedtime or after hours
 #####################################################################
-
-- alias: heat downstairs evenings
-  trigger:
-    - platform: time
-      after: '17:59:59'
-
-  condition:
-    - condition: state
-      entity_id: sensor.ds_climate_control
-      state: 'Cold'
-
-    - condition: time
-      weekday:
-        - mon
-        - tue
-        - wed
-        - thu
-        - fri
-
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'on'
-
-        - condition: state
-          entity_id: input_boolean.visitor_mode
-          state: 'on'
-
-  # kick the heat on for 3 hours
-  action:
-### Reset script if already on; wait 10 seconds and then re-trigger
-    - service: script.turn_off
-      entity_id: script.heat_downstairs_180min
-
-    - service: script.turn_off
-      entity_id: script.heat_downstairs_120min
-
-    - delay: 10
-### kick the AC on for 3 hours
-    - service: script.heat_downstairs_180min
-
-#####################################################################
-### HEAT - Turn down the heat at bedtime
-#####################################################################
-
-- alias: heat downstairs lowered at bedtime
+- alias: heat downstairs bedtime
   trigger:
     - platform: state
-      entity_id: input_boolean.after_hours
+      entity_id: script.bedtime
       from: 'off'
       to: 'on'
 
     - platform: state
-      entity_id: script.bedtime
+      entity_id: input_boolean.after_hours
       from: 'off'
       to: 'on'
 
@@ -162,36 +72,7 @@
       state: 'Heat'
 
   action:
-    - service: script.turn_off
-      data:
-        entity_id: script.heat_downstairs_180min
-
-    - service: climate.set_temperature
-      data:
-        entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_18_1
-        temperature: 62
-
-#####################################################################
-### HEAT - Raise the heat when we return
-#####################################################################
-
-- alias: heat downstairs upon arrival
-  trigger:
-    - platform: state
-      entity_id: group.family
-      from: 'off'
-      to: 'on'
-      for:
-        minutes: 2
-
-  condition:
-    - condition: state
-      entity_id: sensor.ds_climate_control
-      state: 'Cold'
-
-    - condition: state
-      entity_id: input_boolean.peak_hours
-      state: 'off'
-
-  action:
-    - service: script.heat_downstairs_60min
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.downstairs_heat
+        value: 66

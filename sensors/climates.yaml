@@ -8,8 +8,8 @@
       friendly_name: "Seasonal Condition"
       value_template: >-
         {% set temperature = states('sensor.pws_temp_f')|float(none) %}
-        {% set winter_temp = states.input_slider.season_winter.state|default(64)|float %}
-        {% set summer_temp = states.input_slider.season_summer.state|default(84)|float %}
+        {% set winter_temp = states.input_slider.season_winter.state|default(62)|float %}
+        {% set summer_temp = states.input_slider.season_summer.state|default(74)|float %}
         {% if temperature is none %}
           {{ states('sensor.pws_temp_f') }}
         {% elif temperature < winter_temp %}
@@ -31,7 +31,7 @@
       value_template: >-
         {% set temperature = states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1')|float(none) %}
         {% set ds_low = states.input_slider.ds_low.state|default(69)|float %}
-        {% set ds_high = states.input_slider.ds_high.state|default(80)|float %}
+        {% set ds_high = states.input_slider.ds_high.state|default(79)|float %}
         {% if temperature is none %}
           {{ states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1') }}
         {% elif temperature < ds_low %}
@@ -53,7 +53,7 @@
       value_template: >-
         {% set temperature = states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1')|float(none) %}
         {% set us_low = states.input_slider.us_low.state|default(68)|float %}
-        {% set us_high = states.input_slider.us_high.state|default(84)|float %}
+        {% set us_high = states.input_slider.us_high.state|default(81)|float %}
         {% if temperature is none %}
           {{ states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1') }}
         {% elif temperature < us_low %}

@@ -1,7 +1,7 @@
 #####################################################################
-### Set Temperature Thresholds on peak hours or away
+### Set Temperature Thresholds on away
 #####################################################################
-- alias: set temperature thresholds on peak or away
+- alias: set temperature thresholds on away
   trigger:
     - platform: state
       entity_id: group.family
@@ -10,47 +10,36 @@
       for:
         minutes: 15
 
-    - platform: state
-      entity_id: input_boolean.peak_hours
-      from: 'off'
-      to: 'on'
-
   condition:
     - condition: state
       entity_id: input_boolean.visitor_mode
       state: 'off'
 
   action:
-## Set Summer and Winter thresholds
+########################
+### Set Downstairs Values
+########################
     - service: input_slider.select_value
       data_template:
-        entity_id: input_slider.season_summer
-        value: 86
+        entity_id: input_slider.downstairs_ac
+        value: 82
 
     - service: input_slider.select_value
       data_template:
-        entity_id: input_slider.season_winter
-        value: 50
+        entity_id: input_slider.downstairs_heat
+        value: 66
 
-## Set Temperature thresholds
+########################
+### Set Upstairs Values
+########################
     - service: input_slider.select_value
       data_template:
-        entity_id: input_slider.ds_high
-        value: 83
-
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.us_high
+        entity_id: input_slider.upstairs_ac
         value: 87
 
     - service: input_slider.select_value
       data_template:
-        entity_id: input_slider.ds_low
-        value: 66
-
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.us_low
+        entity_id: input_slider.upstairs_heat
         value: 66
 
 #####################################################################
@@ -66,34 +55,65 @@
       minutes: 2
 
   action:
-## Set Summer and Winter thresholds
+########################
+### Set Downstairs Values
+########################
     - service: input_slider.select_value
       data_template:
-        entity_id: input_slider.season_summer
-        value: 83
+        entity_id: input_slider.downstairs_ac
+        value: 78
 
     - service: input_slider.select_value
       data_template:
-        entity_id: input_slider.season_winter
-        value: 50
-
-## Set Temperature thresholds
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.ds_high
-        value: 79
-
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.us_high
-        value: 83
-
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.ds_low
+        entity_id: input_slider.downstairs_heat
         value: 69
 
+########################
+### Set Upstairs Values
+########################
     - service: input_slider.select_value
       data_template:
-        entity_id: input_slider.us_low
+        entity_id: input_slider.upstairs_ac
+        value: 82
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_heat
         value: 68
+
+#####################################################################
+### Set Temperature Thresholds on peak hours
+#####################################################################
+- alias: set temperature thresholds on peak hours
+  trigger:
+    - platform: state
+      entity_id: input_boolean.peak_hours
+      from: 'off'
+      to: 'on'
+
+  action:
+########################
+### Set Downstairs Values
+########################
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.downstairs_ac
+        value: 81
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.downstairs_heat
+        value: 67
+
+########################
+### Set Upstairs Values
+########################
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 86
+
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_heat
+        value: 67

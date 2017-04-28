@@ -158,8 +158,8 @@ Family:
   - input_boolean.rick_home
 
 Device Status:
-  - sensor.iphone_battery_rick
-  - sensor.iphone_battery_megs
+  - sensor.iphwn666_battery_level
+  - sensor.iphone7_battery_level
 
 Travel Rick:
   - device_tracker.iphwn666
@@ -370,14 +370,16 @@ Climate Status:
 
 Downstairs Climate:
   - sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-  - sensor.ds_climate_control
+  - sensor.hvac_downstairs_op_state
   - sensor.hvac_downstairs_mode
+  - sensor.ds_climate_control
   - sensor.hvac_downstairs_fan
 
 Upstairs Climate:
   - sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
-  - sensor.us_climate_control
+  - sensor.hvac_upstairs_op_state
   - sensor.hvac_upstairs_mode
+  - sensor.us_climate_control
   - sensor.hvac_upstairs_fan
 
 Downstairs Heating:

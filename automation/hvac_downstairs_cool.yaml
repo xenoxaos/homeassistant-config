@@ -1,66 +1,42 @@
 #####################################################################
-### AC - Downstairs Upper Limit Reached
+### AC - Downstairs Cooling Schedule
 #####################################################################
-- alias: cool downstairs if too hot
+- alias: downstairs cooling schedule
   trigger:
-    - platform: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-      above: 83
-
-  action:
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.downstairs_ac
-        value: 77
-
-    - delay: 00:60:00
-
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.downstairs_ac
-        value: 80
-
-#####################################################################
-### AC - Downstairs Comfort Zone Reached
-#####################################################################
-- alias: downstairs comfort zone reached
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-      below: 78
+    - platform: time
+      after: '05:59:59'
 
   condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      state: 'Cool'
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: group.family
+          state: 'on'
+
+        - condition: state
+          entity_id: input_boolean.visitor_mode
+          state: 'on'
 
   action:
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.downstairs_ac
-        value: 80
+        value: 78
 
 #####################################################################
-### AC - Downstairs Cooling Trigger
+### AC - Downstairs Cooling - Off Peak
 #####################################################################
-- alias: downstairs cooling triggered
+- alias: downstairs cooling off peak
   trigger:
     - platform: state
-      entity_id: sensor.ds_climate_control
-      to: 'Hot'
-
-    - platform: state
       entity_id: input_boolean.peak_hours
+      from: 'on'
       to: 'off'
 
   condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      state: 'Cool'
-
-    - condition: state
-      entity_id: input_boolean.after_hours
-      state: 'off'
+    - condition: numeric_state
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
+      above: 78
 
     - condition: or
       conditions:
@@ -73,84 +49,7 @@
           state: 'on'
 
   action:
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.downstairs_ac
-        value: 76
-
-#####################################################################
-### AC - Downstairs Weekday mornings
-#####################################################################
-- alias: downstairs cooling weekday mornings
-  trigger:
-    - platform: time
-      after: '05:14:59'
-
-  condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      state: 'Cool'
-
-    - condition: time
-      weekday:
-      - mon
-      - tue
-      - wed
-      - thu
-      - fri
-
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'on'
-
-        - condition: state
-          entity_id: input_boolean.visitor_mode
-          state: 'on'
-
-  action:
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.downstairs_ac
-        value: 77
-
-#####################################################################
-### AC - Downstairs weekends
-#####################################################################
-- alias: downstairs cooling weekends
-  trigger:
-    - platform: time
-      after: '07:59:59'
-
-    - platform: time
-      after: '12:59:59'
-
-  condition:
-    - condition: state
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
-      state: 'Cool'
-
-    - condition: time
-      weekday:
-      - sat
-      - sun
-
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: group.family
-          state: 'on'
-
-        - condition: state
-          entity_id: input_boolean.visitor_mode
-          state: 'on'
-
-  action:
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.downstairs_ac
-        value: 77
+    - service: script.cool_downstairs_60min
 
 #####################################################################
 ### AC - Raise temp at bedtime or after hours

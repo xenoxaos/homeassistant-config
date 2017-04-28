@@ -80,7 +80,7 @@
 
   trigger:
     - platform: time
-      after: '01:59:59'
+      after: '00:59:59'
 
   condition:
     - condition: time
@@ -112,6 +112,49 @@
     - service: input_boolean.turn_off
       data:
         entity_id: input_boolean.after_hours
+
+#####################################################################
+### Bedtime OFF weekdays
+#####################################################################
+- alias: bedtime off weekdays
+  hide_entity: True
+  trigger:
+    - platform: time
+      after: '03:59:59'
+
+  condition:
+    - condition: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.bedtime
+
+#####################################################################
+### Bedtime OFF weekends
+#####################################################################
+- alias: bedtime off weekends
+  hide_entity: True
+  trigger:
+    - platform: time
+      after: '07:59:59'
+
+  condition:
+    - condition: time
+      weekday:
+        - sat
+        - sun
+
+  action:
+    - service: input_boolean.turn_off
+      data:
+        entity_id: input_boolean.bedtime
 
 #####################################################################
 ### RAIN SENSOR ON/OFF
