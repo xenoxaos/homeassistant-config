@@ -8,7 +8,7 @@ bedtime:
 ### Lock the doors
   - service: lock.lock
 
-  - service: input_boolean.turn_off
+  - service: input_boolean.turn_on
     data:
       entity_id: input_boolean.bedtime
 

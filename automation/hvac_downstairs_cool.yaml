@@ -38,6 +38,10 @@
       entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
       above: 78
 
+    - condition: numeric_state
+      entity_id: sensor.pws_temp_f
+      above: 78
+
     - condition: or
       conditions:
         - condition: state

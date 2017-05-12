@@ -2,27 +2,51 @@
 - platform: generic
   still_image_url: !secret front_door_url
   name: Front Door
-  username: !secret tplink_user
-  password: !secret tplink_password
+  username: !secret camera_user
+  password: !secret camera_password
 
 ## GATE
 - platform: generic
   still_image_url: !secret north_gate_url
   name: Gate
-  username: !secret tplink_user
-  password: !secret tplink_password
+  username: !secret camera_user
+  password: !secret camera_password
 
-### Amcrest (not working as well as generic...test that again)
+### Generic configuration for Amcrest Cameras - retire once Amcrest component is working properly
 ## NORTH PTZ
 - platform: generic
   still_image_url: !secret north_ptz_url
   name: North PTZ
-  username: !secret tplink_user
-  password: !secret tplink_password
+  username: !secret camera_user
+  password: !secret camera_password
+  authentication: digest
 
 ## KITCHEN PTZ
 - platform: generic
   still_image_url: !secret kitchen_ptz_url
   name: Kitchen PTZ
-  username: !secret tplink_user
-  password: !secret tplink_password
+  username: !secret camera_user
+  password: !secret camera_password
+  authentication: digest
+
+### Amcrest configuration 
+### NORTH PTZ
+#- platform: amcrest
+#  name: North PTZ
+#  host: !secret north_ptz_host
+#  port: !secret north_ptz_port
+#  resolution: high
+#  stream_source: mjpeg
+#  username: !secret camera_user
+#  password: !secret camera_password
+#
+### KITCHEN PTZ
+#- platform: amcrest
+#  name: Kitchen PTZ
+#  host: !secret kitchen_ptz_host
+#  port: !secret kitchen_ptz_port
+#  resolution: high
+#  stream_source: mjpeg
+#  username: !secret camera_user
+#  password: !secret camera_password
+

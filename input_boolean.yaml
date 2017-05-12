@@ -1,9 +1,14 @@
 
-# Enable visitor mode
+# Visitor Mode
 visitor_mode:
   name: Visitor Mode
   initial: off
   icon: mdi:account
+
+# Holiday
+holiday:
+  name: Holiday Mode
+  initial: off
 
 # Peak Hours
 peak_hours:
@@ -15,7 +20,7 @@ after_hours:
   name: After Hours
   icon: mdi:clock
 
-# After Hours
+# Bedtime
 bedtime:
   name: Bedtime
   icon: mdi:hotel
@@ -38,11 +43,9 @@ megs_home:
 rick_home:
   name: Rick Home
 
-# Holiday
-holiday:
-  name: Holiday Mode
-  initial: off
-
+#####################################################################
+### Input Booleans for Testing Automations
+#####################################################################
 ### TESTING
 condition_1:
   name: condition_1

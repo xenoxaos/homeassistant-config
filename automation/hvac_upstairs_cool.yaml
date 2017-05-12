@@ -21,7 +21,7 @@
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.upstairs_ac
-        value: 81
+        value: 82
 
 #####################################################################
 ### AC - Upstairs Cooling - Off Peak
@@ -63,11 +63,19 @@
   condition:
     - condition: numeric_state
       entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
-      above: 81
+      above: 82
 
     - condition: numeric_state
       entity_id: sensor.pws_temp_f
       above: 75
+
+    - condition: state
+      entity_id: script.cool_upstairs_120min
+      state: 'off'
+
+    - condition: state
+      entity_id: script.cool_upstairs_180min
+      state: 'off'
 
   action:
     - service: script.cool_upstairs_60min

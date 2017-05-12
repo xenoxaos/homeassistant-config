@@ -1,20 +1,20 @@
 - platform: amcrest
-  host: 192.168.11.100
-  port: 8083
+  host: !secret north_ptz_host
+  port: !secret north_ptz_port
   name: "North PTZ"
-  username: !secret tplink_user
-  password: !secret tplink_password
+  username: !secret camera_user
+  password: !secret camera_password
   monitored_conditions:
     - motion_detector
 #    - sdcard
 #    - ptz_preset
 
 - platform: amcrest
-  host: 192.168.11.101
-  port: 8084
+  host: !secret kitchen_ptz_host
+  port: !secret kitchen_ptz_port
   name: "Kitchen PTZ"
-  username: !secret tplink_user
-  password: !secret tplink_password
+  username: !secret camera_user
+  password: !secret camera_password
   monitored_conditions:
     - motion_detector
 #    - sdcard

@@ -509,6 +509,9 @@
     hidden: true
     icon: mdi:play-circle
 
+  automation.unlock_door_for_megs:
+    friendly_name: "Unlock Door for Megan"
+
   script.time_temp:
     friendly_name: "Time and Temp"
     hidden: true
@@ -643,8 +646,11 @@
 
 ## Phone Batteries
   sensor.iphwn666_battery_level:
+    friendly_name: "Rick's Phone Battery"
     icon: mdi:cellphone-iphone
+
   sensor.iphone7_battery_level:
+    friendly_name: "Meg's Phone Battery"
     icon: mdi:cellphone-iphone
 
 ## Fibaro Motion

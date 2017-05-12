@@ -7,6 +7,19 @@
     - platform: time
       after: '14:59:59'
 
+  condition:
+    - condition: time
+      weekday:
+        - mon
+        - tue
+        - wed
+        - thu
+        - fri
+
+    - condition: state
+      entity_id: input_boolean.holiday
+      state: 'off'
+
   action:
     - service: input_boolean.turn_on
       data:

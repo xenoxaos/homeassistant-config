@@ -1,3 +1,6 @@
+#####################################################################
+### Desk Lamp RGB Bulb
+#####################################################################
 rgb_light:
   name: RGB Light
   initial: "Select an option..."
@@ -16,6 +19,9 @@ rgb_light:
     - "Violet"
     - "Yellow"
 
+#####################################################################
+### Under Master Bed RGB Colors
+#####################################################################
 mbr_under_bed_color:
   name: Under Bed Color
   initial: "Select an option..."
@@ -32,6 +38,9 @@ mbr_under_bed_color:
     - "Violet"
     - "Yellow"
 
+#####################################################################
+### Under Master Bed RGB Effects
+#####################################################################
 mbr_under_bed_effect:
   name: Under Bed Effect
   initial: "Select an option..."
@@ -52,6 +61,9 @@ mbr_under_bed_effect:
     - "RB Cross Fade"
     - "GB Cross Fade"
 
+#####################################################################
+### Under Master Bed RGB Strobe
+#####################################################################
 mbr_under_bed_strobe:
   name: Under Bed Strobe
   initial: "Select an option..."
@@ -67,6 +79,9 @@ mbr_under_bed_strobe:
     - "Purple"
     - "White"
 
+#####################################################################
+### Pool Light Scene
+#####################################################################
 pool_scene:
   name: Pool Scene
   initial: "Select an option..."
@@ -80,6 +95,9 @@ pool_scene:
     - "Sunset"
     - "Royal"
 
+#####################################################################
+### Pool Light Color
+#####################################################################
 pool_color:
   name: Pool Color
   initial: "Select an option..."
@@ -91,6 +109,9 @@ pool_color:
     - "White"
     - "Magenta"
 
+#####################################################################
+### Living Room Ceiling Fan Speed
+#####################################################################
 living_room_fan_speed:
   name: Living  Room Fan
   initial: "Select an option..."
@@ -101,6 +122,9 @@ living_room_fan_speed:
     - "Medium"
     - "High"
 
+#####################################################################
+### Master Bedroom Ceiling Fan Speed
+#####################################################################
 master_bedroom_fan_speed:
   name: Master Bedroom Fan Speed
   initial: "Select an option..."
@@ -115,6 +139,9 @@ master_bedroom_fan_speed:
     - "6"
     - "Random"
 
+#####################################################################
+### Master Bedroom Ceiling Fan Options
+#####################################################################
 master_bedroom_fan_options:
   name: Master Bedroom Fan Options
   initial: "Select an option..."
@@ -125,6 +152,9 @@ master_bedroom_fan_options:
     - "8 Hour"
     - "Vacation"
 
+#####################################################################
+### Living Room TV
+#####################################################################
 living_room_tv_input:
   name: Living Room TV Input
   initial: "Select an option..."
@@ -134,6 +164,9 @@ living_room_tv_input:
     - "Fire TV"
     - "Chromecast"
 
+#####################################################################
+### Living Room Amp
+#####################################################################
 onkyo_amp_input:
   name: Onkyo Amp Input
   initial: "Select an option..."

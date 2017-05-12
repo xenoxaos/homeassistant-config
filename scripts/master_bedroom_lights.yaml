@@ -1,18 +1,29 @@
 #####################################################################
-### Master Bedroom Chandelier - Night Time Mode
+### Master Bedroom - Night Mode
 #####################################################################
-
 master_bedroom_night_time:
   sequence:
+### Turn the ceiling fan on low
+  - service: input_select.select_option
+    data_template:
+      entity_id: input_select.master_bedroom_fan_speed
+      option: 2
+
+### Set master bedroom chandelier to dim
+  - service: light.turn_on
+    entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+    data:
+      brightness: 65
+
+### Turn on the under-bed lights
   - service: light.turn_on
     data:
-      entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
-      brightness: 50
+      entity_id: light.under_bed_lights
+      rgb_color: [0,55,55]
 
 #####################################################################
 ### Master Bedroom Night Light; 6 min timer
 #####################################################################
-
 mbr_night_light:
   alias: "Night Light"
   sequence:
@@ -24,7 +35,9 @@ mbr_night_light:
       rgb_color: [0,55,55]
 
   - delay:
-      minutes: 6
+      minutes: 5
 
   - service: light.turn_off
-    entity_id: light.under_bed_lights
+    data:
+      entity_id: light.under_bed_lights
+      transition: 5

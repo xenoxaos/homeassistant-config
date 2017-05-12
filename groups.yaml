@@ -60,18 +60,6 @@ upstairs:
     - media_player.kodi_bedroom
 
 #####################################################################
-### EXTERIOR DEVICES VIEW
-#####################################################################
-exterior:
-  name: Exterior
-  view: yes
-  icon: mdi:tree
-  entities:
-    - group.porch
-    - group.yard
-    - group.pool
-
-#####################################################################
 ### WEATHER VIEW
 #####################################################################
 weather:
@@ -85,6 +73,18 @@ weather:
     - group.weather_summary
     - group.weather_details
     - group.precipitation
+
+#####################################################################
+### EXTERIOR DEVICES VIEW
+#####################################################################
+exterior:
+  name: Exterior
+  view: yes
+  icon: mdi:tree
+  entities:
+    - group.porch
+    - group.yard
+    - group.pool
 
 #####################################################################
 ### SCENES VIEW

@@ -27,11 +27,3 @@
   action:
     - service: homeassistant.turn_off
       entity_id: group.porch
-
-#####################################################################
-### Turn on the Christmas Lights - (GE plugin outlet)
-#####################################################################
-
-## Turn on Christmas lights
-#    - service: switch.turn_on
-#      entity_id: switch.ge_unknown_type4f50_id3031_switch_23_0
