@@ -15,12 +15,6 @@ morning_weekday:
   - service: switch.turn_on
     entity_id: group.accent_lights
 
-  - delay: 00:00:10
-
-### Hit accent lights again
-  - service: switch.turn_on
-    entity_id: group.accent_lights
-
   - delay:
       minutes: 7
 

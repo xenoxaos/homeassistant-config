@@ -2,11 +2,11 @@
 ### ZWAVE DEVICE CONFIG
 #####################################################################
 
-#cover.somfy_unknown_type5a52_id5401_switch_39_0:
-#  ignored: true
+cover.somfy_unknown_type5a52_id5401_switch_39_0:
+  ignored: true
 
-#cover.somfy_unknown_type5a52_id5402_switch_37_0:
-#  ignored: true
+cover.somfy_unknown_type5a52_id5402_switch_37_0:
+  ignored: true
 
 cover.somfy_unknown_type5a52_id5401_level_39_0:
   invert_openclose_buttons: true

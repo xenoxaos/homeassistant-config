@@ -10,22 +10,15 @@
   condition:
     - condition: numeric_state
       entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-      below: 79
+      below: 78
+      above: 68
 
     - condition: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-      above: 66
+      entity_id: sensor.pws_temp_f
+      below: 76
+      above: 59
 
   action:
-    - service: script.turn_off
-      entity_id:
-        - script.cool_stairs_60min
-        - script.cool_stairs_120min
-        - script.cool_stairs_180min
-        - script.heat_stairs_60min
-        - script.heat_stairs_120min
-        - script.heat_downstairs_180min
-
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.downstairs_ac

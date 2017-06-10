@@ -4,9 +4,9 @@
 - alias: set temperature thresholds on away
   trigger:
     - platform: state
-      entity_id: group.family
-      from: 'on'
-      to: 'off'
+      entity_id: group.all_devices
+      from: 'home'
+      to: 'not_home'
       for:
         minutes: 15
 
@@ -48,9 +48,9 @@
 - alias: set temperature thresholds on arrival
   trigger:
     platform: state
-    entity_id: group.family
-    from: 'off'
-    to: 'on'
+    entity_id: group.all_devices
+    from: 'not_home'
+    to: 'home'
     for:
       minutes: 2
 
@@ -61,7 +61,7 @@
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.downstairs_ac
-        value: 78
+        value: 79
 
     - service: input_slider.select_value
       data_template:
@@ -74,7 +74,7 @@
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.upstairs_ac
-        value: 82
+        value: 83
 
     - service: input_slider.select_value
       data_template:

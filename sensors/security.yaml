@@ -29,8 +29,8 @@
     lock_beach_door_status:
       friendly_name: "Beach Door Status"
       value_template: >-
-        {% set state = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_12_0') %}
-        {% set user = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_level_12_1') %}
+        {% set state = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_40_0') %}
+        {% set user = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_level_40_1') %}
         
         {% if state == '19' %}
           {% if user == '1' %}
@@ -68,8 +68,8 @@
     lock_south_door_status:
       friendly_name: "South Door Status"
       value_template: >-
-        {% set state = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_16_0') %}
-        {% set user = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_level_16_1') %}
+        {% set state = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_43_0') %}
+        {% set user = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_level_43_1') %}
         
         {% if state == '19' %}
           {% if user == '1' %}

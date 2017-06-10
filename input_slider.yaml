@@ -3,7 +3,7 @@
 #####################################################################
 downstairs_heat:
   name: "Downstairs Heat"
-#  initial: 68
+  initial: 68
   min: 60
   max: 90
   step: 1
@@ -13,7 +13,7 @@ downstairs_heat:
 #####################################################################
 downstairs_ac:
   name: "Downstairs AC"
-#  initial: 80
+  initial: 79
   min: 60
   max: 90
   step: 1
@@ -23,7 +23,7 @@ downstairs_ac:
 #####################################################################
 ds_low:
   name: "Downstairs Low"
-#  initial: 68
+  initial: 68
   min: 60
   max: 90
   step: 1
@@ -33,7 +33,7 @@ ds_low:
 #####################################################################
 ds_high:
   name: "Downstairs High"
-#  initial: 81
+  initial: 80
   min: 60
   max: 90
   step: 1
@@ -43,7 +43,7 @@ ds_high:
 #####################################################################
 upstairs_heat:
   name: "Upstairs Heat"
-#  initial: 68
+  initial: 68
   min: 60
   max: 90
   step: 1
@@ -53,7 +53,7 @@ upstairs_heat:
 #####################################################################
 upstairs_ac:
   name: "Upstairs AC"
-#  initial: 83
+  initial: 83
   min: 60
   max: 90
   step: 1
@@ -63,7 +63,7 @@ upstairs_ac:
 #####################################################################
 us_low:
   name: "Upstairs Low"
-#  initial: 69
+  initial: 69
   min: 60
   max: 90
   step: 1
@@ -73,7 +73,7 @@ us_low:
 #####################################################################
 us_high:
   name: "Upstairs High"
-#  initial: 83
+  initial: 83
   min: 60
   max: 90
   step: 1
@@ -83,7 +83,7 @@ us_high:
 #####################################################################
 season_summer:
   name: "Summer"
-#  initial: 84
+  initial: 79
   min: 60
   max: 100
   step: 1
@@ -93,7 +93,7 @@ season_summer:
 #####################################################################
 season_winter:
   name: "Winter"
-#  initial: 50
+  initial: 50
   min: 40
   max: 80
   step: 1

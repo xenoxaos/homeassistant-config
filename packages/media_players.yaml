@@ -1,0 +1,189 @@
+#####################################################################
+#    @package          :     media_players
+#    @description      :     media Players and associated automations, scenes, etc.
+#####################################################################
+homeassistant:
+  customize:
+## Kodi Players
+    media_player.kodi_office:
+      friendly_name: "Office Kodi"
+      haaska_hidden: true
+
+    media_player.kodi_living_room:
+      friendly_name: "Living Room Kodi"
+      haaska_hidden: true
+
+    media_player.kodi_bedroom:
+      friendly_name: "Bedroom Kodi"
+      haaska_hidden: true
+
+## AppleTV
+    media_player.apple_tv:
+      friendly_name: "Apple TV"
+      haaska_hidden: true
+
+## Chromecast
+    media_player.rnmcast:
+      friendly_name: Chromecast
+      haaska_hidden: true
+
+
+group:
+  Media Players:
+    entities:
+      - media_player.kodi_office
+      - media_player.apple_tv
+    #  - media_player.rnmcast
+
+
+media_player:
+  - platform: kodi
+    host: !secret kodi_office
+    port: !secret kodi_port
+    name: kodi_office
+    username: !secret kodi_user
+    password: !secret kodi_password
+
+  - platform: kodi
+    host: !secret kodi_bedroom
+    port: !secret kodi_port
+    name: kodi_bedroom
+    username: !secret kodi_user
+    password: !secret kodi_password
+
+  - platform: kodi
+    host: !secret kodi_living_room
+    port: !secret kodi_other_port
+    name: kodi_living_room
+    username: !secret kodi_user
+    password: !secret kodi_password
+
+  - platform: apple_tv
+    host: !secret appletv_host
+    name: apple_tv
+    login_id: !secret appletv_login_id
+
+
+scene:
+#####################################################################
+### Movie Time
+#####################################################################
+  - name: Movie Time
+    entities:
+
+  ## turn off the hue entry_lighting
+      group.entry_lighting:
+        state: off
+        transition: 5
+
+  ## turn off the living room lamp
+      light.living_room_lamp:
+        state: off
+        transition: 15
+
+  ## turn off the hue living_room_ceiling lights
+      group.living_room_ceiling:
+        state: off
+        transition: 10
+
+#####################################################################
+### Movie Paused
+#####################################################################
+  - name: Movie Paused
+    entities:
+
+  ## turn on kitchen entry light
+      light.kitchen_entry:
+        state: on
+        brightness: 50
+        transition: 10
+
+  ## turn on the south entry light
+      light.south_entry:
+        state: on
+        brightness: 75
+        transition: 10
+
+  ## turn on the center entry light
+      light.center_entry:
+        state: on
+        brightness: 50
+        transition: 10
+
+  ## turn on the living room lamp
+      light.living_room_lamp:
+        state: on
+        brightness: 75
+        transition: 10
+
+  ## turn on the hue living_room_ceiling lights
+      group.living_room_ceiling:
+        state: on
+        brightness: 50
+        transition: 15
+
+#####################################################################
+### Movie Ended
+#####################################################################
+  - name: Movie Ended
+    entities:
+
+  ## turn on kitchen entry light
+      light.kitchen_entry:
+        state: on
+        brightness: 160
+        transition: 30
+
+  ## turn on the south entry light
+      light.south_entry:
+        state: on
+        brightness: 100
+        transition: 10
+
+  ## turn on the center entry light
+      light.center_entry:
+        state: on
+        brightness: 50
+        transition: 10
+
+  ## turn on the living room lamp
+      light.living_room_lamp:
+        state: on
+        brightness: 200
+        transition: 60
+
+  ## turn on the hue living_room_ceiling lights
+      group.living_room_ceiling:
+        state: on
+        brightness: 100
+        transition: 30
+
+
+automation:
+####################################################################
+### Adjust lighting scenes based on Kodi playback state
+####################################################################
+  - alias: Kodi Scene Set
+    hide_entity: True
+    trigger:
+      - platform: state
+        entity_id: media_player.kodi_living_room
+
+    condition: 
+      - condition: state
+        entity_id: sun.sun
+        state: 'below_horizon'
+
+    action:
+      - service: scene.turn_on
+        data_template:
+          entity_id: >-
+            {% if trigger.to_state.state == "playing" or trigger.to_state.state == "resumed" %}
+              scene.movie_time
+            {% elif trigger.to_state.state == "paused" or trigger.to_state.state == "idle" %}
+              scene.movie_paused
+            {% elif trigger.to_state.state == "stopped" or trigger.to_state.state == "ended" %}
+              scene.movie_ended
+            {% else %}
+              scene.living_room_normal
+            {% endif %}

@@ -35,13 +35,13 @@ state_change:
   name: State Change Test
   initial: off
 
-# Megs home
-megs_home:
-  name: Megs Home
-
-# Rick home
-rick_home:
-  name: Rick Home
+## Megs home
+#megs_home:
+#  name: Megs Home
+#
+## Rick home
+#rick_home:
+#  name: Rick Home
 
 #####################################################################
 ### Input Booleans for Testing Automations

@@ -4,14 +4,21 @@
 - alias: downstairs cooling schedule
   trigger:
     - platform: time
-      after: '05:59:59'
+      at: '06:00:00'
+
+    - platform: time
+      at: '19:30:00'
 
   condition:
+    - condition: state
+      entity_id: script.cool_downstairs_60min
+      state: 'off'
+
     - condition: or
       conditions:
         - condition: state
-          entity_id: group.family
-          state: 'on'
+          entity_id: group.all_devices
+          state: 'home'
 
         - condition: state
           entity_id: input_boolean.visitor_mode
@@ -22,6 +29,35 @@
       data_template:
         entity_id: input_slider.downstairs_ac
         value: 78
+
+#####################################################################
+### AC - Downstairs Pre-Cooling
+#####################################################################
+- alias: downstairs pre-cooling
+  trigger:
+    - platform: time
+      at: '13:00:00'
+
+  condition:
+    - condition: state
+      entity_id: script.cool_downstairs_60min
+      state: 'off'
+
+    - condition: or
+      conditions:
+        - condition: state
+          entity_id: group.all_devices
+          state: 'home'
+
+        - condition: state
+          entity_id: input_boolean.visitor_mode
+          state: 'on'
+
+  action:
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.downstairs_ac
+        value: 75
 
 #####################################################################
 ### AC - Downstairs Cooling - Off Peak
@@ -40,13 +76,13 @@
 
     - condition: numeric_state
       entity_id: sensor.pws_temp_f
-      above: 78
+      above: 76
 
     - condition: or
       conditions:
         - condition: state
-          entity_id: group.family
-          state: 'on'
+          entity_id: group.all_devices
+          state: 'home'
 
         - condition: state
           entity_id: input_boolean.visitor_mode

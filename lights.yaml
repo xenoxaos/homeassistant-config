@@ -1,14 +1,27 @@
-- platform: flux_led
-  automatic_add: true
-  devices:
-#    192.168.11.113:
-    192.168.10.37:
-      name: flux_rgb
-      mode: rgb
+#####################################################################
+### FLUX LED
+#####################################################################
+#- platform: flux_led
+#  devices:
+#    192.168.10.39:
+#      name: under_bed_lights
+#      mode: rgb
 
-    192.168.10.39:
-      name: under_bed_lights
+#####################################################################
+### PHILIPS HUE
+#####################################################################
+#- platform: hue
+#  host: 192.168.10.38
+#  allow_unreachable: true
 
-- platform: hue
-  host: 192.168.10.38
-  allow_unreachable: true
+#####################################################################
+### MQTT JSON
+#####################################################################
+#- platform: mqtt_json
+#  name: "SN1 LED"
+#  state_topic: "home/sensornode1"
+#  command_topic: "home/sensornode1/set"
+#  rgb: true
+#  brightness: true
+#  optimistic: false
+#  qos: 0

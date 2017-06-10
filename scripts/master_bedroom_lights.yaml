@@ -1,43 +1,54 @@
-#####################################################################
-### Master Bedroom - Night Mode
-#####################################################################
-master_bedroom_night_time:
-  sequence:
-### Turn the ceiling fan on low
-  - service: input_select.select_option
-    data_template:
-      entity_id: input_select.master_bedroom_fan_speed
-      option: 2
-
-### Set master bedroom chandelier to dim
-  - service: light.turn_on
-    entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
-    data:
-      brightness: 65
-
-### Turn on the under-bed lights
-  - service: light.turn_on
-    data:
-      entity_id: light.under_bed_lights
-      rgb_color: [0,55,55]
-
-#####################################################################
-### Master Bedroom Night Light; 6 min timer
-#####################################################################
-mbr_night_light:
-  alias: "Night Light"
-  sequence:
-  - service: light.turn_on
-    data:
-      entity_id: light.under_bed_lights
-#      brightness: 127
-#      color_temp: 200
-      rgb_color: [0,55,55]
-
-  - delay:
-      minutes: 5
-
-  - service: light.turn_off
-    data:
-      entity_id: light.under_bed_lights
-      transition: 5
+######################################################################
+#### Master Bedroom - Night Mode
+######################################################################
+#master_bedroom_night_time:
+#  sequence:
+#### Set master bedroom chandelier to dim
+#  - service: light.turn_on
+#    entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+#    data:
+#      brightness: 65
+#
+#  - service: light.turn_on
+#    entity_id: light.master_sitting_lamp
+#    data:
+#      brightness: 50
+#      transition: 3
+#
+#### Turn on the under-bed lights
+#  - service: light.turn_on
+#    data:
+#      entity_id: light.under_bed_lights
+#      rgb_color: [0,55,55]
+#
+######################################################################
+#### Master Bedroom Night Light; 6 min timer
+######################################################################
+#mbr_night_light:
+#  alias: "Night Light"
+#  sequence:
+#  - service: light.turn_on
+#    data:
+#      entity_id: light.under_bed_lights
+#      rgb_color: [0,60,60]
+#
+#  - service: light.turn_on
+#    entity_id: light.master_sitting_lamp
+#    data:
+#      brightness: 40
+#      transition: 5
+#
+#  - delay:
+#      minutes: 4
+#
+#  - service: light.turn_off
+#    entity_id: light.master_sitting_lamp
+#    data:
+#      transition: 10
+#
+#  - delay:
+#      minutes: 1
+#
+#  - service: light.turn_off
+#    data:
+#      entity_id: light.under_bed_lights

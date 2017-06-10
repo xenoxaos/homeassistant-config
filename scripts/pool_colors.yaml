@@ -229,7 +229,7 @@ pool_green:
 ### Pool Light - Solid Magenta; Channel 12
 #####################################################################
 
-pool_color_magenta:
+pool_magenta:
   sequence:
 
 ## turn on the light
@@ -511,7 +511,7 @@ pool_red:
 ### Pool Light - Solid White; Channel 11
 #####################################################################
 
-pool_color_white:
+pool_white:
   sequence:
 
 ## turn on the light

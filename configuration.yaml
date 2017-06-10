@@ -37,10 +37,12 @@ zone 2:
 mqtt:
   broker: !secret broker
   port: 1883
-  client_id: home-assistant-100
-  keepalive: 60
+  protocol: 3.1
+  client_id: home-assistant-1
   username: !secret mqtt_user
   password: !secret mqtt_password
+  discovery: true
+  discovery_prefix: homeassistant
 
 ifttt:
   key: !secret ifttt_api_key
@@ -51,7 +53,7 @@ ifttt:
 zwave:
   usb_path: /dev/ttyACM0
   config_path: /srv/hass/hass_venv/lib/python3.4/site-packages/libopenzwave-0.3.1-py3.4-linux-armv7l.egg/config
-  polling_interval: 60000
+#  polling_interval: 60000
 
 ## Device config
   device_config: !include zwave_device_config.yaml
@@ -68,9 +70,9 @@ zwave:
 #####################################################################
 ### ZIGBEE CONFIG
 #####################################################################
-
-
-
+#zha:
+#  usb_path: /dev/ttyUSB1
+#  database_path: /home/hass/.homeassistant/zigbee.db
 
 #####################################################################
 ### HTTP CONFIG
@@ -119,14 +121,14 @@ ios:
 alexa: !include alexa.yaml
 automation: !include_dir_merge_list automation/
 binary_sensor: !include binary_sensors.yaml
-camera: !include cameras.yaml
-device_tracker: !include device_trackers.yaml
+#camera: !include cameras.yaml
+#device_tracker: !include device_trackers.yaml
 group: !include groups.yaml
 input_boolean: !include input_boolean.yaml
 input_select: !include input_select.yaml
 input_slider: !include input_slider.yaml
-light: !include lights.yaml
-media_player: !include media_players.yaml
+#light: !include lights.yaml
+#media_player: !include media_players.yaml
 notify: !include notify.yaml
 proximity: !include proximity.yaml
 scene: !include_dir_merge_list scenes/
@@ -162,13 +164,17 @@ logger:
   logs:
     homeassistant.components.camera: critical
     homeassistant.components.switch: debug
+    homeassistant.components.input_slider: debug
     homeassistant.components.automation: debug
     homeassistant.components.script: debug
-    homeassistant.components.cover: debug
+#    homeassistant.components.cover: debug
+    homeassistant.components.light: debug
+#    homeassistant.components.zwave: debug
+#    homeassistant.components.mqtt: debug
 #    homeassistant.components.device_tracker: debug
 #    homeassistant.components.group: debug
 #    homeassistant.components.sensor: debug
-#    homeassistant.components.media_player: debug
+    homeassistant.components.media_player: critical
 #    homeassistant.components.notify: debug
 #    homeassistant.components.scene: debug
 

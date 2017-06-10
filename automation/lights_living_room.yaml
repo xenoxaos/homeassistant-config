@@ -1,30 +1,28 @@
 #####################################################################
 ### Set the Living Room Normal Scene (if home)
 #####################################################################
-
-- alias: turn on living room scene after sunset
-  hide_entity: True
-  trigger:
-    - platform: sun
-      event: sunset
-      offset: '00:15:00'
-
-  condition:
-    - condition: state
-      entity_id: group.family
-      state: 'on'
-
-    - condition: template
-      value_template: "{{ states.media_player.kodi_living_room.state != 'playing' }}"
-
-  action:
-    - service: scene.turn_on
-      entity_id: scene.living_room_normal
+#- alias: turn on living room scene after sunset
+#  hide_entity: True
+#  trigger:
+#    - platform: sun
+#      event: sunset
+#      offset: '00:15:00'
+#
+#  condition:
+#    - condition: state
+#      entity_id: group.all_devices
+#      state: 'home'
+#
+#    - condition: template
+#      value_template: "{{ states.media_player.kodi_living_room.state != 'playing' }}"
+#
+#  action:
+#    - service: scene.turn_on
+#      entity_id: scene.living_room_normal
 
 #####################################################################
 ### Brighten the home once we are awake and getting ready for work
 #####################################################################
-
 - alias: brighten the house once sun is up
   hide_entity: True
   trigger:
@@ -59,20 +57,15 @@
 ## turn off the accent lights
     - service: homeassistant.turn_off
       entity_id: group.accent_lights
-## hit the RF outlets again
-    - delay: 3
-    - service: homeassistant.turn_off
-      entity_id: group.accent_lights
 
 #####################################################################
 ### Turn off the lights after the sun is up high
 #####################################################################
-
 - alias: turn off lights once sun is up high enough
   hide_entity: True
   trigger:
     - platform: time
-      after: '07:25:00'
+      at: '07:25:00'
 
   condition:
     - condition: state
@@ -91,13 +84,12 @@
 #####################################################################
 ### Turn on some lights when we get home
 #####################################################################
-
 - alias: turn on lights upon arrival
   trigger:
     platform: state
-    entity_id: group.family
-    from: 'off'
-    to: 'on'
+    entity_id: group.all_devices
+    from: 'not_home'
+    to: 'home'
 
   condition:
     - condition: state
@@ -133,7 +125,6 @@
 #####################################################################
 ### Set the Living Room Cloudy Scene
 #####################################################################
-
 - alias: turn on living room scene if cloudy
 #  hide_entity: True
   trigger:
@@ -155,8 +146,8 @@
 
   condition:
     - condition: state
-      entity_id: group.family
-      state: 'on'
+      entity_id: group.all_devices
+      state: 'home'
 
     - condition: template
       value_template: "{{ states.media_player.kodi_living_room.state != 'playing' }}"
@@ -186,7 +177,6 @@
 #####################################################################
 ### Turn off the lights when rain has stopped
 #####################################################################
-
 - alias: rain has stopped
 #  hide_entity: True
   trigger:

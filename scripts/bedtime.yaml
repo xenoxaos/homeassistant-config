@@ -1,7 +1,6 @@
 #####################################################################
 ### Bedtime
 #####################################################################
-
 bedtime:
   sequence:
 
@@ -42,20 +41,8 @@ bedtime:
       brightness: 40
 
   - delay:
-      minutes: 5
+      minutes: 7
 
-### Turn off remaining accent lights
-  - service: switch.turn_off
-    entity_id: group.accent_lights
-
-  - delay:
-      seconds: 3
-### Double-tap the accent lights
-  - service: switch.turn_off
-    entity_id: group.accent_lights
-
-  - delay:
-      minutes: 2
 ### turn_off master bed chandelier
   - service: light.turn_off
     entity_id: light.ge_12724_3way_dimmer_switch_level_8_0

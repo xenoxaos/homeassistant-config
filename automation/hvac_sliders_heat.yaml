@@ -11,7 +11,7 @@
     - service: climate.set_temperature
       data_template:
         entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_18_1
-        temperature: '{{ trigger.to_state.state | int }}'
+        temperature: '{{ states.input_slider.downstairs_heat.state | int }}'
 
 #####################################################################
 ### Upstairs Input slider temperature adjustment
@@ -25,8 +25,9 @@
   action:
     - service: climate.set_temperature
       data_template:
-        entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_24_1
-        temperature: '{{ trigger.to_state.state | int }}'
+        entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_42_1
+        temperature: '{{ states.input_slider.upstairs_heat.state | int }}'
+#        temperature: '{{ trigger.to_state.state | int }}'
 
 #####################################################################
 ### Downstairs - Change Input slider adjust to match temperature (downstairs heat)

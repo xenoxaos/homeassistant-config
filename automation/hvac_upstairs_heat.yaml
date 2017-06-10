@@ -4,14 +4,14 @@
 - alias: upstairs heating schedule
   trigger:
     - platform: time
-      after: '03:59:59'
+      at: '04:00:00'
 
   condition:
     - condition: or
       conditions:
         - condition: state
-          entity_id: group.family
-          state: 'on'
+          entity_id: group.all_devices
+          state: 'home'
 
         - condition: state
           entity_id: input_boolean.visitor_mode
@@ -35,14 +35,14 @@
 
   condition:
     - condition: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1
       below: 68
 
     - condition: or
       conditions:
         - condition: state
-          entity_id: group.family
-          state: 'on'
+          entity_id: group.all_devices
+          state: 'home'
 
         - condition: state
           entity_id: input_boolean.visitor_mode
@@ -62,7 +62,7 @@
 
   condition:
     - condition: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1
       below: 69
 
     - condition: numeric_state

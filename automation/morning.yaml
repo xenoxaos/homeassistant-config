@@ -8,12 +8,12 @@
       event_type: good_morning
 
     - platform: time
-      after: '05:49:59'
+      at: '05:55:00'
 
   condition:
     - condition: state
-      entity_id: group.family
-      state: 'on' 
+      entity_id: group.all_devices
+      state: 'home'
 
     - condition: state
       entity_id: input_boolean.holiday

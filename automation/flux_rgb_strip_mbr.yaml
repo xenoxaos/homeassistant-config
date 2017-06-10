@@ -7,15 +7,15 @@
   trigger:
     - platform: state
       entity_id: input_select.mbr_under_bed_color
-      state: "Off"
+      to: "Off"
 
     - platform: state
       entity_id: input_select.mbr_under_bed_effect
-      state: "Off"
+      to: "Off"
 
     - platform: state
       entity_id: input_select.mbr_under_bed_strobe
-      state: "Off"
+      to: "Off"
 
   action:
     - service: light.turn_off
@@ -93,7 +93,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_color
-    state: "Blue"
+    to: "Blue"
 
   action:
     - service: light.turn_on
@@ -117,7 +117,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_color
-    state: "Cyan"
+    to: "Cyan"
 
   action:
     - service: light.turn_on
@@ -141,7 +141,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_color
-    state: "Crystal"
+    to: "Crystal"
 
   action:
     - service: light.turn_on
@@ -164,7 +164,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_color
-    state: "Green"
+    to: "Green"
 
   action:
     - service: light.turn_on
@@ -188,7 +188,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_color
-    state: "Pink"
+    to: "Pink"
 
   action:
     - service: light.turn_on
@@ -212,7 +212,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_color
-    state: "Red"
+    to: "Red"
 
   action:
     - service: light.turn_on
@@ -236,7 +236,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_color
-    state: "Violet"
+    to: "Violet"
 
   action:
     - service: light.turn_on
@@ -260,7 +260,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_color
-    state: "Yellow"
+    to: "Yellow"
 
   action:
     - service: light.turn_on
@@ -284,7 +284,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "Color Loop"
+    to: "Color Loop"
 
   action:
     - service: light.turn_on
@@ -307,7 +307,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "Color Jump"
+    to: "Color Jump"
 
   action:
     - service: light.turn_on
@@ -330,7 +330,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "Random"
+    to: "Random"
 
   action:
     - service: light.turn_on
@@ -353,7 +353,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "Red Fade"
+    to: "Red Fade"
 
   action:
     - service: light.turn_on
@@ -376,7 +376,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "Green Fade"
+    to: "Green Fade"
 
   action:
     - service: light.turn_on
@@ -399,7 +399,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "Blue Fade"
+    to: "Blue Fade"
 
   action:
     - service: light.turn_on
@@ -422,7 +422,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "Yellow Fade"
+    to: "Yellow Fade"
 
   action:
     - service: light.turn_on
@@ -445,7 +445,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "Purple Fade"
+    to: "Purple Fade"
 
   action:
     - service: light.turn_on
@@ -468,7 +468,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "White Fade"
+    to: "White Fade"
 
   action:
     - service: light.turn_on
@@ -491,7 +491,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "RG Cross Fade"
+    to: "RG Cross Fade"
 
   action:
     - service: light.turn_on
@@ -514,7 +514,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "RB Cross Fade"
+    to: "RB Cross Fade"
 
   action:
     - service: light.turn_on
@@ -537,7 +537,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_effect
-    state: "GB Cross Fade"
+    to: "GB Cross Fade"
 
   action:
     - service: light.turn_on
@@ -560,7 +560,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_strobe
-    state: "Color Strobe"
+    to: "Color Strobe"
 
   action:
     - service: light.turn_on
@@ -583,7 +583,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_strobe
-    state: "Red"
+    to: "Red"
 
   action:
     - service: light.turn_on
@@ -606,7 +606,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_strobe
-    state: "Green"
+    to: "Green"
 
   action:
     - service: light.turn_on
@@ -629,7 +629,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_strobe
-    state: "Blue"
+    to: "Blue"
 
   action:
     - service: light.turn_on
@@ -652,7 +652,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_strobe
-    state: "Yellow"
+    to: "Yellow"
 
   action:
     - service: light.turn_on
@@ -675,7 +675,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_strobe
-    state: "Cyan"
+    to: "Cyan"
 
   action:
     - service: light.turn_on
@@ -698,7 +698,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_strobe
-    state: "Purple"
+    to: "Purple"
 
   action:
     - service: light.turn_on
@@ -721,7 +721,7 @@
   trigger:
     platform: state
     entity_id: input_select.mbr_under_bed_strobe
-    state: "White"
+    to: "White"
 
   action:
     - service: light.turn_on

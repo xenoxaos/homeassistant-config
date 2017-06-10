@@ -51,11 +51,11 @@
     us_climate_control:
       friendly_name: "Upstairs Climate Control"
       value_template: >-
-        {% set temperature = states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1')|float(none) %}
+        {% set temperature = states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1')|float(none) %}
         {% set us_low = states.input_slider.us_low.state|default(68)|float %}
         {% set us_high = states.input_slider.us_high.state|default(81)|float %}
         {% if temperature is none %}
-          {{ states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1') }}
+          {{ states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1') }}
         {% elif temperature < us_low %}
           Cold
         {% elif temperature > us_high %}

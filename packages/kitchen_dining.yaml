@@ -1,0 +1,79 @@
+#####################################################################
+#    @package          :     kitchen_dining
+#    @description      :     kitchen and dining and associated automations, etc.
+#####################################################################
+homeassistant:
+  customize:
+    group.kitchen:
+      order: 4
+
+    group.dining_room:
+      order: 5
+
+## Kitchen Lights
+    light.ge_12724_3way_dimmer_switch_level_33_0:
+      friendly_name: "Kitchen Lights"
+      icon: mdi:white-balance-incandescent
+
+## Dining Room Chandelier
+    light.ge_12724_3way_dimmer_switch_level_34_0:
+      friendly_name: "Dining Room Chandelier"
+      haaska_name: "Dining Room Light"
+      icon: mdi:ceiling-light
+
+## Kitchen Roller Shade Control
+    cover.somfy_unknown_type5a52_id5401_level_39_0:
+      friendly_name: "Kitchen Shade"
+      homebridge_cover_type: rollershutter
+      icon: mdi:blinds
+## Kitchen Roller Shade State (hidden)
+    cover.somfy_unknown_type5a52_id5401_switch_39_0:
+      friendly_name: "Kitchen Shade State"
+      haaska_hidden: true
+      homebridge_hidden: true
+      icon: mdi:blinds
+
+
+group:
+  Kitchen:
+    control: hidden
+    entities:
+      - light.ge_12724_3way_dimmer_switch_level_33_0
+      - cover.somfy_unknown_type5a52_id5401_level_39_0
+
+  Dining Room:
+    entities:
+      - light.ge_12724_3way_dimmer_switch_level_34_0
+
+
+#script:
+### see scripts folder
+
+
+automation:
+#####################################################################
+### KITCHEN - Raise Shade
+#####################################################################
+  - alias: kitchen shade raised schedule
+    hide_entity: True
+    trigger:
+      - platform: sun
+        event: sunrise
+        offset: '-00:15:00'
+
+    action:
+      - service: cover.open_cover
+        entity_id: cover.somfy_unknown_type5a52_id5401_level_39_0
+
+#####################################################################
+### KITCHEN - Lower Shade
+#####################################################################
+  - alias: kitchen shade lowered schedule
+    hide_entity: True
+    trigger:
+      - platform: time
+        at: '21:00:00'
+
+    action:
+      - service: cover.stop_cover
+        entity_id: cover.somfy_unknown_type5a52_id5401_level_39_0

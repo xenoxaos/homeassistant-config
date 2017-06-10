@@ -1,0 +1,66 @@
+#####################################################################
+#    @package          :     device_trackers
+#    @description      :     device_trackers and associated automations, etc.
+#####################################################################
+homeassistant:
+  customize:
+# device_tracker customizations
+    device_tracker.iphwn666:
+      friendly_name: "Rick"
+      entity_picture: /local/rick.jpg
+      haaska_hidden: true
+
+    device_tracker.iphone7:
+      friendly_name: "Megs"
+      entity_picture: /local/megs.jpg
+      haaska_hidden: true
+
+device_tracker:
+  - platform: ddwrt
+    host: !secret router_ip
+    username: !secret router_user
+    password: !secret router_pass
+    track_new_devices: no
+    consider_home: 180
+
+# group config
+group:
+  Family:
+    entities:
+      - device_tracker.iphone7
+      - device_tracker.iphwn666
+
+automation:
+#####################################################################
+### Detect Away
+#####################################################################
+  - alias: Away Mode
+    trigger:
+      platform: state
+      entity_id: group.all_devices
+      from: 'home'
+      to: 'not_home'
+      for:
+        minutes: 10
+
+    action:
+      - service: script.away
+
+#####################################################################
+### Cancel Away if we return
+#####################################################################
+  - alias: Away Mode Cancel
+    trigger:
+      platform: state
+      entity_id: group.all_devices
+      from: 'not_home'
+      to: 'home'
+
+    condition:
+      - condition: state
+        entity_id: script.away
+        state: 'on'
+
+    action:
+      - service: script.turn_off
+        entity_id: script.away

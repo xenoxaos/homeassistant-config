@@ -1,0 +1,101 @@
+#####################################################################
+#    @package          :     locks
+#    @description      :     locks and associated automations, etc.
+#####################################################################
+homeassistant:
+  customize:
+    lock.assa_abloy_yale_real_living_captouch_lever_locked_40_0:
+      friendly_name: "Beach Bathroom Door"
+      haaska_hidden: true
+
+    lock.assa_abloy_yale_real_living_captouch_lever_locked_43_0:
+      friendly_name: "South Door"
+      haaska_hidden: true
+
+    script.unlock_megs:
+      friendly_name: "Unlock Door for Megan"
+      hidden: true
+      icon: mdi:play-circle
+
+    automation.unlock_door_for_megs:
+      friendly_name: "Unlock Door for Megan"
+
+
+group:
+  Security Override:
+    control: hidden
+    entities:
+      - input_boolean.visitor_mode
+      - automation.away_mode
+      - automation.unlock_door_for_megs
+
+  Door Locks:
+    entities:
+      - lock.assa_abloy_yale_real_living_captouch_lever_locked_40_0
+      - sensor.lock_beach_door_status
+      - sensor.lock_beach_battery
+      - lock.assa_abloy_yale_real_living_captouch_lever_locked_43_0
+      - sensor.lock_south_door_status
+      - sensor.lock_south_battery
+
+
+script:
+#####################################################################
+### unlock south door for Megs
+#####################################################################
+  unlock_megs:
+    sequence:
+
+    - service: lock.unlock
+      entity_id: lock.assa_abloy_yale_real_living_captouch_lever_locked_43_0
+
+    - service: script.turn_off
+      data:
+        entity_id: script.away
+
+    - service: notify.ios_iphwn666
+      data:
+        title: "Arrived"
+        message: "Megs is home!"
+
+    - delay:
+        minutes: 15
+    - service: lock.lock
+      entity_id: lock.assa_abloy_yale_real_living_captouch_lever_locked_43_0
+
+
+automation:
+#####################################################################
+### Unlock door for Megs
+#####################################################################
+  - alias: unlock door for megs
+    trigger:
+      - platform: state
+        entity_id: device_tracker.iphone7
+        from: 'not_home'
+        to: 'home'
+
+    # door should be locked
+    condition:
+      - condition: template
+        value_template: "{{ is_state('lock.assa_abloy_yale_real_living_captouch_lever_locked_43_0', 'locked') or false }}"
+
+    # unlock the south door for Megs
+    action:
+      - service: script.unlock_megs
+
+#####################################################################
+### Notify when south door is unloked via code
+#####################################################################
+  - alias: notify unlock entry
+    hide_entity: True
+    trigger:
+      platform: state
+      entity_id: sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_43_0
+      to: '19'
+  
+    action:
+      - service: notify.ios_iphwn666
+        data:
+          title: "Door Unlocked"
+          message: "South Door {{ states.sensor.lock_south_door_status.state }}"

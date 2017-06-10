@@ -1,0 +1,146 @@
+#####################################################################
+#    @package          :     system
+#    @description      :     system and associated automations, etc.
+#####################################################################
+homeassistant:
+  customize:
+## Restart Home Assistant
+    script.restart_ha:
+      friendly_name: "Restart Home Assistant"
+      icon: mdi:recycle
+
+## Speed Test
+    sensor.speedtest_ping:
+      friendly_name: "Ping"
+      icon: mdi:clock
+
+    sensor.speedtest_download:
+      friendly_name: "Download"
+      icon: mdi:arrow-down
+
+    sensor.speedtest_upload:
+      friendly_name: "Upload"
+      icon: mdi:arrow-up
+
+## SabNZB
+    sensor.sab_disk:
+      friendly_name: "Total Storage"
+      icon: mdi:harddisk
+
+    sensor.sab_disk_free:
+      friendly_name: "Storage Remaining"
+      icon: mdi:chart-pie
+
+    sensor.sab_queue:
+      friendly_name: "Queued for Download"
+      icon: mdi:clipboard-arrow-down
+
+    sensor.sab_speed:
+      friendly_name: "DL Speed"
+      icon: mdi:speedometer
+
+    sensor.sab_status:
+      friendly_name: "Current State"
+      icon: mdi:check
+
+
+group:
+  Speedtest:
+    entities:
+      - sensor.speedtest_ping
+      - sensor.speedtest_download
+      - sensor.speedtest_upload
+
+  Downloads:
+    entities:
+      - sensor.sab_disk
+      - sensor.sab_disk_free
+      - sensor.sab_queue
+      - sensor.sab_speed
+      - sensor.sab_status
+
+  HA Status:
+    entities:
+      - sensor.date__time
+      - sensor.ha_current_version
+      - sensor.ha_installed_version
+      - sensor.ha_last_restart
+      - sensor.cpu_use
+      - sensor.ram_free
+      - sensor.disk_free_home
+      - sensor.last_boot
+
+
+sensor:
+  - platform: command_line
+    name: HA Current Version
+    command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
+
+  - platform: command_line
+    name: HA Installed Version
+    command: "/srv/hass/hass_venv/bin/hass --version"
+
+  - platform: template
+    sensors:
+      ha_last_restart:
+        value_template: '{{ as_timestamp(states.automation.startup_notification.attributes.last_triggered) | timestamp_custom("%b %d %X") }}'
+        friendly_name: "HA Last Restart"
+
+## now built into  HA
+#script:
+#  restart_ha:
+#    sequence:
+#      - service: homeassistant.restart
+#
+#      - service: notify.pushbullet
+#        data:
+#          title: "System Restart"
+#          target: "device/Chrome"
+#          message: "Restarting Home Assistant at {{ states('sensor.date__time') }}"
+#
+#      - service: notify.ios_iphwn666
+#        data:
+#          title: "System Restart"
+#          message: "Restarting Home Assistant at {{ states('sensor.date__time') }}"
+
+
+automation:
+#####################################################################
+### Auto Notify when HA has an update available
+#####################################################################
+  - alias: notify update
+    trigger:
+      platform: state
+      entity_id: updater.updater
+
+    action:
+      - service: persistent_notification.create
+        data:
+          title:   "New Update"
+          message: "Update for Home Assistant is available."
+
+      - service: notify.ios_iphwn666
+        data:
+          title: "New Update"
+          message: "Update for Home Assistant is available."
+
+#####################################################################
+### Send notification on HA Restart
+#####################################################################
+  - alias: Startup Notification
+    hide_entity: True
+    trigger:
+      platform: homeassistant
+      event: start
+
+    action:
+    - service: notify.pushbullet
+      data:
+        title: "Home Assistant Startup"
+        target: "device/Chrome"
+        message: "Home Assistant is up and running."
+
+    - service: notify.ios_iphwn666
+      data:
+        title: "Home Assistant Startup"
+        message: "Home Assistant is up and running."

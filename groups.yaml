@@ -69,7 +69,6 @@ weather:
   entities:
     - sun.sun
     - sensor.moon
-    - group.climate_status
     - group.weather_summary
     - group.weather_details
     - group.precipitation
@@ -95,8 +94,6 @@ scenes:
   view: yes
   entities:
     - group.lighting_scenes
-    - group.downstairs_climate_override
-    - group.upstairs_climate_override
     - group.light_and_switch_override
 
 #####################################################################
@@ -150,13 +147,6 @@ lab:
 #####################################################################
 ### DEVICE TRACKERS GROUPS
 #####################################################################
-Family:
-  icon: mdi:account-multiple
-  control: hidden
-  entities:
-  - input_boolean.megs_home
-  - input_boolean.rick_home
-
 Device Status:
   - sensor.iphwn666_battery_level
   - sensor.iphone7_battery_level
@@ -193,9 +183,9 @@ Lighting Scenes:
 #####################################################################
 Interior Lights:
   - group.accent_lights
-  - group.entry_lighting
-  - group.living_room_ceiling
-  - light.living_room_lamp
+  - light.entryway_lights
+  - light.family_room_lights
+  - light.master_bedroom
   - light.flux_rgb
 # Master Bedroom Chandelier
   - light.ge_12724_3way_dimmer_switch_level_8_0
@@ -212,15 +202,6 @@ Stateless Lights:
   - switch.master_bedroom_fan_light
 
 #####################################################################
-### EXTERIOR LIGHTS (excluding Porch Lights)
-#####################################################################
-Exterior Lights:
-# patio lights
-  - switch.ge_12722_onoff_relay_switch_switch_7_0
-# Party/Christmas lights - GE Outdoor wireless outlet
-  - switch.ge_Unknown_type4f50_id3031_switch_23_0
-
-#####################################################################
 ### THINGS (appliances, outlets, etc.) that are not lights
 #####################################################################
 Things:
@@ -228,98 +209,6 @@ Things:
 # Fountains
   - switch.linear_fs20z_isolated_contact_fixture_module_switch_21_0
   - switch.outdoor_speakers
-
-#####################################################################
-### ROOMS GROUPS
-#####################################################################
-Accent Lights:
-  - switch.staircase_lamp
-  - switch.wine_room_lamp
-#  - switch.staircase_xmas
-
-Entry Lighting:
-  - light.south_entry
-  - light.kitchen_entry
-  - light.center_entry
-
-Kitchen:
-  - light.ge_12724_3way_dimmer_switch_level_33_0
-  ## Kitchen Somfy
-  - cover.somfy_unknown_type5a52_id5401_level_39_0
-#    - cover.somfy_unknown_type5a52_id5401_switch_39_0
-
-Dining Room:
-  - light.ge_12724_3way_dimmer_switch_level_34_0
-
-Living Room:
-  control: hidden
-  entities:
-  - light.living_room_lamp
-  - group.living_room_ceiling
-  - switch.living_room_fan_light
-  - input_select.living_room_fan_speed
-
-Living Room Ceiling:
-  - light.northeast_ceiling
-  - light.northwest_ceiling
-  - light.southeast_ceiling
-  - light.southwest_ceiling
-
-Office:
-  - light.flux_rgb
-  - input_select.rgb_light
-
-Master Bedroom:
-  control: hidden
-  entities:
-  - script.master_bedroom_night_time
-  - script.mbr_night_light
-  - light.ge_12724_3way_dimmer_switch_level_8_0
-  - light.under_bed_lights
-  - input_select.mbr_under_bed_color
-  - input_select.mbr_under_bed_effect
-  - input_select.mbr_under_bed_strobe
-  - switch.master_bedroom_fan_light
-  - input_select.master_bedroom_fan_speed
-  - input_select.master_bedroom_fan_options
-  - script.mbr_fan_speed_step_low
-  - script.mbr_fan_speed_step_high
-  - switch.master_bedroom_fan_delay
-  - switch.humidifier
-## Master Bath Somfy
-  - cover.somfy_unknown_type5a52_id5402_level_37_0
-#    - cover.somfy_unknown_type5a52_id5402_switch_37_0
-
-Billiards Room:
-  - switch.ge_45609_onoff_relay_switch_switch_2_0
-
-#####################################################################
-### SECURITY GROUPS
-#####################################################################
-Security Override:
-  control: hidden
-  entities:
-  - input_boolean.visitor_mode
-  - automation.away_mode
-  - automation.unlock_door_for_megs
-
-Door Locks:
-  - lock.assa_abloy_yale_real_living_captouch_lever_locked_12_0
-  - sensor.lock_beach_door_status
-  - sensor.lock_beach_battery
-  - lock.assa_abloy_yale_real_living_captouch_lever_locked_16_0
-  - sensor.lock_south_door_status
-  - sensor.lock_south_battery
-
-Cameras:
-  - camera.front_door
-  - camera.gate
-  - camera.north_ptz
-  - camera.kitchen_ptz
-  - sensor.kitchen_ptz_ptz_preset
-  - sensor.north_ptz_ptz_preset
-  - sensor.kitchen_ptz_sd_used
-  - sensor.north_ptz_sd_used
 
 Sensors:
   - sensor.fibaro_state
@@ -340,47 +229,26 @@ Sensors:
 #  - sensor.breaches_ricknmegsgmailcom
 #  - sensor.breaches_rixjunkcoxnet
 
-
-
 #####################################################################
 ### CLIMATE GROUPS
 #####################################################################
-Downstairs Climate Override:
-  control: hidden
-  entities:
-  - script.heat_downstairs_120min
-  - script.heat_downstairs_180min
-  - script.cool_downstairs_120min
-  - script.cool_downstairs_180min
-
-Upstairs Climate Override:
-  control: hidden
-  entities:
-  - script.heat_upstairs_120min
-  - script.heat_upstairs_180min
-  - script.cool_upstairs_120min
-  - script.cool_upstairs_180min
-
-Climate Status:
-  - sensor.upstairs_thermostat_statistics_mean
-  - sensor.downstairs_thermostat_statistics_mean
-  - sensor.fibaro_system_fgms001_motion_sensor_temperature_22_1
-  - sensor.broadlink_sensor_temperature
-  - sensor.peak_hours_status
-
 Downstairs Climate:
   - sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
+  - sensor.fibaro_system_fgms001_motion_sensor_temperature_22_1
+  - sensor.broadlink_sensor_temperature
   - sensor.hvac_downstairs_op_state
   - sensor.hvac_downstairs_mode
   - sensor.ds_climate_control
   - sensor.hvac_downstairs_fan
+  - sensor.downstairs_thermostat_statistics_mean
 
 Upstairs Climate:
-  - sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
+  - sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1
   - sensor.hvac_upstairs_op_state
   - sensor.hvac_upstairs_mode
   - sensor.us_climate_control
   - sensor.hvac_upstairs_fan
+  - sensor.upstairs_thermostat_statistics_mean
 
 Downstairs Heating:
   - sensor.hvac_downstairs_heat_setpoint
@@ -405,63 +273,6 @@ Upstairs Cooling:
   - input_slider.us_high
   - input_slider.upstairs_ac
   - script.cool_upstairs_60min
-
-#####################################################################
-### OUTDOOR GROUPS
-#####################################################################
-Yard:
-  control: hidden
-  entities:
-# patio lights
-  - switch.ge_12722_onoff_relay_switch_switch_7_0
-# GE Outdoor wireless outlet; for Christmas lights, etc.
-  - switch.ge_Unknown_type4f50_id3031_switch_23_0
-# Pool fountains
-  - switch.linear_fs20z_isolated_contact_fixture_module_switch_21_0
-  - switch.outdoor_speakers
-
-Pool:
-# Pool Light
-  - switch.ge_12722_onoff_relay_switch_switch_25_0
-  - input_select.pool_scene
-  - input_select.pool_color
-
-Porch:
-## south porch_lights
-  - switch.ge_45609_onoff_relay_switch_switch_19_0
-## front porch_lights
-  - switch.ge_45609_onoff_relay_switch_switch_20_0
-
-#####################################################################
-### WEATHER GROUPS
-#####################################################################
-Weather Summary:
-  - sensor.season
-  - input_slider.season_summer
-  - input_slider.season_winter
-  - sensor.pws_weather
-  - sensor.dark_sky_daily_summary
-  - sensor.pws_temp_f
-  - sensor.pws_feelslike_string
-  - sensor.pws_wind_string
-  - sensor.pws_relative_humidity
-  - sensor.pws_dewpoint_string
-
-Precipitation:
-  - sensor.dark_sky_precip_probability
-  - sensor.dark_sky_precip_intensity
-  - sensor.pws_precip_today_string
-  - sensor.dark_sky_nearest_storm_distance
-  - input_boolean.rain
-
-Weather Details:
-  - sensor.dark_sky_cloud_coverage
-  - sensor.pws_heat_index_string
-  - sensor.pws_pressure_in
-  - sensor.pws_pressure_mb
-  - sensor.pws_solarradiation
-  - sensor.pws_uv
-  - sensor.pws_visibility_mi
 
 #####################################################################
 ### AUTOMATION GROUPS
@@ -507,37 +318,6 @@ Onkyo Amp:
   - switch.amp_movie_mode
   - switch.amp_music_mode
 
-Media Players:
-  - media_player.kodi_office
-  - media_player.apple_tv
-#  - media_player.rnmcast
-#  - media_player.directv
-
-#####################################################################
-### SYSTEM GROUPS
-#####################################################################
-Speedtest:
-  - sensor.speedtest_ping
-  - sensor.speedtest_download
-  - sensor.speedtest_upload
-
-Downloads:
-  - sensor.sab_disk
-  - sensor.sab_disk_free
-  - sensor.sab_queue
-  - sensor.sab_speed
-  - sensor.sab_status
-
-HA Status:
-  - sensor.date__time
-  - sensor.ha_current_version
-  - sensor.ha_installed_version
-  - script.restart_ha
-  - sensor.cpu_use
-  - sensor.ram_free
-  - sensor.disk_free_home
-  - sensor.last_boot
-
 #####################################################################
 ### TEST LAB GROUPS
 #####################################################################
@@ -566,5 +346,5 @@ HVAC Downstairs:
   - climate.2gig_technologies_ct101_thermostat_iris_heating_1_18_1
 
 HVAC Upstairs:
-  - climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
-  - climate.2gig_technologies_ct101_thermostat_iris_heating_1_24_1
+  - climate.2gig_technologies_ct101_thermostat_iris_cooling_1_42_2
+  - climate.2gig_technologies_ct101_thermostat_iris_heating_1_42_1

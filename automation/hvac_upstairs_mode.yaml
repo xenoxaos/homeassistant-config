@@ -9,11 +9,11 @@
 
   condition:
     - condition: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1
       below: 81
 
     - condition: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_24_1
+      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1
       above: 66
 
   action:
@@ -71,7 +71,7 @@
         visible: False
 
     - service: climate.set_operation_mode
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
+      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_42_2
       data:
         operation_mode: 'Cool'
 
@@ -100,6 +100,6 @@
         visible: False
 
     - service: climate.set_operation_mode
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_24_2
+      entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_42_2
       data:
         operation_mode: 'Heat'

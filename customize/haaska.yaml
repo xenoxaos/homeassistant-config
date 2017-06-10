@@ -13,6 +13,12 @@
   group.default_view:
     haaska_hidden: true
 
+  group.downstairs:
+    haaska_hidden: true
+
+  group.upstairs:
+    haaska_hidden: true
+
   group.dining_room:
     haaska_hidden: true
 
@@ -28,8 +34,8 @@
   group.exterior:
     haaska_hidden: true
 
-  group.family:
-    haaska_hidden: true
+#  group.family:
+#    haaska_hidden: true
 
   group.ha_status:
     haaska_hidden: true
@@ -197,6 +203,9 @@
     haaska_hidden: true
 
   switch.tv_volume:
+    haaska_hidden: true
+
+  input_boolean.bedtime:
     haaska_hidden: true
 
 #####################################################################

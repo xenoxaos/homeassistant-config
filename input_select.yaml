@@ -82,32 +82,32 @@ mbr_under_bed_strobe:
 #####################################################################
 ### Pool Light Scene
 #####################################################################
-pool_scene:
-  name: Pool Scene
-  initial: "Select an option..."
-  options:
-    - "Select an option..."
-    - "Cycle"
-    - "Party"
-    - "Romance"
-    - "Caribbean"
-    - "Patriotic"
-    - "Sunset"
-    - "Royal"
+#pool_scene:
+#  name: Pool Scene
+#  initial: "Select an option..."
+#  options:
+#    - "Select an option..."
+#    - "Cycle"
+#    - "Party"
+#    - "Romance"
+#    - "Caribbean"
+#    - "Patriotic"
+#    - "Sunset"
+#    - "Royal"
 
 #####################################################################
 ### Pool Light Color
 #####################################################################
-pool_color:
-  name: Pool Color
-  initial: "Select an option..."
-  options:
-    - "Select an option..."
-    - "Blue"
-    - "Green"
-    - "Red"
-    - "White"
-    - "Magenta"
+#pool_color:
+#  name: Pool Color
+#  initial: "Select an option..."
+#  options:
+#    - "Select an option..."
+#    - "Blue"
+#    - "Green"
+#    - "Red"
+#    - "White"
+#    - "Magenta"
 
 #####################################################################
 ### Living Room Ceiling Fan Speed
@@ -142,15 +142,15 @@ master_bedroom_fan_speed:
 #####################################################################
 ### Master Bedroom Ceiling Fan Options
 #####################################################################
-master_bedroom_fan_options:
-  name: Master Bedroom Fan Options
-  initial: "Select an option..."
-  options:
-    - "Select an option..."
-    - "2 Hour"
-    - "4 Hour"
-    - "8 Hour"
-    - "Vacation"
+#master_bedroom_fan_options:
+#  name: Master Bedroom Fan Options
+#  initial: "Select an option..."
+#  options:
+#    - "Select an option..."
+#    - "2 Hour"
+#    - "4 Hour"
+#    - "8 Hour"
+#    - "Vacation"
 
 #####################################################################
 ### Living Room TV
