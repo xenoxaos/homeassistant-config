@@ -1,29 +1,29 @@
 #####################################################################
 ### Reset Kitchen Lights timer
 #####################################################################
-kitchen_light_motion:
-  alias: Reset kitchen lights motion timer
-  sequence:
-
-    - service: script.turn_off
-      data:
-        entity_id: script.kitchen_light_timer
-
-    - delay:
-        seconds: 5
-    # Set new timer
-    - service: script.kitchen_light_timer
-
-#####################################################################
-### Turn the Kitchen Lights off when Timer expires
-#####################################################################
-
-kitchen_light_timer:
-  alias: Turn off kitchen_lights after 10 minutes
-  sequence:
-    - delay:
-        minutes: 10
-
-    - service: light.turn_off
-      entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+#kitchen_light_motion:
+#  alias: Reset kitchen lights motion timer
+#  sequence:
+#
+#    - service: script.turn_off
+#      data:
+#        entity_id: script.kitchen_light_timer
+#
+#    - delay:
+#        seconds: 5
+#    # Set new timer
+#    - service: script.kitchen_light_timer
+#
+######################################################################
+#### Turn the Kitchen Lights off when Timer expires
+######################################################################
+#
+#kitchen_light_timer:
+#  alias: Turn off kitchen_lights after 10 minutes
+#  sequence:
+#    - delay:
+#        minutes: 10
+#
+#    - service: light.turn_off
+#      entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
 

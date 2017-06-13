@@ -1,43 +1,43 @@
 ####################################################################
 ### Humidor Low
 ####################################################################
-- alias: humidor_refill
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.sn1_humidity
-      below: 60
-
-  action:
-    - service: light.turn_on
-      entity_id: light.sn1_led
-      data:
-        brightness: 150
-        color_name: "red"
-        transition: 3
-
-    - service: notify.ios_iphwn666
-      data:
-        title: "Refill Humidor"
-        message: "Humidor is {{ states.sensor.sn1_humidity.state|round }}% refill soon!"
-
-####################################################################
-### Humidor OK
-####################################################################
-- alias: humidor_ok
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.sn1_humidity
-      above: 60
-
-  action:
-    - service: light.turn_on
-      entity_id: light.sn1_led
-      data:
-        brightness: 150
-        color_name: "green"
-        transition: 3
-
-    - delay: '00:03:00'
-
-    - service: light.turn_off
-      entity_id: light.sn1_led
+#- alias: humidor_refill
+#  trigger:
+#    - platform: numeric_state
+#      entity_id: sensor.sn1_humidity
+#      below: 60
+#
+#  action:
+#    - service: light.turn_on
+#      entity_id: light.sn1_led
+#      data:
+#        brightness: 150
+#        color_name: "red"
+#        transition: 3
+#
+#    - service: notify.ios_iphwn666
+#      data:
+#        title: "Refill Humidor"
+#        message: "Humidor is {{ states.sensor.sn1_humidity.state|round }}% refill soon!"
+#
+#####################################################################
+#### Humidor OK
+#####################################################################
+#- alias: humidor_ok
+#  trigger:
+#    - platform: numeric_state
+#      entity_id: sensor.sn1_humidity
+#      above: 60
+#
+#  action:
+#    - service: light.turn_on
+#      entity_id: light.sn1_led
+#      data:
+#        brightness: 150
+#        color_name: "green"
+#        transition: 3
+#
+#    - delay: '00:03:00'
+#
+#    - service: light.turn_off
+#      entity_id: light.sn1_led

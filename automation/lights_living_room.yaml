@@ -23,191 +23,191 @@
 #####################################################################
 ### Brighten the home once we are awake and getting ready for work
 #####################################################################
-- alias: brighten the house once sun is up
-  hide_entity: True
-  trigger:
-    - platform: numeric_state
-      entity_id: sun.sun
-      value_template: '{{ state.attributes.elevation }}'
-      above: 4.5
-
-  condition:
-    - condition: state
-      entity_id: group.all_lights
-      state: 'on'
-
-    - condition: time
-      before: '08:00:00'
-
-  action:
-
-    - service: scene.turn_on
-      entity_id: scene.living_room_bright
-
-## kitchen max brightness
-    - service: light.turn_on
-      entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
-      data:
-        brightness: 255
-
-## turn off the master bedroom chandelier
-    - service: light.turn_off
-      entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
-
-## turn off the accent lights
-    - service: homeassistant.turn_off
-      entity_id: group.accent_lights
-
-#####################################################################
-### Turn off the lights after the sun is up high
-#####################################################################
-- alias: turn off lights once sun is up high enough
-  hide_entity: True
-  trigger:
-    - platform: time
-      at: '07:25:00'
-
-  condition:
-    - condition: state
-      entity_id: group.all_lights
-      state: 'on'
-
-    - condition: numeric_state
-      entity_id: sun.sun
-      value_template: '{{ state.attributes.elevation }}'
-      above: 12
-
-  action:
-    - service: homeassistant.turn_off
-      entity_id: group.interior_lights
-
-#####################################################################
-### Turn on some lights when we get home
-#####################################################################
-- alias: turn on lights upon arrival
-  trigger:
-    platform: state
-    entity_id: group.all_devices
-    from: 'not_home'
-    to: 'home'
-
-  condition:
-    - condition: state
-      entity_id: sun.sun
-      state: 'below_horizon'
-
-  action:
-
-# notify iOS
-    - service: notify.ios_iphwn666
-      data:
-        title: "Welcome Home"
-        message: "Turning on some lights"
-        data:
-          push:
-            sound: "US-EN-Alexa-Welcome-Home.wav"
-
-    - service: scene.turn_on
-      entity_id: scene.living_room_bright
-
-## kitchen max brightness
-    - service: light.turn_on
-      entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
-      data:
-        brightness: 255
-
-    - delay:
-        minutes: 3
-
-    - service: scene.turn_on
-      entity_id: scene.living_room_normal
-
-#####################################################################
-### Set the Living Room Cloudy Scene
-#####################################################################
-- alias: turn on living room scene if cloudy
+#- alias: brighten the house once sun is up
 #  hide_entity: True
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
-      below: 30
-
-    - platform: numeric_state
-      entity_id: sensor.dark_sky_cloud_coverage
-      above: 70
-
-    - platform: numeric_state
-      entity_id: sensor.dark_sky_precip_intensity
-      above: 1
-
-    - platform: state
-      entity_id: input_boolean.rain
-      to: 'on'
-
-  condition:
-    - condition: state
-      entity_id: group.all_devices
-      state: 'home'
-
-    - condition: template
-      value_template: "{{ states.media_player.kodi_living_room.state != 'playing' }}"
-
-    - condition: time
-      after: '08:00:00'
-      before: '17:00:00'
-
-    - condition: numeric_state
-      entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
-      below: 30
-
-    - condition: or
-      conditions:
-      - condition: state
-        entity_id: input_boolean.rain
-        state: 'on'
-
-      - condition: numeric_state
-        entity_id: sensor.dark_sky_precip_intensity
-        above: 1
-
-  action:
-    - service: scene.turn_on
-      entity_id: scene.living_room_cloudy
-
-#####################################################################
-### Turn off the lights when rain has stopped
-#####################################################################
-- alias: rain has stopped
+#  trigger:
+#    - platform: numeric_state
+#      entity_id: sun.sun
+#      value_template: '{{ state.attributes.elevation }}'
+#      above: 4.5
+#
+#  condition:
+#    - condition: state
+#      entity_id: group.all_lights
+#      state: 'on'
+#
+#    - condition: time
+#      before: '08:00:00'
+#
+#  action:
+#
+#    - service: scene.turn_on
+#      entity_id: scene.living_room_bright
+#
+### kitchen max brightness
+#    - service: light.turn_on
+#      entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+#      data:
+#        brightness: 255
+#
+### turn off the master bedroom chandelier
+#    - service: light.turn_off
+#      entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+#
+### turn off the accent lights
+#    - service: homeassistant.turn_off
+#      entity_id: group.accent_lights
+#
+######################################################################
+#### Turn off the lights after the sun is up high
+######################################################################
+#- alias: turn off lights once sun is up high enough
 #  hide_entity: True
-  trigger:
-    - platform: numeric_state
-      entity_id: sensor.dark_sky_precip_intensity
-      below: 1
-
-    - platform: state
-      entity_id: input_boolean.rain
-      from: 'on'
-      to: 'off'
-
-    - platform: numeric_state
-      entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
-      above: 30
-
-  condition:
-    - condition: state
-      entity_id: group.living_room
-      state: 'on'
-
-    - condition: numeric_state
-      entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
-      above: 30
-
-    - condition: time
-      before: '17:00:00'
-
-  action:
-    - service: homeassistant.turn_off
-      entity_id: group.living_room
-
-    - service: homeassistant.turn_off
-      entity_id: group.entry_lighting
+#  trigger:
+#    - platform: time
+#      at: '07:25:00'
+#
+#  condition:
+#    - condition: state
+#      entity_id: group.all_lights
+#      state: 'on'
+#
+#    - condition: numeric_state
+#      entity_id: sun.sun
+#      value_template: '{{ state.attributes.elevation }}'
+#      above: 12
+#
+#  action:
+#    - service: homeassistant.turn_off
+#      entity_id: group.interior_lights
+#
+######################################################################
+#### Turn on some lights when we get home
+######################################################################
+#- alias: turn on lights upon arrival
+#  trigger:
+#    platform: state
+#    entity_id: group.all_devices
+#    from: 'not_home'
+#    to: 'home'
+#
+#  condition:
+#    - condition: state
+#      entity_id: sun.sun
+#      state: 'below_horizon'
+#
+#  action:
+#
+## notify iOS
+#    - service: notify.ios_iphwn666
+#      data:
+#        title: "Welcome Home"
+#        message: "Turning on some lights"
+#        data:
+#          push:
+#            sound: "US-EN-Alexa-Welcome-Home.wav"
+#
+#    - service: scene.turn_on
+#      entity_id: scene.living_room_bright
+#
+### kitchen max brightness
+#    - service: light.turn_on
+#      entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+#      data:
+#        brightness: 255
+#
+#    - delay:
+#        minutes: 3
+#
+#    - service: scene.turn_on
+#      entity_id: scene.living_room_normal
+#
+######################################################################
+#### Set the Living Room Cloudy Scene
+######################################################################
+#- alias: turn on living room scene if cloudy
+##  hide_entity: True
+#  trigger:
+#    - platform: numeric_state
+#      entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
+#      below: 30
+#
+#    - platform: numeric_state
+#      entity_id: sensor.dark_sky_cloud_coverage
+#      above: 70
+#
+#    - platform: numeric_state
+#      entity_id: sensor.dark_sky_precip_intensity
+#      above: 1
+#
+#    - platform: state
+#      entity_id: input_boolean.rain
+#      to: 'on'
+#
+#  condition:
+#    - condition: state
+#      entity_id: group.all_devices
+#      state: 'home'
+#
+#    - condition: template
+#      value_template: "{{ states.media_player.kodi_living_room.state != 'playing' }}"
+#
+#    - condition: time
+#      after: '08:00:00'
+#      before: '17:00:00'
+#
+#    - condition: numeric_state
+#      entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
+#      below: 30
+#
+#    - condition: or
+#      conditions:
+#      - condition: state
+#        entity_id: input_boolean.rain
+#        state: 'on'
+#
+#      - condition: numeric_state
+#        entity_id: sensor.dark_sky_precip_intensity
+#        above: 1
+#
+#  action:
+#    - service: scene.turn_on
+#      entity_id: scene.living_room_cloudy
+#
+######################################################################
+#### Turn off the lights when rain has stopped
+######################################################################
+#- alias: rain has stopped
+##  hide_entity: True
+#  trigger:
+#    - platform: numeric_state
+#      entity_id: sensor.dark_sky_precip_intensity
+#      below: 1
+#
+#    - platform: state
+#      entity_id: input_boolean.rain
+#      from: 'on'
+#      to: 'off'
+#
+#    - platform: numeric_state
+#      entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
+#      above: 30
+#
+#  condition:
+#    - condition: state
+#      entity_id: group.living_room
+#      state: 'on'
+#
+#    - condition: numeric_state
+#      entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
+#      above: 30
+#
+#    - condition: time
+#      before: '17:00:00'
+#
+#  action:
+#    - service: homeassistant.turn_off
+#      entity_id: group.living_room
+#
+#    - service: homeassistant.turn_off
+#      entity_id: group.entry_lighting

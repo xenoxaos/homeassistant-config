@@ -72,6 +72,9 @@ group:
 
 
 sensor:
+#####################################################################
+### SYSTEM SENSORS
+#####################################################################
   - platform: command_line
     name: HA Current Version
     command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
@@ -85,6 +88,40 @@ sensor:
       ha_last_restart:
         value_template: '{{ as_timestamp(states.automation.startup_notification.attributes.last_triggered) | timestamp_custom("%b %d %X") }}'
         friendly_name: "HA Last Restart"
+
+  - platform: time_date
+    display_options:
+      - "date_time"
+
+  - platform: speedtest
+    minute:
+      - 0
+      - 30
+    monitored_conditions:
+      - ping
+      - download
+      - upload
+
+  - platform: systemmonitor
+    resources:
+      - type: disk_free
+        arg: /home
+      - type: memory_free
+      - type: processor_use
+      - type: last_boot
+
+  - platform: sabnzbd
+    name: SAB
+    api_key: !secret sabnzb_api_key
+    host: !secret sabnzb_host
+    port: !secret sabnzb_port
+    monitored_variables:
+      - 'current_status'
+      - 'speed'
+      - 'queue_size'
+      - 'queue_remaining'
+      - 'disk_size'
+      - 'disk_free'
 
 ## now built into  HA
 #script:

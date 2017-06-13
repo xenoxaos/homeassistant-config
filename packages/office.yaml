@@ -33,6 +33,10 @@ homeassistant:
     light.sn1_led:
       friendly_name: "Humidor Indicator Light"
 
+    script.desk_lamp:
+      friendly_name: "Desk Lamp Test"
+      icon: mdi:play-circle
+      haaska_hidden: true
 
 group:
   Office:
@@ -64,11 +68,93 @@ light:
     brightness: true
     optimistic: false
 
+sensor:
+#####################################################################
+### Humidity 
+#####################################################################
+  - platform: mqtt
+    state_topic: "home/sensornode1"
+    name: "SN1 Humidity"
+    unit_of_measurement: "%"
+    value_template: '{{ value_json.humidity | round(1) }}'
+
+#####################################################################
+### Light Sensitivity 
+#####################################################################
+  - platform: mqtt
+    state_topic: "home/sensornode1"
+    name: "SN1 LDR"
+    ##This sensor is not calibrated to actual LUX. Rather, this a map of the input voltage ranging from 0 - 1023.
+    unit_of_measurement: "LUX"
+    value_template: '{{ value_json.ldr }}'
+
+#####################################################################
+### Motion Detection 
+#####################################################################
+  - platform: mqtt
+    state_topic: "home/sensornode1"
+    name: "SN1 PIR"
+    value_template: '{{ value_json.motion }}'
+
+#####################################################################
+### Temperature 
+#####################################################################
+  - platform: mqtt
+    state_topic: "home/sensornode1"
+    name: "SN1 Temperature"
+    unit_of_measurement: "F"
+    value_template: '{{ value_json.temperature | round(1) }}'
+
+
 #script:
 ### see scripts folder
 
 
 automation:
+####################################################################
+### Humidor Low
+####################################################################
+  - alias: humidor_refill
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.sn1_humidity
+        below: 60
+
+    action:
+      - service: light.turn_on
+        entity_id: light.sn1_led
+        data:
+          brightness: 150
+          color_name: "red"
+          transition: 3
+
+      - service: notify.ios_iphwn666
+        data:
+          title: "Refill Humidor"
+          message: "Humidor is {{ states.sensor.sn1_humidity.state|round }}% refill soon!"
+
+####################################################################
+### Humidor OK
+####################################################################
+  - alias: humidor_ok
+    trigger:
+      - platform: numeric_state
+        entity_id: sensor.sn1_humidity
+        above: 60
+
+    action:
+      - service: light.turn_on
+        entity_id: light.sn1_led
+        data:
+          brightness: 150
+          color_name: "green"
+          transition: 3
+
+      - delay: '00:03:00'
+
+      - service: light.turn_off
+        entity_id: light.sn1_led
+
 #####################################################################
 ### Turn off the lamp when OFF is selected
 #####################################################################
@@ -109,24 +195,24 @@ automation:
 #####################################################################
 ### Default to Warm if turned on with no selection
 #####################################################################
-  - alias: RGB Default Warm
-    hide_entity: True
-    trigger:
-      - platform: state
-        entity_id: light.office_desk_lamp
-        from: 'off'
-        to: 'on'
-
-    condition:
-      condition: state
-      entity_id: input_select.rgb_light
-      state: "Select an option..."
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.rgb_light
-          option: "Warm"
+#  - alias: RGB Default Warm
+#    hide_entity: True
+#    trigger:
+#      - platform: state
+#        entity_id: light.office_desk_lamp
+#        from: 'off'
+#        to: 'on'
+#
+#    condition:
+#      condition: state
+#      entity_id: input_select.rgb_light
+#      state: "Select an option..."
+#
+#    action:
+#      - service: input_select.select_option
+#        data:
+#          entity_id: input_select.rgb_light
+#          option: "Warm"
 
 #####################################################################
 ### RGB Select Cool

@@ -1,29 +1,28 @@
 #####################################################################
 ### BATTERY STATUS - LOCKS
 #####################################################################
-
-## Beach Bathroom Lock Battery
-- platform: template
-  sensors:
-    lock_beach_battery:
-      friendly_name: "Beach Lock Battery"
-      value_template: >-
-        {%- if states.zwave.assa_abloy_yale_real_living_captouch_lever_40.attributes.battery_level != None -%}
-          {{ states.zwave.assa_abloy_yale_real_living_captouch_lever_40.attributes.battery_level }}
-        {%- else -%}
-          Unknown
-        {%- endif -%}
-      unit_of_measurement: '%'
-
-## South Lock Battery
-- platform: template
-  sensors:
-    lock_south_battery:
-      friendly_name: "South Lock Battery"
-      value_template: >-
-        {%- if states.zwave.assa_abloy_yale_real_living_captouch_lever_43.attributes.battery_level != None -%}
-          {{ states.zwave.assa_abloy_yale_real_living_captouch_lever_43.attributes.battery_level }}
-        {%- else -%}
-          Unknown
-        {%- endif -%}
-      unit_of_measurement: '%'
+### Beach Bathroom Lock Battery
+#- platform: template
+#  sensors:
+#    lock_beach_battery:
+#      friendly_name: "Beach Lock Battery"
+#      value_template: >-
+#        {%- if states.zwave.assa_abloy_yale_real_living_captouch_lever_40.attributes.battery_level != None -%}
+#          {{ states.zwave.assa_abloy_yale_real_living_captouch_lever_40.attributes.battery_level }}
+#        {%- else -%}
+#          Unknown
+#        {%- endif -%}
+#      unit_of_measurement: '%'
+#
+### South Lock Battery
+#- platform: template
+#  sensors:
+#    lock_south_battery:
+#      friendly_name: "South Lock Battery"
+#      value_template: >-
+#        {%- if states.zwave.assa_abloy_yale_real_living_captouch_lever_43.attributes.battery_level != None -%}
+#          {{ states.zwave.assa_abloy_yale_real_living_captouch_lever_43.attributes.battery_level }}
+#        {%- else -%}
+#          Unknown
+#        {%- endif -%}
+#      unit_of_measurement: '%'

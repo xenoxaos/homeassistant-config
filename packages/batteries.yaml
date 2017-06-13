@@ -1,0 +1,56 @@
+#####################################################################
+#    @package          :     batteries
+#    @description      :     batteries, etc.
+#####################################################################
+homeassistant:
+  customize:
+    sensor.lock_beach_battery:
+      icon: mdi:battery-charging
+    sensor.lock_south_battery:
+      icon: mdi:battery-charging
+
+    sensor.iphwn666_battery_level:
+      friendly_name: "Rick's Phone Battery"
+      icon: mdi:cellphone-iphone
+
+    sensor.iphone7_battery_level:
+      friendly_name: "Meg's Phone Battery"
+      icon: mdi:cellphone-iphone
+
+
+group:
+  Device Status:
+    entities:
+      - sensor.iphwn666_battery_level
+      - sensor.iphone7_battery_level
+
+
+sensor:
+#####################################################################
+### BATTERY STATUS - LOCKS
+#####################################################################
+  - platform: template
+    sensors:
+      lock_beach_battery:
+        friendly_name: "Beach Lock Battery"
+        value_template: >-
+          {%- if states.zwave.assa_abloy_yale_real_living_captouch_lever_40.attributes.battery_level != None -%}
+            {{ states.zwave.assa_abloy_yale_real_living_captouch_lever_40.attributes.battery_level }}
+          {%- else -%}
+            Unknown
+          {%- endif -%}
+        unit_of_measurement: '%'
+
+## South Lock Battery
+  - platform: template
+    sensors:
+      lock_south_battery:
+        friendly_name: "South Lock Battery"
+        value_template: >-
+          {%- if states.zwave.assa_abloy_yale_real_living_captouch_lever_43.attributes.battery_level != None -%}
+            {{ states.zwave.assa_abloy_yale_real_living_captouch_lever_43.attributes.battery_level }}
+          {%- else -%}
+            Unknown
+          {%- endif -%}
+        unit_of_measurement: '%'
+

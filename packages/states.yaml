@@ -1,0 +1,50 @@
+############################################################################
+#    @package          :     state sensors and monitors
+#    @description      :     state sensors, and associated automations, scenes, etc.
+############################################################################
+homeassistant:
+  customize:
+## Peak Hours
+    sensor.peak_hours_status:
+      icon: mdi:clock
+
+
+
+binary_sensor:
+## Workday Sensor
+  - platform: workday
+    country: US
+
+
+sensor:
+## Peak Hours
+  - platform: template
+    sensors:
+      peak_hours_status:
+        value_template: "{{ is_state('input_boolean.peak_hours', 'on') or false }}"
+        friendly_name: "Peak Hours"
+
+################################################################
+## Sensor / Time Based Brightness
+################################################################
+  - platform: template
+    sensors:
+      time_brightness:
+        value_template: >-
+          {%- if now().strftime('%H%M')|int < 600 -%}
+            64
+          {%- elif now().strftime('%H%M')|int < 700 -%}
+            128
+          {%- elif now().strftime('%H%M')|int < 800 -%}
+            192
+          {%- elif now().strftime('%H%M')|int < 2000 -%}
+            255
+          {%- elif now().strftime('%H%M')|int < 2100 -%}
+            192
+          {%- elif now().strftime('%H%M')|int < 2200 -%}
+            128
+          {%- else -%}
+            64
+          {%- endif -%}
+
+#       warnings: false

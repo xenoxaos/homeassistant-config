@@ -1,9 +1,8 @@
 #####################################################################
 ### Broadlink RM Pro
 #####################################################################
-
-- platform: broadlink
-  host: !secret broadlink_ip
-  mac: !secret broadlink_mac
-  monitored_conditions:
-    - 'temperature'
+#- platform: broadlink
+#  host: !secret broadlink_ip
+#  mac: !secret broadlink_mac
+#  monitored_conditions:
+#    - 'temperature'

@@ -1,0 +1,198 @@
+############################################################################
+#    @package          :     climate_upstairs
+#    @description      :     climate_upstairs, and associated automations, scenes, etc.
+############################################################################
+homeassistant:
+  customize:
+    group.upstairs_climate:
+      order: 1
+
+    group.upstairs_cooling:
+        order: 2
+
+    group.upstairs_heating:
+      order: 3
+
+
+    sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1:
+      friendly_name: "Upstairs Temp"
+
+    climate.2gig_technologies_ct101_thermostat_iris_cooling_1_42_2:
+      friendly_name: "Upstairs Cooling Setpoint"
+
+    climate.2gig_technologies_ct101_thermostat_iris_heating_1_42_1:
+      friendly_name: "Upstairs Heating Setpoint"
+
+    sensor.hvac_upstairs_op_state:
+      icon: mdi:air-conditioner
+      haaska_hidden: true
+
+    sensor.hvac_upstairs_fan:
+      icon: mdi:fan
+      haaska_hidden: true
+
+    sensor.hvac_upstairs_ac_setpoint:
+      icon: mdi:snowflake
+      haaska_hidden: true
+
+    sensor.hvac_upstairs_heat_setpoint:
+      icon: mdi:fire
+      haaska_hidden: true
+
+    script.heat_upstairs_60min:
+      friendly_name: "Upstairs Quick Heating"
+      entity_picture: /local/flame.png
+
+    script.cool_upstairs_60min:
+      friendly_name: "Upstairs Quick Cooling"
+      entity_picture: /local/snowflake.png
+
+    input_slider.upstairs_heat:
+      icon: mdi:nest-thermostat
+
+    input_slider.upstairs_ac:
+      icon: mdi:nest-thermostat
+
+    sensor.upstairs_thermostat_statistics_mean:
+      friendly_name: Upstairs Thermostat Mean Temp
+      icon: mdi:chart-areaspline
+
+    sensor.hvac_upstairs_climate:
+      icon: mdi:air-conditioner
+
+
+group:
+  Upstairs Climate:
+    entities:
+      - sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1
+      - sensor.hvac_upstairs_op_state
+      - sensor.hvac_upstairs_mode
+      - sensor.us_climate_control
+      - sensor.hvac_upstairs_fan
+      - sensor.upstairs_thermostat_statistics_mean
+
+  Upstairs Heating:
+    entities:
+      - sensor.hvac_upstairs_heat_setpoint
+      - input_slider.us_low
+      - input_slider.upstairs_heat
+      - script.heat_upstairs_60min
+
+  Upstairs Cooling:
+    entities:
+      - sensor.hvac_upstairs_ac_setpoint
+      - input_slider.us_high
+      - input_slider.upstairs_ac
+      - script.cool_upstairs_60min
+
+
+sensor:
+#####################################################################
+### HVAC Upstairs
+#####################################################################
+## Median Temperature Upstairs
+  - platform: statistics
+    entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1
+    name: Upstairs Thermostat Statistics
+
+  - platform: template
+    sensors:
+      hvac_upstairs_mode:
+        friendly_name: "Upstairs Thermostat Mode"
+        value_template: "{{ states('climate.2gig_technologies_ct101_thermostat_iris_cooling_1_42_2') }}"
+
+      hvac_upstairs_op_state:
+        friendly_name: "Upstairs HVAC State"
+        value_template: "{{ (states.climate['2gig_technologies_ct101_thermostat_iris_cooling_1_42_2'].attributes|default({})).operating_state|default('unknown') }}"
+
+      hvac_upstairs_fan:
+        friendly_name: "Upstairs HVAC Fan"
+        value_template: "{{ (states.climate['2gig_technologies_ct101_thermostat_iris_cooling_1_42_2'].attributes|default({})).fan_state|default('unknown') }}"
+
+      hvac_upstairs_ac_setpoint:
+        friendly_name: "Upstairs AC Setpoint"
+        value_template: "{{ (states.climate['2gig_technologies_ct101_thermostat_iris_cooling_1_42_2'].attributes|default({})).temperature|default('unknown') }}"
+
+      hvac_upstairs_heat_setpoint:
+        friendly_name: "Upstairs Heat Setpoint"
+        value_template: "{{ (states.climate['2gig_technologies_ct101_thermostat_iris_heating_1_42_1'].attributes|default({})).temperature|default('unknown') }}"
+
+#####################################################################
+### Upstairs Climate Control
+#####################################################################
+  - platform: template
+    sensors:
+      us_climate_control:
+        friendly_name: "Upstairs Climate Control"
+        value_template: >-
+          {% set temperature = states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1')|float(none) %}
+          {% set us_low = states.input_slider.us_low.state|default(68)|float %}
+          {% set us_high = states.input_slider.us_high.state|default(81)|float %}
+          {% if temperature is none %}
+            {{ states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1') }}
+          {% elif temperature < us_low %}
+            Cold
+          {% elif temperature > us_high %}
+            Hot
+          {% else %}
+            Comfy
+          {% endif %}
+
+
+script:
+#####################################################################
+### Cool for 1 hour
+#####################################################################
+  cool_upstairs_60min:
+    sequence:
+      - service: climate.set_operation_mode
+        entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_42_2
+        data:
+          operation_mode: 'Cool'
+
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_ac
+          value: 75
+
+      - service: notify.ios_iphwn666
+        data:
+          title: "HVAC Event"
+          message: "Cooling Upstairs for 1 hour starting at {{ states('sensor.date__time') }}"
+
+      - delay: 01:00
+
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_ac
+          value: 83
+
+#####################################################################
+### Heat for 1 hour
+#####################################################################
+  heat_upstairs_60min:
+    sequence:
+      - service: climate.set_operation_mode
+        entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_42_1
+        data:
+          operation_mode: 'Heat'
+
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_heat
+          value: 86
+
+      - service: notify.ios_iphwn666
+        data:
+          title: "HVAC Event"
+          message: "Upstairs Quick Heat started at {{ states('sensor.date__time') }}"
+
+      - delay: 01:00
+
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_heat
+          value: 66
+
+
+# automation: (see automations folder)

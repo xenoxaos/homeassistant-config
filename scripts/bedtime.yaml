@@ -1,61 +1,61 @@
 #####################################################################
 ### Bedtime
 #####################################################################
-bedtime:
-  sequence:
-
-### Lock the doors
-  - service: lock.lock
-
-  - service: input_boolean.turn_on
-    data:
-      entity_id: input_boolean.bedtime
-
-### Turn off outlets and devices
-  - service: homeassistant.turn_off
-    entity_id: group.things
-
-### Turn off the billiards room lights
-  - service: switch.turn_off
-    entity_id: switch.billiards_room
-
-### Set master bedroom chandelier to dim
-  - service: light.turn_on
-    entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
-    data:
-      brightness: 50
-
-### Turn on the under-bed lights
-  - service: light.turn_on
-    data:
-      entity_id: light.under_bed_lights
-      rgb_color: [0,55,55]
-
-  - delay:
-      minutes: 5
-
-### dim master bed chandelier
-  - service: light.turn_on
-    entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
-    data:
-      brightness: 40
-
-  - delay:
-      minutes: 7
-
-### turn_off master bed chandelier
-  - service: light.turn_off
-    entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
-    data:
-      transition: 60
-
-  # turn off all remaining lights
-  - service: homeassistant.turn_off
-    entity_id: group.interior_lights
-
-  - delay:
-      minutes: 1.5
-
-### Turn off the under-bed lights
-  - service: light.turn_off
-    entity_id: light.under_bed_lights
+#bedtime:
+#  sequence:
+#
+#### Lock the doors
+#  - service: lock.lock
+#
+#  - service: input_boolean.turn_on
+#    data:
+#      entity_id: input_boolean.bedtime
+#
+#### Turn off outlets and devices
+#  - service: homeassistant.turn_off
+#    entity_id: group.things
+#
+#### Turn off the billiards room lights
+#  - service: switch.turn_off
+#    entity_id: switch.billiards_room
+#
+#### Set master bedroom chandelier to dim
+#  - service: light.turn_on
+#    entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+#    data:
+#      brightness: 50
+#
+#### Turn on the under-bed lights
+#  - service: light.turn_on
+#    data:
+#      entity_id: light.under_bed_lights
+#      rgb_color: [0,55,55]
+#
+#  - delay:
+#      minutes: 5
+#
+#### dim master bed chandelier
+#  - service: light.turn_on
+#    entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+#    data:
+#      brightness: 40
+#
+#  - delay:
+#      minutes: 7
+#
+#### turn_off master bed chandelier
+#  - service: light.turn_off
+#    entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+#    data:
+#      transition: 60
+#
+#  # turn off all remaining lights
+#  - service: homeassistant.turn_off
+#    entity_id: group.interior_lights
+#
+#  - delay:
+#      minutes: 1.5
+#
+#### Turn off the under-bed lights
+#  - service: light.turn_off
+#    entity_id: light.under_bed_lights

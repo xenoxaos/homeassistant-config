@@ -2,102 +2,101 @@
 #####################################################################
 ### Fibaro Motion Detector status
 #####################################################################
+#- platform: template
+#  sensors:
+#    fibaro_state:
+#      value_template: >-
+#        {% set state = states('sensor.fibaro_system_fgms001_motion_sensor_burglar_22_10') %}
+#        {% if state == '0' %}
+#          Idle
+#        {% elif state == '8' %}
+#          Motion Detected
+#        {% elif state == '3' %}
+#          Tamper
+#        {% elif state == '254' %}
+#          Sleeping
+#        {% else %}
+#          {{ state|title }}
+#        {% endif %}
 
-- platform: template
-  sensors:
-    fibaro_state:
-      value_template: >-
-        {% set state = states('sensor.fibaro_system_fgms001_motion_sensor_burglar_22_10') %}
-        {% if state == '0' %}
-          Idle
-        {% elif state == '8' %}
-          Motion Detected
-        {% elif state == '3' %}
-          Tamper
-        {% elif state == '254' %}
-          Sleeping
-        {% else %}
-          {{ state|title }}
-        {% endif %}
-
-#####################################################################
-###  Beach Door Status
-#####################################################################
-
-- platform: template
-  sensors:
-    lock_beach_door_status:
-      friendly_name: "Beach Door Status"
-      value_template: >-
-        {% set state = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_40_0') %}
-        {% set user = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_level_40_1') %}
-        
-        {% if state == '19' %}
-          {% if user == '1' %}
-            Unlocked by Rick
-          {% elif user == '2' %}
-            Unlocked by Megs
-          {% elif user == '3' %}
-            Unlocked by Guest
-          {% else %}
-            Unlocked by user {{ user }}
-          {% endif %}
-        {% elif state == '21' %}
-          Manually Locked
-        {% elif state == '22' %}
-          Manually Unlocked
-        {% elif state == '24' %}
-          Auto Locked
-        {% elif state == '25' %}
-          Auto Unlocked
-        {% elif state == '27' %}
-          Auto-Relocked
-        {% elif state == '161' %}
-          Tamper
-        {% else %}
-          {{ state|title }}
-        {% endif %}
-
-
-#####################################################################
-###  South Door Status
-#####################################################################
-
-- platform: template
-  sensors:
-    lock_south_door_status:
-      friendly_name: "South Door Status"
-      value_template: >-
-        {% set state = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_43_0') %}
-        {% set user = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_level_43_1') %}
-        
-        {% if state == '19' %}
-          {% if user == '1' %}
-            Unlocked by Rick
-          {% elif user == '2' %}
-            Unlocked by Megs
-          {% elif user == '3' %}
-            Unlocked by Housekeeper
-          {% elif user == '4' %}
-            Unlocked by Dog Sitter
-          {% else %}
-            Unlocked by user {{ user }}
-          {% endif %}
-        {% elif state == '21' %}
-          Manually Locked
-        {% elif state == '22' %}
-          Manually Unlocked
-        {% elif state == '24' %}
-          Auto Locked
-        {% elif state == '25' %}
-          Auto Unlocked
-        {% elif state == '27' %}
-          Auto-Relocked
-        {% elif state == '161' %}
-          Tamper
-        {% else %}
-          {{ state|title }}
-        {% endif %}
+######################################################################
+####  Beach Door Status
+######################################################################
+#
+#- platform: template
+#  sensors:
+#    lock_beach_door_status:
+#      friendly_name: "Beach Door Status"
+#      value_template: >-
+#        {% set state = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_40_0') %}
+#        {% set user = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_level_40_1') %}
+#        
+#        {% if state == '19' %}
+#          {% if user == '1' %}
+#            Unlocked by Rick
+#          {% elif user == '2' %}
+#            Unlocked by Megs
+#          {% elif user == '3' %}
+#            Unlocked by Guest
+#          {% else %}
+#            Unlocked by user {{ user }}
+#          {% endif %}
+#        {% elif state == '21' %}
+#          Manually Locked
+#        {% elif state == '22' %}
+#          Manually Unlocked
+#        {% elif state == '24' %}
+#          Auto Locked
+#        {% elif state == '25' %}
+#          Auto Unlocked
+#        {% elif state == '27' %}
+#          Auto-Relocked
+#        {% elif state == '161' %}
+#          Tamper
+#        {% else %}
+#          {{ state|title }}
+#        {% endif %}
+#
+#
+######################################################################
+####  South Door Status
+######################################################################
+#
+#- platform: template
+#  sensors:
+#    lock_south_door_status:
+#      friendly_name: "South Door Status"
+#      value_template: >-
+#        {% set state = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_43_0') %}
+#        {% set user = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_level_43_1') %}
+#        
+#        {% if state == '19' %}
+#          {% if user == '1' %}
+#            Unlocked by Rick
+#          {% elif user == '2' %}
+#            Unlocked by Megs
+#          {% elif user == '3' %}
+#            Unlocked by Housekeeper
+#          {% elif user == '4' %}
+#            Unlocked by Dog Sitter
+#          {% else %}
+#            Unlocked by user {{ user }}
+#          {% endif %}
+#        {% elif state == '21' %}
+#          Manually Locked
+#        {% elif state == '22' %}
+#          Manually Unlocked
+#        {% elif state == '24' %}
+#          Auto Locked
+#        {% elif state == '25' %}
+#          Auto Unlocked
+#        {% elif state == '27' %}
+#          Auto-Relocked
+#        {% elif state == '161' %}
+#          Tamper
+#        {% else %}
+#          {{ state|title }}
+#        {% endif %}
 
 
 #####################################################################

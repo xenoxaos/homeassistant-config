@@ -1,27 +1,27 @@
 #####################################################################
 ### Heat for 1 hour
 #####################################################################
-heat_upstairs_60min:
-  sequence:
-    - service: climate.set_operation_mode
-      entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_42_1
-      data:
-        operation_mode: 'Heat'
-
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.upstairs_heat
-        value: 86
-
-# notify iOS
-    - service: notify.ios_iphwn666
-      data:
-        title: "HVAC Event"
-        message: "Upstairs Quick Heat started at {{ states('sensor.date__time') }}"
-
-    - delay: 01:00
-
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.upstairs_heat
-        value: 66
+#heat_upstairs_60min:
+#  sequence:
+#    - service: climate.set_operation_mode
+#      entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_42_1
+#      data:
+#        operation_mode: 'Heat'
+#
+#    - service: input_slider.select_value
+#      data_template:
+#        entity_id: input_slider.upstairs_heat
+#        value: 86
+#
+## notify iOS
+#    - service: notify.ios_iphwn666
+#      data:
+#        title: "HVAC Event"
+#        message: "Upstairs Quick Heat started at {{ states('sensor.date__time') }}"
+#
+#    - delay: 01:00
+#
+#    - service: input_slider.select_value
+#      data_template:
+#        entity_id: input_slider.upstairs_heat
+#        value: 66

@@ -4,12 +4,10 @@
 ############################################################################
 homeassistant:
   customize:
-## groups
     group.master_bedroom:
       haaska_name: "Master Bedroom Lights"
       order: 6
 
-## Master Bath Roller Shades
     cover.somfy_unknown_type5a52_id5402_level_37_0:
       friendly_name: "Master Bath Shades"
       homebridge_cover_type: rollershutter
@@ -22,23 +20,19 @@ homeassistant:
       homebridge_hidden: true
       icon: mdi:blinds
 
-## MBR Chandelier
     light.ge_12724_3way_dimmer_switch_level_8_0:
       friendly_name: "Master Bedroom Chandelier"
       haaska_name: "Master Bedroom Chandelier"
       icon: mdi:ceiling-light
 
-## MBR Bed Lights
     light.under_bed_lights:
       friendly_name: "Bed Lights"
       icon: mdi:led-on
 
-## Master Bedroom Sitting Lamp
     light.master_sitting_lamp:
       haaska_hidden: true
       icon: mdi:lamp
 
-## Humidifier
     switch.humidifier:
       friendly_name: "Humidifier"
       icon: mdi:cup-water
@@ -46,10 +40,19 @@ homeassistant:
     script.mbr_night_light:
       icon: mdi:weather-night
 
-## master bedroom night mode
     script.master_bedroom_night_time:
       friendly_name: "Master Bedroom Night Time"
       icon: mdi:weather-night
+
+    script.mbr_fan_speed_step_low:
+      friendly_name: "Master Bedroom Fan Auto Low"
+      icon: mdi:fan
+      haaska_hidden: true
+
+    script.mbr_fan_speed_step_high:
+      friendly_name: "Master Bedroom Fan Auto High"
+      icon: mdi:fan
+      haaska_hidden: true
 
 
 group:
@@ -299,7 +302,6 @@ automation:
       condition: state
       entity_id: switch.humidifier
       state: 'on'
-
 
     action:
       service: switch.turn_off
