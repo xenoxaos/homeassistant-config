@@ -120,23 +120,14 @@ ios:
 ####################################################
 alexa: !include alexa.yaml
 automation: !include_dir_merge_list automation/
-#binary_sensor: !include binary_sensors.yaml
-#camera: !include cameras.yaml
-#device_tracker: !include device_trackers.yaml
 group: !include groups.yaml
 input_boolean: !include input_boolean.yaml
 input_select: !include input_select.yaml
 input_slider: !include input_slider.yaml
-#light: !include lights.yaml
-#media_player: !include media_players.yaml
 notify: !include notify.yaml
-#proximity: !include proximity.yaml
-#scene: !include_dir_merge_list scenes/
 script: !include_dir_merge_named scripts
-#sensor: !include_dir_merge_list sensors/
 switch: !include switches.yaml
 #tts: !include tts.yaml
-
 #panel_iframe: !include iframe.yaml
 #emulated_hue: !include emulated_hue.yaml
 #binary_sensor: !include binary_sensors.yaml
