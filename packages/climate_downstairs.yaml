@@ -4,168 +4,125 @@
 ############################################################################
 homeassistant:
   customize:
-## groups
-    group.climate_status:
-      order: 1
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'climate_downstairs'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Group
+    ################################################
     group.downstairs_climate:
-      order: 1
-    group.downstairs_cooling:
-      order: 2
-    group.downstairs_heating:
-      order: 3
+      <<: *contained
+      #order: 1
 
+    group.downstairs_ecobee:
+      <<: *contained
+      #order: 1
 
-    sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1:
-      friendly_name: "Downstairs Temp"
+    script.ecobee_home:
+      <<: *contained
+      friendly_name: "Ecobee Home"
+      entity_picture: /local/ecobee.png
 
-    climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2:
-      friendly_name: "Downstairs Cooling Setpoint"
+    script.ecobee_away:
+      <<: *contained
+      friendly_name: "Ecobee Away"
+      entity_picture: /local/ecobee.png
 
-    climate.2gig_technologies_ct101_thermostat_iris_heating_1_18_1:
-      friendly_name: "Downstairs Heating Setpoint"
+    script.ecobee_sleep:
+      <<: *contained
+      friendly_name: "Ecobee Sleep"
+      entity_picture: /local/ecobee.png
 
-    sensor.hvac_downstairs_op_state:
-      icon: mdi:air-conditioner
-      haaska_hidden: true
+    script.ecobee_resume:
+      <<: *contained
+      friendly_name: "Ecobee Resume"
+      entity_picture: /local/ecobee.png
 
-    sensor.hvac_downstairs_fan:
-      icon: mdi:fan
-      haaska_hidden: true
-
-    sensor.hvac_downstairs_ac_setpoint:
-      icon: mdi:snowflake
-      haaska_hidden: true
-
-    sensor.hvac_downstairs_heat_setpoint:
-      icon: mdi:fire
-      haaska_hidden: true
-
-    script.heat_downstairs_60min:
-      friendly_name: "Downstairs Quick Heating"
-      entity_picture: /local/flame.png
-
-    script.cool_downstairs_60min:
-      friendly_name: "Downstairs Quick Cooling"
-      entity_picture: /local/snowflake.png
-
-    input_slider.downstairs_heat:
-      icon: mdi:nest-thermostat
-
-    input_slider.downstairs_ac:
-      icon: mdi:nest-thermostat
-
-## HVAC Downstairs Thermostat Mode
-    sensor.hvac_downstairs_mode:
-      icon: mdi:nest-thermostat
-
-## HVAC Downstairs Mean Temp
-    sensor.downstairs_thermostat_statistics_mean:
-      friendly_name: Downstairs Thermostat Mean Temp
+    sensor.ds_avg_temp:
+      <<: *contained
       icon: mdi:chart-areaspline
 
-## Downstairs Front Entry Fibaro Temperature
-    sensor.fibaro_system_fgms001_motion_sensor_temperature_22_1:
-      friendly_name: Front Entry Temperature
+    sensor.downstairs_humidity:
+      <<: *contained
+      icon: mdi:water-percent
+
+    sensor.front_entry_fibaro_multisensor_temperature:
+      <<: *contained
+      friendly_name: "Front Entry Temperature"
       icon: mdi:thermometer
 
-## Downstairs Broadlink Sensor
     sensor.broadlink_sensor_temperature:
-      friendly_name: Entryway Temperature
+      <<: *contained
+      friendly_name: "Entryway Temperature"
       icon: mdi:thermometer
 
-## HVAC Downstairs Climate
-    sensor.hvac_downstairs_climate:
-      icon: mdi:air-conditioner
 
-
+#####################################################################
+### Group
+#####################################################################
 group:
   Downstairs Climate:
     entities:
-      - sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-      - sensor.fibaro_system_fgms001_motion_sensor_temperature_22_1
+      - sensor.ds_avg_temp
+      - climate.downstairs
+      - sensor.downstairs_temperature
+      - sensor.living_room_temperature
+      - sensor.office_temperature
+      - sensor.front_entry_fibaro_multisensor_temperature
       - sensor.broadlink_sensor_temperature
-      - sensor.hvac_downstairs_op_state
-      - sensor.hvac_downstairs_mode
-      - sensor.ds_climate_control
-      - sensor.hvac_downstairs_fan
-      - sensor.downstairs_thermostat_statistics_mean
+      - sensor.downstairs_humidity
 
-  Downstairs Heating:
+  Downstairs Ecobee:
+    control: hidden
     entities:
-      - sensor.hvac_downstairs_heat_setpoint
-      - input_slider.ds_low
-      - input_slider.downstairs_heat
-      - script.heat_downstairs_60min
-
-  Downstairs Cooling:
-    entities:
-      - sensor.hvac_downstairs_ac_setpoint
-      - input_slider.ds_high
-      - input_slider.downstairs_ac
-      - script.cool_downstairs_60min
+      - script.ecobee_home
+      - script.ecobee_away
+      - script.ecobee_sleep
+      - script.ecobee_resume
 
 
+#####################################################################
+### Ecobee
+#####################################################################
+ecobee:
+  api_key: !secret ecobee_api_key
+  hold_temp: True
+
+
+#####################################################################
+### Sensor
+#####################################################################
 sensor:
-#####################################################################
-### HVAC Downstairs
-#####################################################################
-## Median Temperature Downstairs
-  - platform: statistics
-    entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1
-    name: Downstairs Thermostat Statistics
-
   - platform: template
     sensors:
-## Downstairs Thermostat Mode
-      hvac_downstairs_mode:
-        friendly_name: "Downstairs Thermostat Mode"
-## This automatically returns "unknown" if the state is not set
-        value_template: "{{ states('climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2') }}"
-
-## Downstairs Operating State
-      hvac_downstairs_op_state:
-        friendly_name: "Downstairs HVAC State"
-        value_template: "{{ (states.climate['2gig_technologies_ct101_thermostat_iris_cooling_1_18_2'].attributes|default({})).operating_state|default('unknown') }}"
-
-## Downstairs Fan State
-      hvac_downstairs_fan:
-        friendly_name: "Downstairs HVAC Fan"
-        value_template: "{{ (states.climate['2gig_technologies_ct101_thermostat_iris_cooling_1_18_2'].attributes|default({})).fan_state|default('unknown') }}"
-
-## Downstairs AC Temp Setpoint
-      hvac_downstairs_ac_setpoint:
-        friendly_name: "Downstairs AC Setpoint"
-        value_template: "{{ (states.climate['2gig_technologies_ct101_thermostat_iris_cooling_1_18_2'].attributes|default({})).temperature|default('unknown') }}"
-
-## Downstairs Heat Temp Setpoint
-      hvac_downstairs_heat_setpoint:
-        friendly_name: "Downstairs Heat Setpoint"
-        value_template: "{{ (states.climate['2gig_technologies_ct101_thermostat_iris_heating_1_18_1'].attributes|default({})).temperature|default('unknown') }}"
-
-#####################################################################
-### Downstairs Climate Control
-#####################################################################
-  - platform: template
-    sensors:
-      ds_climate_control:
-        friendly_name: "Downstairs Climate Control"
+      ds_avg_temp:
+        friendly_name: "Downstairs Average Temperature"
+        unit_of_measurement: "F"
         value_template: >-
-          {% set temperature = states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1')|float(none) %}
-          {% set ds_low = states.input_slider.ds_low.state|default(69)|float %}
-          {% set ds_high = states.input_slider.ds_high.state|default(79)|float %}
-          {% if temperature is none %}
-            {{ states('sensor.2gig_technologies_ct101_thermostat_iris_temperature_18_1') }}
-          {% elif temperature < ds_low %}
-            Cold
-          {% elif temperature > ds_high %}
-            Hot
-          {% else %}
-            Comfy
-          {% endif %}
+          {{ ((float(states.sensor.downstairs_temperature.state) + float(states.sensor.living_room_temperature.state) + float(states.sensor.office_temperature.state) + float(states.sensor.front_entry_fibaro_multisensor_temperature.state) + float(states.sensor.broadlink_sensor_temperature.state)) / 5) | round(1) }}
 
-#####################################################################
-### Broadlink RM Pro
-#####################################################################
+
+  ################################################
+  ## Broadlink RM 2 Pro
+  ################################################
   - platform: broadlink
     host: !secret broadlink_ip
     mac: !secret broadlink_mac
@@ -173,62 +130,80 @@ sensor:
       - 'temperature'
 
 
+#####################################################################
+### Script
+#####################################################################
 script:
-#####################################################################
-### Cool for 1 hour
-#####################################################################
-  cool_downstairs_60min:
+  ecobee_sleep:
     sequence:
-      - service: climate.set_operation_mode
-        entity_id: climate.2gig_technologies_ct101_thermostat_iris_cooling_1_18_2
+      - service: climate.set_hold_mode
         data:
-          operation_mode: 'Cool'
+          entity_id: climate.downstairs
+          hold_mode: 'sleep'
 
-      - service: input_slider.select_value
-        data_template:
-          entity_id: input_slider.downstairs_ac
-          value: 75
-
-# notify iOS
-      - service: notify.ios_iphwn666
-        data:
-          title: "HVAC Event"
-          message: "Cooling Downstairs for 1 hour starting at {{ states('sensor.date__time') }}"
-
-      - delay: 01:00
-
-      - service: input_slider.select_value
-        data_template:
-          entity_id: input_slider.downstairs_ac
-          value: 79
-
-#####################################################################
-### Heat for 1 hour
-#####################################################################
-  heat_downstairs_60min:
+  ecobee_home:
     sequence:
-      - service: climate.set_operation_mode
-        entity_id: climate.2gig_technologies_ct101_thermostat_iris_heating_1_18_1
+      - service: climate.set_hold_mode
         data:
-          operation_mode: 'Heat'
+          entity_id: climate.downstairs
+          hold_mode: 'home'
 
-      - service: input_slider.select_value
-        data_template:
-          entity_id: input_slider.downstairs_heat
-          value: 84
-
-## notify iOS
-      - service: notify.ios_iphwn666
+  ecobee_away:
+    sequence:
+      - service: climate.set_hold_mode
         data:
-          title: "HVAC Event"
-          message: "Heating Downstairs for 1 hour starting at {{ states('sensor.date__time') }}"
+          entity_id: climate.downstairs
+          hold_mode: 'away'
 
-      - delay: 01:00
+  ecobee_resume:
+    sequence:
+      - service: climate.ecobee_resume_program
+        data:
+          entity_id: climate.downstairs
+          resume_all: 'true'
 
-      - service: input_slider.select_value
-        data_template:
-          entity_id: input_slider.downstairs_heat
-          value: 68
+
+#####################################################################
+### Automation
+#####################################################################
+automation:
+  - alias: downstairs cooling schedule
+    trigger:
+      - platform: time
+        at: '06:00:00'
+
+    condition:
+      condition: or
+      conditions:
+        - condition: state
+          entity_id: group.all_devices
+          state: 'home'
+
+        - condition: state
+          entity_id: input_boolean.visitor_mode
+          state: 'on'
+
+    action:
+      - service: climate.set_hold_mode
+        data:
+          entity_id: climate.downstairs
+          hold_mode: 'home'
 
 
-# automation: (see automations folder)
+  - alias: downstairs climate sleep mode
+    trigger:
+      - platform: state
+        entity_id: script.bedtime
+        from: 'off'
+        to: 'on'
+
+      - platform: state
+        entity_id: input_boolean.after_hours
+        from: 'off'
+        to: 'on'
+
+    action:
+      - service: climate.set_hold_mode
+        data:
+          entity_id: climate.downstairs
+          hold_mode: 'sleep'

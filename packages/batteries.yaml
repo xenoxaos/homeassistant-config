@@ -4,38 +4,74 @@
 #####################################################################
 homeassistant:
   customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'batteries'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Group
+    ################################################
+    group.device_status:
+      <<: *contained
+
+    ################################################
+    ## Sensor
+    ################################################
     sensor.lock_beach_battery:
+      <<: *contained
       icon: mdi:battery-charging
+
     sensor.lock_south_battery:
+      <<: *contained
       icon: mdi:battery-charging
 
     sensor.iphwn666_battery_level:
+      <<: *contained
       friendly_name: "Rick's Phone Battery"
       icon: mdi:cellphone-iphone
 
     sensor.iphone7_battery_level:
+      <<: *contained
       friendly_name: "Meg's Phone Battery"
       icon: mdi:cellphone-iphone
 
-
+#####################################################################
+### Group
+#####################################################################
 group:
   Device Status:
     entities:
       - sensor.iphwn666_battery_level
       - sensor.iphone7_battery_level
 
-
+#####################################################################
+### Sensor
+#####################################################################
 sensor:
-#####################################################################
-### BATTERY STATUS - LOCKS
-#####################################################################
   - platform: template
     sensors:
       lock_beach_battery:
         friendly_name: "Beach Lock Battery"
         value_template: >-
-          {%- if states.zwave.assa_abloy_yale_real_living_captouch_lever_40.attributes.battery_level != None -%}
-            {{ states.zwave.assa_abloy_yale_real_living_captouch_lever_40.attributes.battery_level }}
+          {%- if states.zwave.bathroom_entry.attributes.battery_level != None -%}
+            {{ states.zwave.bathroom_entry.attributes.battery_level }}
           {%- else -%}
             Unknown
           {%- endif -%}
@@ -47,10 +83,9 @@ sensor:
       lock_south_battery:
         friendly_name: "South Lock Battery"
         value_template: >-
-          {%- if states.zwave.assa_abloy_yale_real_living_captouch_lever_43.attributes.battery_level != None -%}
-            {{ states.zwave.assa_abloy_yale_real_living_captouch_lever_43.attributes.battery_level }}
+          {%- if states.zwave.south_entry.attributes.battery_level != None -%}
+            {{ states.zwave.south_entry.attributes.battery_level }}
           {%- else -%}
             Unknown
           {%- endif -%}
         unit_of_measurement: '%'
-

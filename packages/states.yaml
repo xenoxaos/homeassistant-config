@@ -1,32 +1,68 @@
 ############################################################################
-#    @package          :     state sensors and monitors
-#    @description      :     state sensors, and associated automations, scenes, etc.
+#    @package          :     states
+#    @description      :     states, booleans, and associated automations
 ############################################################################
 homeassistant:
   customize:
-## Peak Hours
-    sensor.peak_hours_status:
-      icon: mdi:clock
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'states'
 
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
 
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
 
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Sensor
+    ################################################
+    sensor.time_brightness:
+      <<: *hidden
+
+    ################################################
+    ## Binary Sensor
+    ################################################
+    binary_sensor.workday:
+      <<: *contained
+
+    ################################################
+    ## Input Boolean
+    ################################################
+    input_boolean.peak_hours:
+      <<: *hidden
+
+    input_boolean.after_hours:
+      <<: *hidden
+
+    input_boolean.rain:
+      <<: *contained
+
+################################################################
+## Binary Sensor
+################################################################
 binary_sensor:
 ## Workday Sensor
   - platform: workday
     country: US
 
 
+################################################################
+## Sensor
+################################################################
 sensor:
-## Peak Hours
-  - platform: template
-    sensors:
-      peak_hours_status:
-        value_template: "{{ is_state('input_boolean.peak_hours', 'on') or false }}"
-        friendly_name: "Peak Hours"
-
-################################################################
-## Sensor / Time Based Brightness
-################################################################
+  ### Time Based Brightness
   - platform: template
     sensors:
       time_brightness:
@@ -48,3 +84,206 @@ sensor:
           {%- endif -%}
 
 #       warnings: false
+
+
+#####################################################################
+### Input Boolean
+#####################################################################
+input_boolean:
+  visitor_mode:
+    name: Visitor Mode
+    initial: off
+    icon: mdi:account
+
+  holiday:
+    name: Holiday Mode
+    initial: off
+
+  peak_hours:
+    name: Peak Hours
+    icon: mdi:clock
+
+  after_hours:
+    name: After Hours
+    icon: mdi:clock
+
+  bedtime:
+    name: Bedtime
+    icon: mdi:hotel
+
+  rain:
+    name: Rain
+    icon: mdi:weather-rainy
+
+  dinner_time:
+    name: Dinner Time
+    initial: off
+
+
+#####################################################################
+### Automation
+#####################################################################
+automation:
+  - alias: peak hours on
+    hide_entity: True
+    trigger:
+      - platform: time
+        at: '15:00:00'
+
+    condition:
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+
+      - condition: state
+        entity_id: input_boolean.holiday
+        state: 'off'
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.peak_hours
+
+
+  - alias: peak hours off
+    hide_entity: True
+    trigger:
+      - platform: time
+        at: '18:00:00'
+
+      - platform: state
+        entity_id: input_boolean.holiday
+        from: 'off'
+        to: 'on'
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.peak_hours
+        state: 'on'
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.peak_hours
+
+
+  - alias: after hours on weekdays
+    hide_entity: True
+    trigger:
+      - platform: time
+        at: '23:30:00'
+
+    condition:
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - sun
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.after_hours
+
+
+  - alias: after hours off weekdays
+    hide_entity: True
+    trigger:
+      - platform: time
+        at: '04:00:00'
+
+    condition:
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.after_hours
+
+
+  - alias: after hours on weekends
+    hide_entity: True
+
+    trigger:
+      - platform: time
+        at: '01:00:00'
+
+    condition:
+      - condition: time
+        weekday:
+          - sat
+          - sun
+
+    action:
+      - service: input_boolean.turn_on
+        data:
+          entity_id: input_boolean.after_hours
+
+
+  - alias: after hours off weekends
+    hide_entity: True
+    trigger:
+      - platform: time
+        at: '08:00:00'
+
+    condition:
+      - condition: time
+        weekday:
+          - sat
+          - sun
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.after_hours
+
+
+  - alias: bedtime off weekdays
+    hide_entity: True
+    trigger:
+      - platform: time
+        at: '04:00:00'
+
+    condition:
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - fri
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.bedtime
+
+
+  - alias: bedtime off weekends
+    hide_entity: True
+    trigger:
+      - platform: time
+        at: '08:00:00'
+
+    condition:
+      - condition: time
+        weekday:
+          - sat
+          - sun
+
+    action:
+      - service: input_boolean.turn_off
+        data:
+          entity_id: input_boolean.bedtime

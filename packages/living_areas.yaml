@@ -4,78 +4,133 @@
 #####################################################################
 homeassistant:
   customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'living_areas'
 
-## groups
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Group
+    ################################################
+    group.default_view:
+      <<: *contained
+
     group.living_room:
+      <<: *contained
       order: 1
 
     group.entry_lighting:
+      <<: *contained
       order: 2
+
+    group.interior:
+      <<: *contained
+
+    group.downstairs:
+      <<: *contained
+
+    group.upstairs:
+      <<: *contained
+
+    group.lighting_scenes:
+      <<: *contained
+
+    group.scenes:
+      <<: *contained
+
+    group.stateless_lights:
+      <<: *contained
 
     group.accent_lights:
       friendly_name: "Accent Lights"
       order: 3
 
     group.billiards_room:
+      <<: *contained
       friendly_name: "Billiards Room"
       order: 8
 
+    group.interior_lights:
+      haaska_name: "Interior Lights"
 
-## Billiards Room Lights
-    switch.ge_45609_onoff_relay_switch_switch_2_0:
-      friendly_name: "Billiards Lights"
+
+    ################################################
+    ## Switch
+    ################################################
+    switch.billiards_room_lights_switch:
+      friendly_name: "Billiards Room Lights"
       icon: mdi:ceiling-light
 
-## Accent - Staircase Lamp
     switch.staircase_accent_lamp:
       haaska_name: "Staircase Lamp"
       icon: mdi:lamp
 
-## Accent - Wine Room Lamp
     switch.wine_room_accent_lamp:
       haaska_name: "Wine Room Lamp"
       icon: mdi:lamp
 
-## Living Room Lamp
+    ################################################
+    ## Light
+    ################################################
     light.living_room_lamp:
-      haaska_hidden: true
+      <<: *contained
       icon: mdi:lamp
 
-## Entryway Lights
     light.south_entry:
-      haaska_hidden: true
+      <<: *contained
       icon: mdi:white-balance-incandescent
 
     light.kitchen_entry:
-      haaska_hidden: true
+      <<: *contained
       icon: mdi:white-balance-incandescent
 
     light.center_entry:
-      haaska_hidden: true
+      <<: *contained
       icon: mdi:white-balance-incandescent
 
-## Ceiling Lights
     light.northeast_ceiling:
-      haaska_hidden: true
+      <<: *contained
       icon: mdi:white-balance-incandescent
 
     light.northwest_ceiling:
-      haaska_hidden: true
+      <<: *contained
       icon: mdi:white-balance-incandescent
 
     light.southeast_ceiling:
-      haaska_hidden: true
+      <<: *contained
       icon: mdi:white-balance-incandescent
 
     light.southwest_ceiling:
-      haaska_hidden: true
+      <<: *contained
       icon: mdi:white-balance-incandescent
 
+    ################################################
+    ## Input Select
+    ################################################
     input_select.living_room_fan_speed:
       icon: mdi:fan
-      haaska_hidden: true
+      <<: *contained
 
 
+#####################################################################
+### Group
+#####################################################################
 group:
   Accent Lights:
     entities:
@@ -95,6 +150,8 @@ group:
       - light.living_room_lamp
       - group.living_room_ceiling
       - switch.living_room_fan_light
+      ## roomba charger
+      - switch.switch_four
 
   Living Room Ceiling:
     entities:
@@ -105,17 +162,59 @@ group:
 
   Billiards Room:
     entities:
-      - switch.ge_45609_onoff_relay_switch_switch_2_0
+      - switch.billiards_room_lights_switch
 
+
+#####################################################################
+### Input Select
+#####################################################################
+input_select:
+  ### Living Room Ceiling Fan Speed
+  living_room_fan_speed:
+    name: Living  Room Fan
+    initial: "Select an option..."
+    options:
+      - "Select an option..."
+      - "Off"
+      - "Low"
+      - "Medium"
+      - "High"
+
+  ### Living Room TV
+  living_room_tv_input:
+    name: Living Room TV Input
+    initial: "Select an option..."
+    options:
+      - "Select an option..."
+      - "DirecTV"
+      - "Fire TV"
+      - "Chromecast"
+
+  ### Living Room Amp
+  onkyo_amp_input:
+    name: Onkyo Amp Input
+    initial: "Select an option..."
+    options:
+      - "Select an option..."
+      - "TV"
+      - "Movie"
+      - "DVD"
+      - "iPod"
+
+#####################################################################
+### Light
+#####################################################################
 light:
   - platform: hue
     host: !secret hue_host
     allow_unreachable: true
 
+
+#####################################################################
+### Switch
+#####################################################################
 switch:
-#####################################################################
-### Sonoff Wifi Switches
-#####################################################################
+  ### Sonoff wifi switches
   - platform: mqtt
     name: "Staircase Accent Lamp"
     command_topic: "cmnd/sonoff0/power"
@@ -153,154 +252,125 @@ switch:
     retain: true
 
 
+#####################################################################
+### Scene
+#####################################################################
 scene:
-#####################################################################
-### Living Room Bright
-#####################################################################
   - name: Living Room Bright
     entities:
-
-# turn on entryway lighting
       group.entry_lighting:
         state: on
         brightness: 255
         transition: 5
 
-# turn on the living room lamp
       light.living_room_lamp:
         state: on
         brightness: 255
         transition: 5
 
-# turn on the hue living_room_ceiling lights
       group.living_room_ceiling:
         state: on
         brightness: 255
         transition: 5
 
-# turn on the kitchen lights
-      light.ge_12724_3way_dimmer_switch_level_33_0:
+      light.kitchen_lights_level:
         state: on
         brightness: 255
 
-#####################################################################
-### Living Room Normal
-#####################################################################
+
   - name: Living Room Normal
     entities:
-
-# turn on kitchen entry light
       light.kitchen_entry:
         state: on
         brightness: 200
         transition: 30
 
-  # turn on the south entry light
       light.south_entry:
         state: on
         brightness: 160
         transition: 10
 
-# turn on the center entry light
       light.center_entry:
         state: on
         brightness: 50
         transition: 10
 
-# turn on the living room lamp
       light.living_room_lamp:
         state: on
         brightness: 255
         transition: 10
 
-# turn off the hue living_room_ceiling lights
       group.living_room_ceiling:
         state: off
         transition: 10
 
-#####################################################################
-### Living Room Dim
-#####################################################################
+
   - name: Living Room Dim
     entities:
-
-# turn on kitchen entry light
       light.kitchen_entry:
         state: on
         brightness: 150
         transition: 30
 
-# turn on the south entry light
       light.south_entry:
         state: on
         brightness: 75
         transition: 10
 
-# turn on the center entry light
       light.center_entry:
         state: on
         brightness: 50
         transition: 10
 
-# turn on the living room lamp
       light.living_room_lamp:
         state: on
         brightness: 100
         transition: 15
 
-# turn on the hue living_room_ceiling lights
       group.living_room_ceiling:
         state: on
         brightness: 50
         transition: 20
 
-#####################################################################
-### Living Room Cloudy
-#####################################################################
+
   - name: Living Room Cloudy
     entities:
-
-# turn on kitchen entry light
       light.kitchen_entry:
         state: on
         brightness: 90
         transition: 10
 
-# turn on the south entry light
       light.south_entry:
         state: on
         brightness: 90
         transition: 10
 
-# turn on the center entry light
       light.center_entry:
         state: on
         brightness: 90
         transition: 10
 
-# turn on the living room lamp
       light.living_room_lamp:
         state: on
         brightness: 254
         transition: 30
 
-# turn on the hue living_room_ceiling lights
       group.living_room_ceiling:
         state: on
         brightness: 75
         transition: 10
 
 
+#####################################################################
+### Automation
+#####################################################################
 automation:
-#####################################################################
-### Turn on the living room lamp at sunset everyday
-#####################################################################
   - alias: turn on living room lamp at sunset
     hide_entity: True
     trigger:
       - platform: sun
         event: sunset
-        offset: '-00:08:00'
+        offset: '-00:15:00'
 
     action:
       - service: light.turn_on
@@ -309,9 +379,7 @@ automation:
           brightness: 255
           transition: 600
 
-#####################################################################
-### Turn off the living room lamp on weekdays
-#####################################################################
+
   - alias: turn off living room lamp weekdays
     trigger:
       platform: time
@@ -336,9 +404,7 @@ automation:
           entity_id: light.living_room_lamp
           transition: 10
 
-#####################################################################
-### Turn off the living room lamp on weekends
-#####################################################################
+
   - alias: turn off living room lamp weekends
     trigger:
       platform: time
@@ -356,9 +422,7 @@ automation:
           entity_id: light.living_room_lamp
           transition: 10
 
-#####################################################################
-### Turn off the living room lamp when we are away during the daytime
-#####################################################################
+
   - alias: turn off living room lamp away
     trigger:
       platform: state
@@ -382,31 +446,33 @@ automation:
       - service: light.turn_off
         entity_id: light.living_room_lamp
 
-#####################################################################
-### Set the Living Room Normal Scene (if home)
-#####################################################################
-  - alias: turn on living room scene after sunset
+
+  - alias: turn on living room scene at sunset
     hide_entity: True
     trigger:
       - platform: sun
         event: sunset
-        offset: '00:15:00'
+        offset: '-00:05:00'
 
     condition:
-      - condition: state
-        entity_id: group.all_devices
-        state: 'home'
-
       - condition: template
         value_template: "{{ states.media_player.kodi_living_room.state != 'playing' }}"
+
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: group.all_devices
+            state: 'home'
+
+          - condition: state
+            entity_id: input_boolean.visitor_mode
+            state: 'on'
 
     action:
       - service: scene.turn_on
         entity_id: scene.living_room_normal
 
-#####################################################################
-### Brighten the home once we are awake and getting ready for work
-#####################################################################
+
   - alias: brighten the house once sun is up
     hide_entity: True
     trigger:
@@ -428,23 +494,18 @@ automation:
       - service: scene.turn_on
         entity_id: scene.living_room_bright
 
-## kitchen max brightness
       - service: light.turn_on
-        entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+        entity_id: light.kitchen_lights_level
         data:
           brightness: 255
 
-## turn off the master bedroom chandelier
       - service: light.turn_off
-        entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+        entity_id: light.master_bedroom_chandelier_level
 
-## turn off the accent lights
       - service: homeassistant.turn_off
         entity_id: group.accent_lights
 
-#####################################################################
-### Turn off the lights after the sun is up high
-#####################################################################
+
   - alias: turn off lights once sun is up high enough
     hide_entity: True
     trigger:
@@ -465,9 +526,7 @@ automation:
       - service: homeassistant.turn_off
         entity_id: group.interior_lights
 
-#####################################################################
-### Turn on some lights when we get home
-#####################################################################
+
   - alias: turn on lights upon arrival
     trigger:
       platform: state
@@ -492,9 +551,8 @@ automation:
       - service: scene.turn_on
         entity_id: scene.living_room_bright
 
-  ## kitchen max brightness
       - service: light.turn_on
-        entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+        entity_id: light.kitchen_lights_level
         data:
           brightness: 255
 
@@ -504,13 +562,11 @@ automation:
       - service: scene.turn_on
         entity_id: scene.living_room_normal
 
-#####################################################################
-### Set the Living Room Cloudy Scene
-#####################################################################
+
   - alias: turn on living room scene if cloudy
     trigger:
       - platform: numeric_state
-        entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
+        entity_id: sensor.front_entry_fibaro_multisensor_luminance
         below: 30
 
       - platform: numeric_state
@@ -538,7 +594,7 @@ automation:
         before: '17:00:00'
 
       - condition: numeric_state
-        entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
+        entity_id: sensor.front_entry_fibaro_multisensor_luminance
         below: 30
 
       - condition: or
@@ -555,9 +611,7 @@ automation:
       - service: scene.turn_on
         entity_id: scene.living_room_cloudy
 
-#####################################################################
-### Turn off the lights when rain has stopped
-#####################################################################
+
   - alias: rain has stopped
     trigger:
       - platform: numeric_state
@@ -570,7 +624,7 @@ automation:
         to: 'off'
 
       - platform: numeric_state
-        entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
+        entity_id: sensor.front_entry_fibaro_multisensor_luminance
         above: 30
 
     condition:
@@ -579,7 +633,7 @@ automation:
         state: 'on'
 
       - condition: numeric_state
-        entity_id: sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
+        entity_id: sensor.front_entry_fibaro_multisensor_luminance
         above: 30
 
       - condition: time
@@ -591,16 +645,8 @@ automation:
 
       - service: homeassistant.turn_off
         entity_id: group.entry_lighting
-        
-        
-        
-        
-        
-        
-        
-#####################################################################
-### Turn Accent Lights ON
-#####################################################################
+
+
   - alias: turn on accent lights at sunset
     trigger:
       - platform: sun
@@ -611,9 +657,7 @@ automation:
       - service: switch.turn_on
         entity_id: group.accent_lights
 
-#####################################################################
-### Turn Accent Lights OFF weekdays
-#####################################################################
+
   - alias: turn off accent lights weekdays
     trigger:
       platform: time
@@ -632,9 +676,7 @@ automation:
       - service: switch.turn_off
         entity_id: group.accent_lights
 
-#####################################################################
-### Turn Accent Lights OFF weekends
-#####################################################################
+
   - alias: turn off accent lamps weekends
     trigger:
       platform: time
@@ -650,9 +692,7 @@ automation:
       - service: switch.turn_off
         entity_id: group.accent_lights
 
-#####################################################################
-### Change Fan speed on input_select
-#####################################################################
+
   - alias: living room fan speed selector
     trigger:
       - platform: state
@@ -663,12 +703,12 @@ automation:
         value_template: "{{ trigger.to_state.state != 'Select an option...' }}"
 
     action:
-# Turn the corresponding switch on to send the fan speed command
+      ### Turn the corresponding switch on to send the fan speed command
       - service: switch.turn_on
         data_template:
           entity_id: "switch.living_room_fan_{{ trigger.to_state.state|lower|replace(' ', '_') }}"
 
-# Reset the Input Select to "Select an option..."
+      ### Reset the Input Select to "Select an option..."
       - service: input_select.select_option
         data_template:
           entity_id: "{{ trigger.to_state.entity_id }}"

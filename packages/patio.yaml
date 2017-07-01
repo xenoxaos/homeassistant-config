@@ -4,52 +4,82 @@
 #####################################################################
 homeassistant:
   customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'patio'
 
-## groups
-    group.living_room:
-      order: 1
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
 
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
 
-    switch.ge_Unknown_type4f50_id3031_switch_23_0:
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Group
+    ################################################
+    group.exterior:
+      haaska_hidden: true
+
+    group.pool:
+      haaska_hidden: true
+
+    group.yard:
+      haaska_name: "Backyard"
+
+    group.exterior_lights:
+      haaska_name: "Exterior Lights"
+
+    ################################################
+    ## Switch
+    ################################################
+    switch.patio_party_lights_switch:
       friendly_name: "Party Lights"
       icon: mdi:glass-mug
 
-    switch.ge_12722_onoff_relay_switch_switch_7_0:
+    switch.patio_lights_switch:
       friendly_name: "Patio Lights"
       icon: mdi:white-balance-incandescent
 
-    switch.linear_fs20z_isolated_contact_fixture_module_switch_21_0:
+    switch.fountains_switch:
       friendly_name: "Fountains"
       icon: mdi:beach
 
-    switch.outdoor_speakers:
-      friendly_name: "Outdoor Speakers"
-      entity_picture: /local/music.ico
 
-
+#####################################################################
+### Group
+#####################################################################
 group:
   Exterior Lights:
     entities:
-# patio lights
-      - switch.ge_12722_onoff_relay_switch_switch_7_0
-# party/christmas lights - GE outdoor wireless outlet
-      - switch.ge_Unknown_type4f50_id3031_switch_23_0
+      - switch.patio_lights_switch
+      - switch.patio_party_lights_switch
 
   Yard:
     control: hidden
     entities:
-# patio lights
-      - switch.ge_12722_onoff_relay_switch_switch_7_0
-# GE Outdoor wireless outlet; for Christmas lights, etc.
-      - switch.ge_Unknown_type4f50_id3031_switch_23_0
-# Pool fountains
-      - switch.linear_fs20z_isolated_contact_fixture_module_switch_21_0
-      - switch.outdoor_speakers
+      - switch.patio_lights_switch
+      - switch.patio_party_lights_switch
+      - switch.fountains_switch
+      ## outdoor speakers
+      - switch.switch_one
 
+
+#####################################################################
+### Automation
+#####################################################################
 automation:
-#####################################################################
 ### FOUNTAINS ON
-#####################################################################
   - alias: turn on fountains
     trigger:
       - platform: sun
@@ -80,11 +110,10 @@ automation:
     action:
       - service: switch.turn_on
         data:
-          entity_id: switch.linear_fs20z_isolated_contact_fixture_module_switch_21_0
+          entity_id: switch.fountains_switch
 
-#####################################################################
+
 ### FOUNTAINS OFF
-#####################################################################
   - alias: turn off fountains
     hide_entity: True
     trigger:
@@ -101,18 +130,17 @@ automation:
 
     condition:
       - condition: state
-        entity_id: switch.linear_fs20z_isolated_contact_fixture_module_switch_21_0
+        entity_id: switch.fountains_switch
         state: 'on'
 
     action:
       - service: switch.turn_off
         data:
-          entity_id: switch.linear_fs20z_isolated_contact_fixture_module_switch_21_0
+          entity_id: switch.fountains_switch
 
-#####################################################################
-### Turn off the Christmas Lights - Weekdays
-#####################################################################
-  - alias: turn off xmas lights weekdays
+
+### Turn off the Party Lights - Weekdays
+  - alias: turn off party lights weekdays
     trigger:
       platform: time
       at: '00:00:00'
@@ -127,18 +155,17 @@ automation:
           - thu
 
       - condition: state
-        entity_id: switch.ge_unknown_type4f50_id3031_switch_23_0
+        entity_id: switch.patio_party_lights_switch
         state: 'on'
 
     action:
-  # outdoor Christmas lights
+  # outdoor Party lights
       - service: switch.turn_off
-        entity_id: switch.ge_unknown_type4f50_id3031_switch_23_0
+        entity_id: switch.patio_party_lights_switch
 
-#####################################################################
-### Turn off the Christmas Lights - Weekends
-#####################################################################
-  - alias: turn off xmas lights weekends
+
+### Turn off the Party Lights - Weekends
+  - alias: turn off party lights weekends
     trigger:
       platform: time
       at: '02:00:00'
@@ -150,10 +177,9 @@ automation:
           - sun
 
       - condition: state
-        entity_id: switch.ge_unknown_type4f50_id3031_switch_23_0
+        entity_id: switch.patio_party_lights_switch
         state: 'on'
 
     action:
-  # outdoor Christmas lights
       - service: switch.turn_off
-        entity_id: switch.ge_unknown_type4f50_id3031_switch_23_0
+        entity_id: switch.patio_party_lights_switch

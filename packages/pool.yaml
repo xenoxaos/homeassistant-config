@@ -4,19 +4,65 @@
 #####################################################################
 homeassistant:
   customize:
-## Pool Light
-    switch.ge_12722_onoff_relay_switch_switch_25_0:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'pool'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Input_Select
+    ################################################
+    input_select.pool_scene:
+      <<: *contained
+
+    input_select.pool_color:
+      <<: *contained
+
+    ################################################
+    ## Switch
+    ################################################
+    switch.pool_light_switch:
       friendly_name: "Pool Light"
       icon: mdi:pool
 
+  ################################################
+  ## Customize Global - (hide scripts)
+  ################################################
+  customize_glob:
+    "script.pool_*":
+      <<: *hidden
+
+
+#####################################################################
+### Group
+#####################################################################
 group:
   Pool:
     entities:
-      - switch.ge_12722_onoff_relay_switch_switch_25_0
+      - switch.pool_light_switch
       - input_select.pool_scene
       - input_select.pool_color
 
 
+#####################################################################
+### Input_Select
+#####################################################################
 input_select:
   pool_scene:
     name: Pool Scene
@@ -47,15 +93,16 @@ input_select:
 ### see scripts folder
 
 
+#####################################################################
+### Automation
+#####################################################################
 automation:
-#####################################################################
 ### Turn off the Pool Light and Reset Selection
-#####################################################################
   - alias: pool light reset selections
     hide_entity: True
     trigger:
       - platform: state
-        entity_id: switch.ge_12722_onoff_relay_switch_switch_25_0
+        entity_id: switch.pool_light_switch
         from: 'on'
         to: 'off'
         for:
@@ -72,9 +119,8 @@ automation:
           entity_id: input_select.pool_color
           option: Select an option...
 
-#####################################################################
+
 ### Pool Light Scene Selection
-#####################################################################
   - alias: 'Pool Scene'
     trigger:
       - platform: state
@@ -108,9 +154,8 @@ automation:
           entity_id: "{{ trigger.to_state.entity_id }}"
           option: Select an option...
 
-#####################################################################
+
 ### Pool Light Color Selection
-#####################################################################
   - alias: 'Pool Color'
     trigger:
       - platform: state

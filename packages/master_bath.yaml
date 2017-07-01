@@ -1,7 +1,7 @@
-#####################################################################
-#    @package          :     kitchen_dining
-#    @description      :     kitchen and dining and associated automations, etc.
-#####################################################################
+############################################################################
+#    @package          :     master_bath
+#    @description      :     master bath, and associated automations, scenes, etc.
+############################################################################
 homeassistant:
   customize:
     ################################################
@@ -9,7 +9,7 @@ homeassistant:
     ################################################
     package.node_anchors:
       customize: &customize
-        package: 'kitchen_dining'
+        package: 'master_bath'
 
       contained: &contained
         <<: *customize
@@ -28,82 +28,75 @@ homeassistant:
     ################################################
     ## Group
     ################################################
-    group.kitchen:
+    group.master_bath:
       <<: *contained
-      order: 4
-
-    group.dining_room:
-      <<: *contained
-      order: 5
-
-    ################################################
-    ## Light
-    ################################################
-    light.kitchen_lights_level:
-      friendly_name: "Kitchen Lights"
-      icon: mdi:white-balance-incandescent
-
-    light.dining_room_chandelier_level:
-      friendly_name: "Dining Room Chandelier"
-      haaska_name: "Dining Room Light"
-      icon: mdi:ceiling-light
 
     ################################################
     ## Cover
     ################################################
-    cover.kitchen_roller_shade_level:
-      friendly_name: "Kitchen Shade"
+    cover.master_bath_roller_shades_level:
+      friendly_name: "Master Bath Shades"
       homebridge_cover_type: rollershutter
       icon: mdi:blinds
 
-    cover.kitchen_roller_shade_switch:
+    cover.master_bath_roller_shades_switch:
       <<: *hidden
-      friendly_name: "Kitchen Shade State"
+      friendly_name: "Bathroom Shade State"
       icon: mdi:blinds
+
+    ################################################
+    ## Light
+    ################################################
+
+
+    ################################################
+    ## Script
+    ################################################
+
 
 #####################################################################
 ### Group
 #####################################################################
 group:
-  Kitchen:
+  Master Bath:
     control: hidden
     entities:
-      - light.kitchen_lights_level
-      - cover.kitchen_roller_shade_level
+      - cover.master_bath_roller_shades_level
 
-  Dining Room:
-    entities:
-      - light.dining_room_chandelier_level
+
+#####################################################################
+### Light
+#####################################################################
 
 
 #####################################################################
 ### Script
 #####################################################################
-#script:
-### see scripts folder
 
 
 #####################################################################
 ### Automation
 #####################################################################
 automation:
-  - alias: kitchen shade raised schedule
-    hide_entity: True
-    trigger:
-      - platform: sun
-        event: sunrise
-        offset: '-00:15:00'
-
-    action:
-      - service: cover.open_cover
-        entity_id: cover.kitchen_roller_shade_level
-
-  - alias: kitchen shade lowered schedule
+## Raise master bath shades
+  - alias: master bath shade raised schedule
     hide_entity: True
     trigger:
       - platform: time
-        at: '21:00:00'
+        at: '11:00:00'
 
     action:
-      - service: cover.stop_cover
-        entity_id: cover.kitchen_roller_shade_level
+      - service: cover.open_cover
+        entity_id: cover.master_bath_roller_shades_level
+
+## Lower master bath shades
+  - alias: master bath shade lowered schedule
+    hide_entity: True
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: '00:15:00'
+
+    action:
+      - service: cover.close_cover
+        entity_id: cover.master_bath_roller_shades_level

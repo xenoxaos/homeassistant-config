@@ -3,8 +3,37 @@
 #    @description      :     scenes and scenarios for lighting, etc.
 #####################################################################
 homeassistant:
+  customize_domain:
+    scene:
+      icon: mdi:play-circle
+
   customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'scenes'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Script
+    ################################################
     script.script_test:
+      <<: *contained
       friendly_name: "Test Script"
       icon: mdi:play-circle
 
@@ -13,13 +42,13 @@ homeassistant:
       icon: mdi:play-circle
 
     script.away:
+      <<: *hidden
       friendly_name: "Away Mode"
-      hidden: true
       icon: mdi:play-circle
 
     script.time_temp:
+      <<: *hidden
       friendly_name: "Time and Temp"
-      hidden: true
       icon: mdi:play-circle
 
     script.tv_power_off:
@@ -30,76 +59,78 @@ homeassistant:
       friendly_name: "Company Mode"
       icon: mdi:play-circle
 
-## bedtime mode
     script.bedtime:
       friendly_name: "Bedtime"
       icon: mdi:hotel
 
-## early morning scene
+    script.shutdown_lights:
+      friendly_name: "Shutdown"
+      icon: mdi:play-circle
+
+
+    ################################################
+    ## Scene
+    ################################################
     scene.morning:
       icon: mdi:weather-sunset-up
 
-## Shutdown lights and devices
-    script.shutdown_lights:
-      icon: mdi:play-circle
-
-## Living Room Bright
     scene.living_room_bright:
       friendly_name: "Living Room Bright"
       icon: mdi:play-circle
 
-## Living Room Normal
     scene.living_room_normal:
       friendly_name: "Living Room Normal"
       icon: mdi:play-circle
 
-## Living Room Cloudy
     scene.living_room_cloudy:
       friendly_name: "Living Room Cloudy"
       icon: mdi:play-circle
 
-## Movie Dim
     scene.living_room_dim:
       friendly_name: "Living Room Dim"
       icon: mdi:play-circle
 
-## Movie Playing
     scene.movie_time:
       friendly_name: "Movie Time"
       icon: mdi:play-circle
 
-## Movie Paused
     scene.movie_paused:
       icon: mdi:play-circle
       hidden: true
       haaska_hidden: true
 
-## Movie Ended
     scene.movie_ended:
       icon: mdi:play-circle
       hidden: true
       haaska_hidden: true
 
-## Modes
+
+    ################################################
+    ## Input Boolean
+    ################################################
     input_boolean.visitor_mode:
-      haaska_hidden: true
+      <<: *hidden
 
     input_boolean.peak_hours:
-      haaska_hidden: true
+      <<: *hidden
 
     input_boolean.state_change_test:
-      haaska_hidden: true
+      <<: *hidden
 
     input_boolean.after_hours:
-      haaska_hidden: true
+      <<: *hidden
 
 
+#####################################################################
+### Group
+#####################################################################
 group:
   Lighting Scenes:
     control: hidden
     entities:
       - script.bedtime
       - scene.morning
+      - input_boolean.dinner_time
       - scene.movie_time
       - scene.living_room_dim
       - scene.living_room_cloudy
@@ -114,14 +145,10 @@ group:
       - light.family_room_lights
       - light.master_bedroom
       - light.flux_rgb
-# Master Bedroom Chandelier
-      - light.ge_12724_3way_dimmer_switch_level_8_0
-# Billiards Room
-      - switch.ge_45609_onoff_relay_switch_switch_2_0
-# Kitchen Ceiling Lights
-      - light.ge_12724_3way_dimmer_switch_level_33_0
-# Dining Room Chandelier
-      - light.ge_12724_3way_dimmer_switch_level_34_0
+      - light.master_bedroom_chandelier_level
+      - switch.billiards_room_lights_switch
+      - light.kitchen_lights_level
+      - light.dining_room_chandelier_level
 
 ## Lights which do not report state (ceiling fans)
   Stateless Lights:
@@ -129,15 +156,16 @@ group:
       - switch.living_room_fan_light
       - switch.master_bedroom_fan_light
 
+
+#####################################################################
+### Scene
+#####################################################################
 scene:
-#####################################################################
-### Morning
-#####################################################################
   - name: Morning
     entities:
 
   # turn on the master bedroom chandelier
-      light.ge_12724_3way_dimmer_switch_level_8_0:
+      light.master_bedroom_chandelier_level:
         state: on
         brightness: 50
 
@@ -163,21 +191,21 @@ scene:
         transition: 900
 
   # turn on the kitchen lights
-      light.ge_12724_3way_dimmer_switch_level_33_0:
+      light.kitchen_lights_level:
         state: on
         brightness: 170
 
 
+#####################################################################
+### Script
+#####################################################################
 script:
-#####################################################################
-### Morning Sequence
-#####################################################################
   morning_sequence:
     sequence:
 
 # turn on master bed chandelier
     - service: light.turn_on
-      entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+      entity_id: light.master_bedroom_chandelier_level
       data:
         brightness: 50
 
@@ -212,17 +240,14 @@ script:
 
 # turn on the kitchen lights
     - service: light.turn_on
-      entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+      entity_id: light.kitchen_lights_level
       data:
         brightness: 170
 
-#####################################################################
+
 ### Bedtime
-#####################################################################
   bedtime:
     sequence:
-
-  ### Lock the doors
     - service: lock.lock
 
     - service: input_boolean.turn_on
@@ -239,7 +264,7 @@ script:
 
 ### Set master bedroom chandelier to dim
     - service: light.turn_on
-      entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+      entity_id: light.master_bedroom_chandelier_level
       data:
         brightness: 50
 
@@ -254,7 +279,7 @@ script:
 
 ### dim master bed chandelier
     - service: light.turn_on
-      entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+      entity_id: light.master_bedroom_chandelier_level
       data:
         brightness: 40
 
@@ -263,7 +288,7 @@ script:
 
 ### turn_off master bed chandelier
     - service: light.turn_off
-      entity_id: light.ge_12724_3way_dimmer_switch_level_8_0
+      entity_id: light.master_bedroom_chandelier_level
       data:
         transition: 60
 
@@ -278,9 +303,8 @@ script:
     - service: light.turn_off
       entity_id: light.under_bed_lights
 
-#####################################################################
+
 ### Away
-#####################################################################
   away:
     sequence:
 
@@ -309,9 +333,8 @@ script:
         title: "Away Mode ON"
         message: "It appears nobody's home; away mode activated."
 
-#####################################################################
+
 ### Company Mode
-#####################################################################
   company_mode:
     sequence:
     - service: switch.turn_on
@@ -324,33 +347,34 @@ script:
 
 ## turn on the kitchen Lights
     - service: light.turn_on
-      entity_id: light.ge_12724_3way_dimmer_switch_level_33_0
+      entity_id: light.kitchen_lights_level
       data:
         brightness: 175
 
 ## turn on the dining room light
     - service: light.turn_on
-      entity_id: light.ge_12724_3way_dimmer_switch_level_34_0
+      entity_id: light.dining_room_chandelier_level
       data:
         brightness: 130
 
 ## turn on the Billiards Room lights
     - service: switch.turn_on
-      entity_id: switch.ge_45609_onoff_relay_switch_switch_2_0
+      entity_id: switch.billiards_room_lights_switch
 
 ## turn on the party lights
     - service: switch.turn_on
-      entity_id: switch.ge_Unknown_type4f50_id3031_switch_23_0
+      entity_id: switch.patio_party_lights_switch
 
 ## turn on the pool light
     - service: switch.turn_on
-      entity_id: switch.ge_12722_onoff_relay_switch_switch_25_0
+      entity_id: switch.pool_light_switch
 
 
+#####################################################################
+### Automation
+#####################################################################
 automation:
-#####################################################################
 ### Weekday Wakeup
-#####################################################################
   - alias: weekday morning wakeup
     trigger:
       - platform: event

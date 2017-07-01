@@ -5,34 +5,39 @@
 homeassistant:
   customize:
 
-## groups
-    group.living_room:
-      order: 1
+    ################################################
+    ## Group
+    ################################################
+    group.porch:
+      haaska_name: "Porch Lights"
 
-
-## Porch Lights
-    switch.ge_45609_onoff_relay_switch_switch_19_0:
+    ################################################
+    ## Switch
+    ################################################
+    switch.south_porch_lights_switch:
       friendly_name: "South Porch Lights"
       icon: mdi:white-balance-incandescent
 
-    switch.ge_45609_onoff_relay_switch_switch_20_0:
+    switch.front_porch_lights_switch:
       friendly_name: "Front Porch Lights"
       icon: mdi:white-balance-incandescent
 
 
+#####################################################################
+### Group
+#####################################################################
 group:
   Porch:
     entities:
-## south porch_lights
-      - switch.ge_45609_onoff_relay_switch_switch_19_0
-## front porch_lights
-      - switch.ge_45609_onoff_relay_switch_switch_20_0
+      - switch.south_porch_lights_switch
+      - switch.front_porch_lights_switch
 
 
+#####################################################################
+### Automation
+#####################################################################
 automation:
-#####################################################################
 ### Turn on the porch lights at sunset
-#####################################################################
 - alias: porch lights on at sunset
   trigger:
     - platform: sun
@@ -43,9 +48,8 @@ automation:
     - service: homeassistant.turn_on
       entity_id: group.porch
 
-#####################################################################
+
 ### Turn off the porch lights
-#####################################################################
 - alias: porch lights off at sunrise
   trigger:
     - platform: sun

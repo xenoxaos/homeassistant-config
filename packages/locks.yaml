@@ -4,23 +4,68 @@
 #####################################################################
 homeassistant:
   customize:
-    lock.assa_abloy_yale_real_living_captouch_lever_locked_40_0:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'locks'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Group
+    ################################################
+    group.security_override:
+      <<: *contained
+
+    group.door_locks:
+      <<: *contained
+
+    ################################################
+    ## Lock
+    ################################################
+    lock.bathroom_entry_locked:
+      <<: *contained
       friendly_name: "Beach Bathroom Door"
-      haaska_hidden: true
 
-    lock.assa_abloy_yale_real_living_captouch_lever_locked_43_0:
+    lock.south_entry_locked:
+      <<: *contained
       friendly_name: "South Door"
-      haaska_hidden: true
 
+    ################################################
+    ## Script
+    ################################################
     script.unlock_megs:
+      <<: *hidden
       friendly_name: "Unlock Door for Megan"
-      hidden: true
       icon: mdi:play-circle
 
-    automation.unlock_door_for_megs:
+    ################################################
+    ## Automation
+    ################################################
+    automation.unlock_door_when_megan_arrives:
+      <<: *contained
       friendly_name: "Unlock Door for Megan"
 
+    automation.notify_if_unlocked_by_code:
+      <<: *hidden
 
+#####################################################################
+### Group
+#####################################################################
 group:
   Security Override:
     control: hidden
@@ -31,24 +76,25 @@ group:
 
   Door Locks:
     entities:
-      - lock.assa_abloy_yale_real_living_captouch_lever_locked_40_0
+      - lock.bathroom_entry_locked
       - sensor.lock_beach_door_status
       - sensor.lock_beach_battery
-      - lock.assa_abloy_yale_real_living_captouch_lever_locked_43_0
+      - lock.south_entry_locked
       - sensor.lock_south_door_status
       - sensor.lock_south_battery
 
+
+#####################################################################
+### Sensor
+#####################################################################
 sensor:
-#####################################################################
-###  Beach Door Status
-#####################################################################
   - platform: template
     sensors:
       lock_beach_door_status:
         friendly_name: "Beach Door Status"
         value_template: >-
-          {% set state = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_40_0') %}
-          {% set user = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_level_40_1') %}
+          {% set state = states('sensor.bathroom_entry_alarm_type') %}
+          {% set user = states('sensor.bathroom_entry_alarm_level') %}
           
           {% if state == '19' %}
             {% if user == '1' %}
@@ -76,16 +122,14 @@ sensor:
             {{ state|title }}
           {% endif %}
 
-#####################################################################
-###  South Door Status
-#####################################################################
+
   - platform: template
     sensors:
       lock_south_door_status:
         friendly_name: "South Door Status"
         value_template: >-
-          {% set state = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_43_0') %}
-          {% set user = states('sensor.assa_abloy_yale_real_living_captouch_lever_alarm_level_43_1') %}
+          {% set state = states('sensor.south_entry_alarm_type') %}
+          {% set user = states('sensor.south_entry_alarm_level') %}
           
           {% if state == '19' %}
             {% if user == '1' %}
@@ -116,15 +160,15 @@ sensor:
           {% endif %}
 
 
+#####################################################################
+### Script
+#####################################################################
 script:
-#####################################################################
-### unlock south door for Megs
-#####################################################################
   unlock_megs:
     sequence:
 
     - service: lock.unlock
-      entity_id: lock.assa_abloy_yale_real_living_captouch_lever_locked_43_0
+      entity_id: lock.south_entry_locked
 
     - service: script.turn_off
       data:
@@ -138,39 +182,35 @@ script:
     - delay:
         minutes: 15
     - service: lock.lock
-      entity_id: lock.assa_abloy_yale_real_living_captouch_lever_locked_43_0
+      entity_id: lock.south_entry_locked
 
 
+#####################################################################
+### Automation
+#####################################################################
 automation:
-#####################################################################
-### Unlock door for Megs
-#####################################################################
-  - alias: unlock door for megs
+  - alias: unlock door when megan arrives
     trigger:
       - platform: state
         entity_id: device_tracker.iphone7
         from: 'not_home'
         to: 'home'
 
-    # door should be locked
     condition:
       - condition: template
-        value_template: "{{ is_state('lock.assa_abloy_yale_real_living_captouch_lever_locked_43_0', 'locked') or false }}"
+        value_template: "{{ is_state('lock.south_entry_locked', 'locked') or false }}"
 
-    # unlock the south door for Megs
     action:
       - service: script.unlock_megs
 
-#####################################################################
-### Notify when south door is unloked via code
-#####################################################################
-  - alias: notify unlock entry
+
+  - alias: notify if unlocked by code
     hide_entity: True
     trigger:
       platform: state
-      entity_id: sensor.assa_abloy_yale_real_living_captouch_lever_alarm_type_43_0
+      entity_id: sensor.south_entry_alarm_type
       to: '19'
-  
+
     action:
       - service: notify.ios_iphwn666
         data:

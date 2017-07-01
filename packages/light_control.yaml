@@ -1,0 +1,204 @@
+############################################################################
+#    @package          :     light_control
+#    @description      :     light_control method for various scenarios
+############################################################################
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'light_control'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Automation
+    ################################################
+    automation.light_control_reset:
+      <<: *hidden
+      friendly_name: "Reset Light Control"
+
+    ################################################
+    ## Script
+    ################################################
+    script.light_control:
+      <<: *hidden
+      friendly_name: "Light Control"
+
+    script.light_control_off:
+      <<: *hidden
+      friendly_name: "Light Control Off"
+
+    script.light_control_off_flash:
+      <<: *hidden
+      friendly_name: "Light Control Off Flash"
+
+    script.light_control_off_transition:
+      <<: *hidden
+      friendly_name: "Light Control Off Transition"
+
+    script.light_control_on:
+      <<: *hidden
+      friendly_name: "Light Control On"
+
+    script.light_control_on_color_name:
+      <<: *hidden
+      friendly_name: "Light Control On Color Name"
+
+    script.light_control_on_flash:
+      <<: *hidden
+      friendly_name: "Light Control On Flash"
+
+    script.light_control_on_transition:
+      <<: *hidden
+      friendly_name: "Light Control On Transition"
+
+    script.light_control_reset:
+      <<: *contained
+      friendly_name: "Reset Light Control"
+
+
+#####################################################################
+### Automation
+#####################################################################
+automation:
+  - alias: light_control_reset
+    trigger:
+      - platform: time
+        seconds: '/5'
+    condition:
+      - condition: state
+        entity_id: script.light_control
+        state: 'on'
+    action:
+      - service: script.light_control_reset
+
+#####################################################################
+### Script
+#####################################################################
+script:
+  light_control:
+    sequence:
+      - service_template: >-
+          {% if state is not defined %}
+            {% set state = 'off' if is_state('binary_sensor.' ~ entity_id.split('.', 1)[1] ~ '_expected_state', 'off') else 'on' %}
+          {% endif %}
+
+          {% if state == 'off' %}
+            script.light_control_off{{ '_flash' if flash is defined else ('_transition' if transition is defined) }}
+          {% else %}
+            script.light_control_on{{ '_color_name' if color_name is defined else ('_flash' if flash is defined else ('_transition' if transition is defined)) }}
+          {% endif %}
+        data_template:
+          entity_id: "{{ entity_id }}"
+          brightness: >-
+            {% set brightness_entity = entity_id.split('.', 1)[1] ~ '_brightness' %}
+
+            {% if brightness is defined and brightness|int(-1) != -1 %}
+              {{ brightness|int }}
+            {% elif states.input_slider[brightness_entity] is not none %}
+              {{ states('input_slider.' ~ brightness_entity)|int }}
+            {% elif states.sensor[brightness_entity] is not none %}
+              {{ states('sensor.' ~ brightness_entity)|int }}
+            {% elif states.input_slider.global_brightness is not none %}
+              {{ states('input_slider.global_brightness')|int }}
+            {% elif states.sensor.global_brightness is not none %}
+              {{ states('sensor.global_brightness')|int }}
+            {% else %}
+              255
+            {% endif %}
+          color_temp: >-
+            {% if color_temp is defined and color_temp|int(-1) != -1 %}
+              {{ color_temp|int }}
+            {% else %}
+              {{ (states.light[entity_id.split('.', 1)[1]].attributes|default).color_temp|default(370) }}
+            {% endif %}
+          flash: "{{ flash }}"
+          transition: "{{ transition }}"
+          color_name: "{{ color_name|default(none) }}"
+          # profile: "{{ profile }}"
+          # rgb_color: "{{ rgb_color }}"
+          # white_value: "{{ white_value }}"
+          # xy_color: "{{ xy_color }}"
+
+  light_control_on:
+    sequence:
+      - service: light.turn_on
+        data_template: &light_control_on
+          entity_id: "{{ entity_id }}"
+          brightness: "{{ brightness }}"
+          color_temp: "{{ color_temp }}"
+          # color_name: "{{ color_name }}"
+          # profile: "{{ profile }}"
+          # rgb_color: "{{ rgb_color }}"
+          # white_value: "{{ white_value }}"
+          # xy_color: "{{ xy_color }}"
+
+  light_control_on_color_name:
+    sequence:
+      - service: light.turn_on
+        data_template:
+          <<: *light_control_on
+          color_name: "{{ color_name }}"
+
+  light_control_on_flash:
+    sequence:
+      - service: light.turn_on
+        data_template:
+          <<: *light_control_on
+          flash: "{{ flash }}"
+
+  light_control_on_transition:
+    sequence:
+      - service: light.turn_on
+        data_template:
+          <<: *light_control_on
+          transition: "{{ transition }}"
+
+  light_control_off:
+    sequence:
+      - service: light.turn_off
+        data_template: &light_control_off
+          entity_id: "{{ entity_id }}"
+
+  light_control_off_flash:
+    sequence:
+      - service: light.turn_off
+        data_template:
+          <<: *light_control_off
+          flash: "{{ flash }}"
+
+  light_control_off_transition:
+    sequence:
+      - service: light.turn_off
+        data_template:
+          <<: *light_control_off
+          transition: "{{ transition }}"
+
+  light_control_reset:
+    sequence:
+      - service: script.turn_off
+        data:
+          entity_id:
+            - script.light_control
+            - script.light_control_on
+            - script.light_control_on_color_name
+            - script.light_control_on_flash
+            - script.light_control_on_transition
+            - script.light_control_off
+            - script.light_control_off_flash
+            - script.light_control_off_transition

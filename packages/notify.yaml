@@ -1,0 +1,59 @@
+#####################################################################
+#    @package          :     notify
+#    @description      :     notifications and alerting components
+#####################################################################
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'notify'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Group
+    ################################################
+    group.alerts:
+      <<: *contained
+      order: 9
+
+
+#####################################################################
+### Group
+#####################################################################
+group:
+  Alerts:
+    entities:
+      - sensor.gitter_messages
+
+
+#####################################################################
+### Notify
+#####################################################################
+notify:
+  - platform: pushbullet
+    name: pushbullet
+    api_key: !secret pushbullet_api_key
+
+
+#####################################################################
+### Sensor
+#####################################################################
+sensor:
+  - platform: gitter
+    api_key: !secret gitter_api_key

@@ -1,0 +1,62 @@
+#####################################################################
+#    @package          :     zones
+#    @description      :     zone configuration
+#####################################################################
+homeassistant:
+  customize_glob:
+    "zone.*":
+      track_ios: true
+
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'zones'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Zone
+    ################################################
+#    zone.home:
+#        <<: *contained
+#        friendly_name: "Home"
+
+    zone.megs_work:
+        <<: *contained
+        friendly_name: "Megs Work"
+        icon: mdi:school
+
+    zone.rick_work:
+        <<: *contained
+        friendly_name: "Ricks Office"
+        icon: mdi:briefcase
+
+
+#####################################################################
+### ZONE
+#####################################################################
+zone:
+  - name: Rick Work
+    latitude: !secret latitude_rick_work
+    longitude: !secret longitude_rick_work
+    radius: 350
+
+  - name: Megs Work
+    latitude: !secret latitude_megs_work
+    longitude: !secret longitude_megs_work
+    radius: 150

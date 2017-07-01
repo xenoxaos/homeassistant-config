@@ -29,29 +29,32 @@
 - alias: upstairs cooling schedule 2
   trigger:
     - platform: time
-      at: '11:00:00'
-
-  condition:
-    - condition: or
-      conditions:
-        - condition: state
-          entity_id: group.all_devices
-          state: 'home'
-
-        - condition: state
-          entity_id: input_boolean.visitor_mode
-          state: 'on'
+      at: '12:00:00'
 
   action:
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.upstairs_ac
-        value: 85
+        value: 90
 
 #####################################################################
 ### AC - Upstairs Cooling Schedule 3
 #####################################################################
 - alias: upstairs cooling schedule 3
+  trigger:
+    - platform: time
+      at: '18:00:00'
+
+  action:
+    - service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: 84
+
+#####################################################################
+### AC - Upstairs Cooling Schedule 4
+#####################################################################
+- alias: upstairs cooling schedule 4
   trigger:
     - platform: state
       entity_id: script.bedtime
@@ -66,16 +69,12 @@
 
   condition:
     - condition: numeric_state
-      entity_id: sensor.2gig_technologies_ct101_thermostat_iris_temperature_42_1
+      entity_id: sensor.upstairs_thermostat_temperature
       above: 82
 
     - condition: numeric_state
       entity_id: sensor.pws_temp_f
       above: 75
-
-    - condition: state
-      entity_id: script.cool_upstairs_60min
-      state: 'off'
 
     - condition: or
       conditions:

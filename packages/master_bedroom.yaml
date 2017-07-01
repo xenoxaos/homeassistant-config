@@ -1,0 +1,149 @@
+############################################################################
+#    @package          :     master_bedroom
+#    @description      :     master bedrrom switches, lights and associated automations, scenes, etc.
+############################################################################
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'master_bedroom'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Group
+    ################################################
+    group.master_bedroom:
+      <<: *contained
+      #order: 6
+
+    ################################################
+    ## Light
+    ################################################
+    light.master_bedroom_chandelier_level:
+      friendly_name: "Master Bedroom Chandelier"
+      icon: mdi:ceiling-light
+
+    light.master_sitting_lamp:
+      friendly_name: "Master Bedroom Reading Lamp"
+      icon: mdi:lamp
+
+    ################################################
+    ## Input Boolean
+    ################################################
+    input_boolean.bedtime:
+      <<: *contained
+
+    ################################################
+    ## Script
+    ################################################
+    script.mbr_night_light:
+      icon: mdi:weather-night
+
+    script.master_bedroom_night_time:
+      friendly_name: "Master Bedroom Night Time"
+      icon: mdi:weather-night
+
+#####################################################################
+### Group
+#####################################################################
+group:
+  Master Bedroom:
+    control: hidden
+    entities:
+      - script.master_bedroom_night_time
+      - script.mbr_night_light
+      - light.master_bedroom_chandelier_level
+      - light.master_sitting_lamp
+      # humidifier
+      - switch.switch_two
+
+
+#####################################################################
+### Script
+#####################################################################
+script:
+  ### Master Bedroom Night Time Mode
+  master_bedroom_night_time:
+    sequence:
+    - service: light.turn_on
+      entity_id: light.master_bedroom_chandelier_level
+      data:
+        brightness: 65
+
+    - service: light.turn_on
+      entity_id: light.master_sitting_lamp
+      data:
+        brightness: 50
+        transition: 3
+
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        rgb_color: [0,55,55]
+
+
+  ### Night Light Mode
+  mbr_night_light:
+    alias: "Night Light"
+    sequence:
+    - service: light.turn_on
+      data:
+        entity_id: light.under_bed_lights
+        rgb_color: [0,60,60]
+
+    - service: light.turn_on
+      entity_id: light.master_sitting_lamp
+      data:
+        brightness: 40
+        transition: 5
+
+    - delay:
+        minutes: 4
+
+    - service: light.turn_off
+      entity_id: light.master_sitting_lamp
+      data:
+        transition: 10
+
+    - delay:
+        minutes: 1
+
+    - service: light.turn_off
+      data:
+        entity_id: light.under_bed_lights
+
+
+#####################################################################
+### Automation
+#####################################################################
+automation:
+  - alias: Turn off Humidifier
+    hide_entity: True
+    trigger:
+      platform: time
+      at: '06:45:00'
+
+    condition:
+      condition: state
+      entity_id: switch.humidifier
+      state: 'on'
+
+    action:
+      service: switch.turn_off
+      entity_id: switch.humidifier

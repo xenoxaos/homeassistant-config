@@ -3,47 +3,102 @@
 #    @description      :     system and associated automations, etc.
 #####################################################################
 homeassistant:
+  customize_domain:
+    automation:
+      icon: mdi:timetable
+
   customize:
-## Restart Home Assistant
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'system'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Group
+    ################################################
+    group.downloads:
+      <<: *contained
+
+    group.speedtest:
+      <<: *contained
+
+    group.ha_status:
+      <<: *contained
+
+    ################################################
+    ## Script
+    ################################################
     script.restart_ha:
+      <<: *contained
       friendly_name: "Restart Home Assistant"
       icon: mdi:recycle
 
-## Speed Test
+    script.kodi_time_and_temp:
+      <<: *contained
+
+    ################################################
+    ## Sensor
+    ################################################
     sensor.speedtest_ping:
+      <<: *contained
       friendly_name: "Ping"
       icon: mdi:clock
 
     sensor.speedtest_download:
+      <<: *contained
       friendly_name: "Download"
       icon: mdi:arrow-down
 
     sensor.speedtest_upload:
+      <<: *contained
       friendly_name: "Upload"
       icon: mdi:arrow-up
 
-## SabNZB
     sensor.sab_disk:
+      <<: *contained
       friendly_name: "Total Storage"
       icon: mdi:harddisk
 
     sensor.sab_disk_free:
+      <<: *contained
       friendly_name: "Storage Remaining"
       icon: mdi:chart-pie
 
     sensor.sab_queue:
+      <<: *contained
       friendly_name: "Queued for Download"
       icon: mdi:clipboard-arrow-down
 
     sensor.sab_speed:
+      <<: *contained
       friendly_name: "DL Speed"
       icon: mdi:speedometer
 
     sensor.sab_status:
+      <<: *contained
       friendly_name: "Current State"
       icon: mdi:check
 
 
+#####################################################################
+### Group
+#####################################################################
 group:
   Speedtest:
     entities:
@@ -69,30 +124,36 @@ group:
       - sensor.ram_free
       - sensor.disk_free_home
       - sensor.last_boot
+      - sensor.gitter
 
 
+#####################################################################
+### Sensor
+#####################################################################
 sensor:
-#####################################################################
-### SYSTEM SENSORS
-#####################################################################
+  ### Home Assistant - Current Version
   - platform: command_line
     name: HA Current Version
     command: python3 -c "import requests; print(requests.get('https://pypi.python.org/pypi/homeassistant/json').json()['info']['version'])"
 
+  ### Home Assistant - Installed Version
   - platform: command_line
     name: HA Installed Version
     command: "/srv/hass/hass_venv/bin/hass --version"
 
+  ### Home Assistant - Last Restart
   - platform: template
     sensors:
       ha_last_restart:
         value_template: '{{ as_timestamp(states.automation.startup_notification.attributes.last_triggered) | timestamp_custom("%b %d %X") }}'
         friendly_name: "HA Last Restart"
 
+  ### Date and Time
   - platform: time_date
     display_options:
       - "date_time"
 
+  ### Speedtest
   - platform: speedtest
     minute:
       - 0
@@ -102,6 +163,7 @@ sensor:
       - download
       - upload
 
+  ### System Resources
   - platform: systemmonitor
     resources:
       - type: disk_free
@@ -110,6 +172,7 @@ sensor:
       - type: processor_use
       - type: last_boot
 
+  ### SABNZBD
   - platform: sabnzbd
     name: SAB
     api_key: !secret sabnzb_api_key
@@ -123,28 +186,12 @@ sensor:
       - 'disk_size'
       - 'disk_free'
 
-## now built into  HA
-#script:
-#  restart_ha:
-#    sequence:
-#      - service: homeassistant.restart
-#
-#      - service: notify.pushbullet
-#        data:
-#          title: "System Restart"
-#          target: "device/Chrome"
-#          message: "Restarting Home Assistant at {{ states('sensor.date__time') }}"
-#
-#      - service: notify.ios_iphwn666
-#        data:
-#          title: "System Restart"
-#          message: "Restarting Home Assistant at {{ states('sensor.date__time') }}"
 
-
+#####################################################################
+### Automation
+#####################################################################
 automation:
-#####################################################################
-### Auto Notify when HA has an update available
-#####################################################################
+  ### Auto Notify when HA has an update available
   - alias: notify update
     trigger:
       platform: state
@@ -161,9 +208,8 @@ automation:
           title: "New Update"
           message: "Update for Home Assistant is available."
 
-#####################################################################
-### Send notification on HA Restart
-#####################################################################
+
+  ### Send notification after home assistant has restarted
   - alias: Startup Notification
     hide_entity: True
     trigger:

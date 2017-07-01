@@ -4,30 +4,54 @@
 #####################################################################
 homeassistant:
   customize:
-## Kodi Players
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'media_players'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Group
+    ################################################
     media_player.kodi_office:
+      <<: *contained
       friendly_name: "Office Kodi"
-      haaska_hidden: true
 
     media_player.kodi_living_room:
+      <<: *contained
       friendly_name: "Living Room Kodi"
-      haaska_hidden: true
 
     media_player.kodi_bedroom:
+      <<: *contained
       friendly_name: "Bedroom Kodi"
-      haaska_hidden: true
 
-## AppleTV
     media_player.apple_tv:
+      <<: *contained
       friendly_name: "Apple TV"
-      haaska_hidden: true
 
-## Chromecast
     media_player.rnmcast:
-      friendly_name: Chromecast
-      haaska_hidden: true
+      <<: *contained
+      friendly_name: "Chromecast"
 
 
+#####################################################################
+### Group
+#####################################################################
 group:
   Media Players:
     entities:
@@ -60,6 +84,10 @@ group:
       - switch.amp_movie_mode
       - switch.amp_music_mode
 
+
+#####################################################################
+### Media Player
+#####################################################################
 media_player:
   - platform: kodi
     host: !secret kodi_office
@@ -88,105 +116,85 @@ media_player:
     login_id: !secret appletv_login_id
 
 
+#####################################################################
+### Scene
+#####################################################################
 scene:
-#####################################################################
-### Movie Time
-#####################################################################
   - name: Movie Time
     entities:
-
-  ## turn off the hue entry_lighting
       group.entry_lighting:
         state: off
         transition: 5
 
-  ## turn off the living room lamp
       light.living_room_lamp:
         state: off
         transition: 15
 
-  ## turn off the hue living_room_ceiling lights
       group.living_room_ceiling:
         state: off
         transition: 10
 
-#####################################################################
-### Movie Paused
-#####################################################################
+
   - name: Movie Paused
     entities:
-
-  ## turn on kitchen entry light
       light.kitchen_entry:
         state: on
         brightness: 50
         transition: 10
 
-  ## turn on the south entry light
       light.south_entry:
         state: on
         brightness: 75
         transition: 10
 
-  ## turn on the center entry light
       light.center_entry:
         state: on
         brightness: 50
         transition: 10
 
-  ## turn on the living room lamp
       light.living_room_lamp:
         state: on
         brightness: 75
         transition: 10
 
-  ## turn on the hue living_room_ceiling lights
       group.living_room_ceiling:
         state: on
         brightness: 50
         transition: 15
 
-#####################################################################
-### Movie Ended
-#####################################################################
+
   - name: Movie Ended
     entities:
-
-  ## turn on kitchen entry light
       light.kitchen_entry:
         state: on
         brightness: 160
         transition: 30
 
-  ## turn on the south entry light
       light.south_entry:
         state: on
         brightness: 100
         transition: 10
 
-  ## turn on the center entry light
       light.center_entry:
         state: on
         brightness: 50
         transition: 10
 
-  ## turn on the living room lamp
       light.living_room_lamp:
         state: on
         brightness: 200
         transition: 60
 
-  ## turn on the hue living_room_ceiling lights
       group.living_room_ceiling:
         state: on
         brightness: 100
         transition: 30
 
 
+#####################################################################
+### Script
+#####################################################################
 script:
-#####################################################################
-### Power Off TV
-#####################################################################
   tv_power_off:
     sequence:
 
@@ -197,10 +205,10 @@ script:
       entity_id: switch.directv_power
 
 
+#####################################################################
+### Automation
+#####################################################################
 automation:
-####################################################################
-### Adjust lighting scenes based on Kodi playback state
-####################################################################
   - alias: Kodi Scene Set
     hide_entity: True
     trigger:
@@ -211,6 +219,10 @@ automation:
       - condition: state
         entity_id: sun.sun
         state: 'below_horizon'
+
+      - condition: state
+        entity_id: input_boolean.dinner_time
+        state: 'off'
 
     action:
       - service: scene.turn_on
@@ -226,9 +238,7 @@ automation:
               scene.living_room_normal
             {% endif %}
 
-######################################################################
-#### Living Room TV Input Select
-######################################################################
+
   - alias: living_room_tv_input_selector
     trigger:
       - platform: state
@@ -250,9 +260,7 @@ automation:
           entity_id: "{{ trigger.to_state.entity_id }}"
           option: Select an option...
 
-######################################################################
-#### Living Room Amp Input Select
-######################################################################
+
   - alias: onkyo_amp_input_selector
     trigger:
       - platform: state

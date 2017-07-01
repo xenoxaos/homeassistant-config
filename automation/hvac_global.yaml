@@ -17,17 +17,12 @@
 
   action:
 ########################
-### Set Downstairs Values
+### Set Downstairs Away
 ########################
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.downstairs_ac
-        value: 82
-
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.downstairs_heat
-        value: 66
+    - service: climate.set_hold_mode
+      data:
+        entity_id: climate.downstairs
+        hold_mode: 'away'
 
 ########################
 ### Set Upstairs Values
@@ -58,15 +53,10 @@
 ########################
 ### Set Downstairs Values
 ########################
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.downstairs_ac
-        value: 79
-
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.downstairs_heat
-        value: 69
+    - service: climate.ecobee_resume_program
+      data:
+        entity_id: climate.downstairs
+        resume_all: 'true'
 
 ########################
 ### Set Upstairs Values
@@ -95,15 +85,10 @@
 ########################
 ### Set Downstairs Values
 ########################
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.downstairs_ac
-        value: 81
-
-    - service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.downstairs_heat
-        value: 67
+    - service: climate.set_hold_mode
+      data:
+        entity_id: climate.downstairs
+        hold_mode: 'away'
 
 ########################
 ### Set Upstairs Values
@@ -111,7 +96,7 @@
     - service: input_slider.select_value
       data_template:
         entity_id: input_slider.upstairs_ac
-        value: 86
+        value: 87
 
     - service: input_slider.select_value
       data_template:

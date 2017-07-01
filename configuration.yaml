@@ -9,27 +9,10 @@ homeassistant:
 #####################################################################
 ### CUSTOMIZATION
 #####################################################################
-  customize: !include_dir_merge_named customize
   packages: !include_dir_named packages
-  customize_glob: !include customize_glob.yaml
-  customize_domain: !include customize_domain.yaml
-
-#####################################################################
-### ZONE CONFIG
-#####################################################################
-zone 1:
-  name: Rick Work
-  latitude: !secret latitude_rick_work
-  longitude: !secret longitude_rick_work
-  radius: 350
-  icon: mdi:briefcase
-
-zone 2:
-  name: Megs Work
-  latitude: !secret latitude_megs_work
-  longitude: !secret longitude_megs_work
-  radius: 150
-  icon: mdi:school
+#  customize: !include_dir_merge_named customize
+#  customize_glob: !include customize_glob.yaml
+#  customize_domain: !include customize_domain.yaml
 
 #####################################################################
 ### SERVICES CONFIG
@@ -46,26 +29,6 @@ mqtt:
 
 ifttt:
   key: !secret ifttt_api_key
-
-#####################################################################
-### ZWAVE CONFIG
-#####################################################################
-zwave:
-  usb_path: /dev/ttyACM0
-  config_path: /srv/hass/hass_venv/lib/python3.4/site-packages/libopenzwave-0.3.1-py3.4-linux-armv7l.egg/config
-#  polling_interval: 60000
-
-## Device config
-  device_config: !include zwave_device_config.yaml
-
-## Domain config
-#  device_config_domain:
-
-## Global config
-  device_config_glob:
-    "light.ge_12724_3way_dimmer_switch_*":
-      refresh_value: true
-      delay: 5
 
 #####################################################################
 ### ZIGBEE CONFIG
@@ -118,21 +81,9 @@ ios:
 #                     Includes                 #
 #                                                  #
 ####################################################
-alexa: !include alexa.yaml
 automation: !include_dir_merge_list automation/
-group: !include groups.yaml
-input_boolean: !include input_boolean.yaml
-input_select: !include input_select.yaml
-input_slider: !include input_slider.yaml
-notify: !include notify.yaml
 script: !include_dir_merge_named scripts
-switch: !include switches.yaml
-#tts: !include tts.yaml
-#panel_iframe: !include iframe.yaml
-#emulated_hue: !include emulated_hue.yaml
-#binary_sensor: !include binary_sensors.yaml
-#alarm_control_panel: !include alarm_control_panel.yaml
-#shell_command: !include shell_commands.yaml
+
 
 ####################################################
 #                                                  #

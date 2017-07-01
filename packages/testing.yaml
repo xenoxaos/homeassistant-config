@@ -1,0 +1,286 @@
+############################################################################
+#    @package          :     testing
+#    @description      :     test components, automations, triggers, etc.
+############################################################################
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        icon: mdi:checkbox-marked-circle
+        package: 'testing'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Group
+    ################################################
+
+
+    ################################################
+    ## Input Boolean
+    ################################################
+    input_boolean.state_change:
+      <<: *contained
+
+    input_boolean.condition_1:
+      <<: *contained
+      friendly_name: "Test Condition 1"
+#      icon: mdi:checkbox-marked-circle
+
+    input_boolean.condition_2:
+      <<: *contained
+      friendly_name: "Test Condition 2"
+#      icon: mdi:checkbox-marked-circle
+
+    input_boolean.condition_3:
+      <<: *contained
+      friendly_name: "Test Condition 3"
+#      icon: mdi:checkbox-marked-circle
+
+    input_boolean.condition_4:
+      <<: *contained
+      friendly_name: "Test Condition 4"
+#      icon: mdi:checkbox-marked-circle
+
+    input_boolean.condition_5:
+      <<: *contained
+      friendly_name: "Test Condition 5"
+#      icon: mdi:checkbox-marked-circle
+
+
+#####################################################################
+### Group
+#####################################################################
+group:
+  Things:
+    entities:
+      - switch.humidifier
+      - switch.fountains_switch
+      - switch.outdoor_speakers
+
+  Triggers:
+    control: hidden
+    entities:
+      - script.desk_lamp
+      - script.light_test
+      - input_boolean.state_change
+      - automation.raining
+      - script.time_temp
+      - script.morning_weekday
+      - script.ecobee_home
+      - script.ecobee_sleep
+      - script.ecobee_away
+      - script.ecobee_resume
+
+  Test Conditions:
+    control: hidden
+    entities:
+      - input_boolean.condition_1
+      - input_boolean.condition_2
+      - input_boolean.condition_3
+      - input_boolean.condition_4
+      - input_boolean.condition_5
+
+
+#####################################################################
+### Input Boolean
+#####################################################################
+input_boolean:
+  condition_1:
+    name: condition_1
+    initial: off
+
+  condition_2:
+    name: condition_2
+    initial: off
+
+  condition_3:
+    name: condition_3
+    initial: off
+
+  condition_4:
+    name: condition_4
+    initial: off
+
+  condition_5:
+    name: condition_5
+    initial: off
+
+### State Change Simulator
+  state_change:
+    name: State Change Test
+    initial: off
+
+
+#####################################################################
+### Script
+#####################################################################
+script:
+  ### A simple script used for testing
+  script_test:
+    sequence:
+    - service: light.turn_on
+      entity_id: light.office_desk_lamp
+
+
+#####################################################################
+### Automation
+#####################################################################
+automation:
+  ### Test Condition 1
+  - alias: test input_boolean condition 1
+    trigger:
+      - platform: state
+        entity_id: input_boolean.state_change
+        from: 'off'
+        to: 'on'
+
+    condition:
+    #    - condition: numeric_state
+    #      entity_id: sensor.upstairs_thermostat_temperature
+    #      below: 72
+
+    #    - condition: time
+    #      weekday:
+    #        - mon
+    #        - tue
+    #        - wed
+    #        - thu
+    #        - fri
+    #        - sun
+
+      - condition: state
+        entity_id: input_boolean.condition_3
+        state: 'on'
+
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_boolean.condition_4
+            state: 'on'
+
+          - condition: state
+            entity_id: input_boolean.condition_5
+            state: 'on'
+
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_boolean.condition_1
+            state: 'on'
+
+          - condition: state
+            entity_id: input_boolean.condition_2
+            state: 'on'
+
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.rgb_light
+          option: "Red"
+
+
+  ### Test Condition 2
+  - alias: test input_boolean condition 2
+    trigger:
+      - platform: state
+        entity_id: input_boolean.state_change
+        from: 'off'
+        to: 'on'
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.condition_1
+        state: 'on'
+
+      - condition: state
+        entity_id: input_boolean.condition_2
+        state: 'on'
+
+      - condition: state
+        entity_id: input_boolean.condition_3
+        state: 'off'
+
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_boolean.condition_4
+            state: 'off'
+
+          - condition: state
+            entity_id: input_boolean.condition_5
+            state: 'off'
+
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.rgb_light
+          option: "Blue"
+
+
+  ### Test Condition 3
+  - alias: test input_boolean condition 3
+    trigger:
+      - platform: state
+        entity_id: input_boolean.state_change
+        from: 'off'
+        to: 'on'
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.condition_1
+        state: 'off'
+
+      - condition: state
+        entity_id: input_boolean.condition_2
+        state: 'off'
+
+      - condition: state
+        entity_id: input_boolean.condition_3
+        state: 'off'
+
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: input_boolean.condition_4
+            state: 'on'
+
+          - condition: state
+            entity_id: input_boolean.condition_5
+            state: 'on'
+
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.rgb_light
+          option: "Violet"
+
+
+  ### input_boolean test
+  - alias: test input_boolean
+    trigger:
+      - platform: state
+        entity_id: input_boolean.state_change
+        from: 'on'
+        to: 'off'
+
+    action:
+      - service: input_select.select_option
+        data:
+          entity_id: input_select.rgb_light
+          option: "Off"
