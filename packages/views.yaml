@@ -46,6 +46,9 @@ homeassistant:
     group.weather:
       <<: *contained
 
+    group.interior:
+      <<: *contained
+
     group.exterior:
       <<: *contained
 
@@ -193,7 +196,5 @@ group:
     view: yes
     icon: mdi:test-tube
     entities:
-      - group.family
       - group.triggers
       - group.test_conditions
-      - input_boolean.holiday

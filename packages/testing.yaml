@@ -29,7 +29,14 @@ homeassistant:
     ################################################
     ## Group
     ################################################
+    group.things:
+      <<: *contained
 
+    group.triggers:
+      <<: *contained
+
+    group.test_conditions:
+      <<: *contained
 
     ################################################
     ## Input Boolean
@@ -62,6 +69,13 @@ homeassistant:
       friendly_name: "Test Condition 5"
 #      icon: mdi:checkbox-marked-circle
 
+    ################################################
+    ## Script
+    ################################################
+    script.script_test:
+      <<: *contained
+      friendly_name: "Test Script"
+
 
 #####################################################################
 ### Group
@@ -76,16 +90,8 @@ group:
   Triggers:
     control: hidden
     entities:
-      - script.desk_lamp
-      - script.light_test
+      - script.script_test
       - input_boolean.state_change
-      - automation.raining
-      - script.time_temp
-      - script.morning_weekday
-      - script.ecobee_home
-      - script.ecobee_sleep
-      - script.ecobee_away
-      - script.ecobee_resume
 
   Test Conditions:
     control: hidden

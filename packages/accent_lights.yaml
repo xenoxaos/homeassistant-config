@@ -1,0 +1,128 @@
+#####################################################################
+#    @package          :     accent_lights
+#    @description      :     accent_lights and associated automations, scenes, etc.
+#####################################################################
+homeassistant:
+  customize:
+    ################################################
+    ## Node Anchors
+    ################################################
+    package.node_anchors:
+      customize: &customize
+        package: 'accent_lights'
+
+      contained: &contained
+        <<: *customize
+        haaska_hidden: true
+        homebridge_hidden: true
+
+      exposed: &exposed
+        <<: *customize
+        haaska_hidden: false
+        homebridge_hidden: false
+
+      hidden: &hidden
+        <<: *contained
+        hidden: true
+
+    ################################################
+    ## Group
+    ################################################
+    group.accent_lights:
+      friendly_name: "Accent Lights"
+      #order: 3
+
+    ################################################
+    ## Switch
+    ################################################
+    switch.staircase_accent_lamp:
+      haaska_name: "Staircase Lamp"
+      icon: mdi:lamp
+
+    switch.wine_room_accent_lamp:
+      haaska_name: "Wine Room Lamp"
+      icon: mdi:lamp
+
+
+#####################################################################
+### Group
+#####################################################################
+group:
+  Accent Lights:
+    entities:
+      - switch.staircase_accent_lamp
+      - switch.wine_room_accent_lamp
+
+
+#####################################################################
+### Switch
+#####################################################################
+switch:
+  ### Sonoff wifi switches
+  - platform: mqtt
+    name: "Staircase Accent Lamp"
+    command_topic: "cmnd/sonoff0/power"
+    state_topic: "stat/sonoff0/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+  - platform: mqtt
+    name: "WIne Room Accent Lamp"
+    command_topic: "cmnd/sonoff1/power"
+    state_topic: "stat/sonoff1/POWER"
+    qos: 1
+    payload_on: "ON"
+    payload_off: "OFF"
+    retain: true
+
+
+#####################################################################
+### Automation
+#####################################################################
+automation:
+  - alias: turn on accent lights at sunset
+    trigger:
+      - platform: sun
+        event: sunset
+        offset: '-00:05:00'
+
+    action:
+      - service: switch.turn_on
+        entity_id: group.accent_lights
+
+
+  - alias: turn off accent lights weekdays
+    trigger:
+      platform: time
+      at: '23:00:00'
+
+    condition:
+      condition: time
+      weekday:
+        - sun
+        - mon
+        - tue
+        - wed
+        - thu
+
+    action:
+      - service: switch.turn_off
+        entity_id: group.accent_lights
+
+
+  - alias: turn off accent lamps weekends
+    trigger:
+      platform: time
+      at: '01:30:00'
+
+    condition:
+      condition: time
+      weekday:
+        - sat
+        - sun
+
+    action:
+      - service: switch.turn_off
+        entity_id: group.accent_lights

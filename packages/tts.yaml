@@ -30,6 +30,8 @@ homeassistant:
     ################################################
     script.time_temp:
       <<: *hidden
+      friendly_name: "Time and Temp"
+      icon: mdi:play-circle
 
 
 #####################################################################

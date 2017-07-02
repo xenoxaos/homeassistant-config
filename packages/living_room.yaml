@@ -1,5 +1,5 @@
 #####################################################################
-#    @package          :     living_areas
+#    @package          :     living_room
 #    @description      :     living room, billiards and associated automations, scenes, etc.
 #####################################################################
 homeassistant:
@@ -9,7 +9,7 @@ homeassistant:
     ################################################
     package.node_anchors:
       customize: &customize
-        package: 'living_areas'
+        package: 'living_room'
 
       contained: &contained
         <<: *customize
@@ -28,62 +28,17 @@ homeassistant:
     ################################################
     ## Group
     ################################################
-    group.default_view:
+    group.entry_lighting:
       <<: *contained
+      #order: 2
 
     group.living_room:
       <<: *contained
-      order: 1
+      #order: 1
 
-    group.entry_lighting:
-      <<: *contained
-      order: 2
-
-    group.interior:
+    group.living_room_ceiling:
       <<: *contained
 
-    group.downstairs:
-      <<: *contained
-
-    group.upstairs:
-      <<: *contained
-
-    group.lighting_scenes:
-      <<: *contained
-
-    group.scenes:
-      <<: *contained
-
-    group.stateless_lights:
-      <<: *contained
-
-    group.accent_lights:
-      friendly_name: "Accent Lights"
-      order: 3
-
-    group.billiards_room:
-      <<: *contained
-      friendly_name: "Billiards Room"
-      order: 8
-
-    group.interior_lights:
-      haaska_name: "Interior Lights"
-
-
-    ################################################
-    ## Switch
-    ################################################
-    switch.billiards_room_lights_switch:
-      friendly_name: "Billiards Room Lights"
-      icon: mdi:ceiling-light
-
-    switch.staircase_accent_lamp:
-      haaska_name: "Staircase Lamp"
-      icon: mdi:lamp
-
-    switch.wine_room_accent_lamp:
-      haaska_name: "Wine Room Lamp"
-      icon: mdi:lamp
 
     ################################################
     ## Light
@@ -121,6 +76,25 @@ homeassistant:
       icon: mdi:white-balance-incandescent
 
     ################################################
+    ## Switch
+    ################################################
+    switch.living_room_fan_high:
+      haaska_name: "Fan High"
+
+    switch.living_room_fan_light:
+      haaska_name: "Fan Light"
+
+    switch.living_room_fan_low:
+      haaska_name: "Fan Low"
+
+    switch.living_room_fan_medium:
+      haaska_name: "Fan Medium"
+
+    switch.living_room_fan:
+      assumed_state: false
+      haaska_name: "Living Room Fan"
+
+    ################################################
     ## Input Select
     ################################################
     input_select.living_room_fan_speed:
@@ -132,11 +106,6 @@ homeassistant:
 ### Group
 #####################################################################
 group:
-  Accent Lights:
-    entities:
-      - switch.staircase_accent_lamp
-      - switch.wine_room_accent_lamp
-
   Entry Lighting:
     entities:
       - light.south_entry
@@ -146,6 +115,7 @@ group:
   Living Room:
     control: hidden
     entities:
+      - switch.living_room_fan
       - input_select.living_room_fan_speed
       - light.living_room_lamp
       - group.living_room_ceiling
@@ -160,10 +130,6 @@ group:
       - light.southeast_ceiling
       - light.southwest_ceiling
 
-  Billiards Room:
-    entities:
-      - switch.billiards_room_lights_switch
-
 
 #####################################################################
 ### Input Select
@@ -175,31 +141,10 @@ input_select:
     initial: "Select an option..."
     options:
       - "Select an option..."
-      - "Off"
       - "Low"
       - "Medium"
       - "High"
 
-  ### Living Room TV
-  living_room_tv_input:
-    name: Living Room TV Input
-    initial: "Select an option..."
-    options:
-      - "Select an option..."
-      - "DirecTV"
-      - "Fire TV"
-      - "Chromecast"
-
-  ### Living Room Amp
-  onkyo_amp_input:
-    name: Onkyo Amp Input
-    initial: "Select an option..."
-    options:
-      - "Select an option..."
-      - "TV"
-      - "Movie"
-      - "DVD"
-      - "iPod"
 
 #####################################################################
 ### Light
@@ -215,24 +160,6 @@ light:
 #####################################################################
 switch:
   ### Sonoff wifi switches
-  - platform: mqtt
-    name: "Staircase Accent Lamp"
-    command_topic: "cmnd/sonoff0/power"
-    state_topic: "stat/sonoff0/POWER"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    retain: true
-
-  - platform: mqtt
-    name: "WIne Room Accent Lamp"
-    command_topic: "cmnd/sonoff1/power"
-    state_topic: "stat/sonoff1/POWER"
-    qos: 1
-    payload_on: "ON"
-    payload_off: "OFF"
-    retain: true
-
   - platform: mqtt
     name: "Third Strip Cord"
     command_topic: "cmnd/sonoff2/power"
@@ -612,6 +539,7 @@ automation:
         entity_id: scene.living_room_cloudy
 
 
+  ### Turn off lights after rain has stopped
   - alias: rain has stopped
     trigger:
       - platform: numeric_state
@@ -647,52 +575,7 @@ automation:
         entity_id: group.entry_lighting
 
 
-  - alias: turn on accent lights at sunset
-    trigger:
-      - platform: sun
-        event: sunset
-        offset: '-00:05:00'
-
-    action:
-      - service: switch.turn_on
-        entity_id: group.accent_lights
-
-
-  - alias: turn off accent lights weekdays
-    trigger:
-      platform: time
-      at: '23:00:00'
-
-    condition:
-      condition: time
-      weekday:
-        - sun
-        - mon
-        - tue
-        - wed
-        - thu
-
-    action:
-      - service: switch.turn_off
-        entity_id: group.accent_lights
-
-
-  - alias: turn off accent lamps weekends
-    trigger:
-      platform: time
-      at: '01:30:00'
-
-    condition:
-      condition: time
-      weekday:
-        - sat
-        - sun
-
-    action:
-      - service: switch.turn_off
-        entity_id: group.accent_lights
-
-
+  ### Living Room Ceiling Fan
   - alias: living room fan speed selector
     trigger:
       - platform: state

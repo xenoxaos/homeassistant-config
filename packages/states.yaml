@@ -26,6 +26,12 @@ homeassistant:
         hidden: true
 
     ################################################
+    ## Group
+    ################################################
+    group.security_override:
+      <<: *contained
+
+    ################################################
     ## Sensor
     ################################################
     sensor.time_brightness:
@@ -48,6 +54,21 @@ homeassistant:
 
     input_boolean.rain:
       <<: *contained
+
+
+#####################################################################
+### Group
+#####################################################################
+group:
+  Security Override:
+    control: hidden
+    entities:
+      - input_boolean.visitor_mode
+      - input_boolean.holiday
+      - input_boolean.dinner_time
+      - automation.away_mode
+      - automation.unlock_door_when_megan_arrives
+
 
 ################################################################
 ## Binary Sensor
@@ -110,10 +131,6 @@ input_boolean:
   bedtime:
     name: Bedtime
     icon: mdi:hotel
-
-  rain:
-    name: Rain
-    icon: mdi:weather-rainy
 
   dinner_time:
     name: Dinner Time

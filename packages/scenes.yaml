@@ -30,13 +30,20 @@ homeassistant:
         hidden: true
 
     ################################################
+    ## Group
+    ################################################
+    group.lighting_scenes:
+      <<: *contained
+
+    group.interior_lights:
+      haaska_name: "Interior Lights"
+
+    group.stateless_lights:
+      <<: *hidden
+
+    ################################################
     ## Script
     ################################################
-    script.script_test:
-      <<: *contained
-      friendly_name: "Test Script"
-      icon: mdi:play-circle
-
     script.morning_sequence:
       hidden: true
       icon: mdi:play-circle
@@ -45,15 +52,6 @@ homeassistant:
       <<: *hidden
       friendly_name: "Away Mode"
       icon: mdi:play-circle
-
-    script.time_temp:
-      <<: *hidden
-      friendly_name: "Time and Temp"
-      icon: mdi:play-circle
-
-    script.tv_power_off:
-      friendly_name: "TV Shutdown"
-      icon: mdi:power
 
     script.company_mode:
       friendly_name: "Company Mode"
@@ -66,7 +64,6 @@ homeassistant:
     script.shutdown_lights:
       friendly_name: "Shutdown"
       icon: mdi:play-circle
-
 
     ################################################
     ## Scene
@@ -105,22 +102,6 @@ homeassistant:
       haaska_hidden: true
 
 
-    ################################################
-    ## Input Boolean
-    ################################################
-    input_boolean.visitor_mode:
-      <<: *hidden
-
-    input_boolean.peak_hours:
-      <<: *hidden
-
-    input_boolean.state_change_test:
-      <<: *hidden
-
-    input_boolean.after_hours:
-      <<: *hidden
-
-
 #####################################################################
 ### Group
 #####################################################################
@@ -130,12 +111,12 @@ group:
     entities:
       - script.bedtime
       - scene.morning
-      - input_boolean.dinner_time
       - scene.movie_time
       - scene.living_room_dim
       - scene.living_room_cloudy
       - scene.living_room_normal
       - scene.living_room_bright
+      - script.company_mode
       - script.shutdown_lights
 
   Interior Lights:
@@ -144,7 +125,8 @@ group:
       - light.entryway_lights
       - light.family_room_lights
       - light.master_bedroom
-      - light.flux_rgb
+      - light.master_sitting_lamp
+      - light.office_desk_lamp
       - light.master_bedroom_chandelier_level
       - switch.billiards_room_lights_switch
       - light.kitchen_lights_level

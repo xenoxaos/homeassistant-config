@@ -28,9 +28,6 @@ homeassistant:
     ################################################
     ## Group
     ################################################
-    group.security_override:
-      <<: *contained
-
     group.door_locks:
       <<: *contained
 
@@ -63,17 +60,11 @@ homeassistant:
     automation.notify_if_unlocked_by_code:
       <<: *hidden
 
+
 #####################################################################
 ### Group
 #####################################################################
 group:
-  Security Override:
-    control: hidden
-    entities:
-      - input_boolean.visitor_mode
-      - automation.away_mode
-      - automation.unlock_door_for_megs
-
   Door Locks:
     entities:
       - lock.bathroom_entry_locked
