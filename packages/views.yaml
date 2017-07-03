@@ -4,82 +4,73 @@
 ############################################################################
 homeassistant:
   customize:
-    ################################################
-    ## Node Anchors
-    ################################################
-    package.node_anchors:
-      customize: &customize
-        package: 'views'
-
-      contained: &contained
-        <<: *customize
-        haaska_hidden: true
-        homebridge_hidden: true
-
-      exposed: &exposed
-        <<: *customize
-        haaska_hidden: false
-        homebridge_hidden: false
-
-      hidden: &hidden
-        <<: *contained
-        hidden: true
+    packages.views: &customize
+      haaska_hidden: true
+      homebridge_hidden: true
+      package: 'views'
 
     ################################################
     ## Group
     ################################################
-    group.default_view:
-      <<: *contained
-
-    group.security:
-      <<: *contained
+    group.climate:
+      <<: *customize
+      icon: mdi:air-conditioner
 
     group.downstairs:
-      <<: *contained
-
-    group.upstairs:
-      <<: *contained
-
-    group.climate:
-      <<: *contained
-
-    group.weather:
-      <<: *contained
-
-    group.interior:
-      <<: *contained
+      <<: *customize
+      icon: mdi:arrow-down-bold-circle-outline
 
     group.exterior:
-      <<: *contained
+      <<: *customize
+      icon: mdi:tree
 
-    group.scenes:
-      <<: *contained
-
-    group.media:
-      <<: *contained
-
-    group.system:
-      <<: *contained
+    group.home:
+      <<: *customize
+      icon: mdi:account-location
 
     group.lab:
-      <<: *contained
+      <<: *customize
+      icon: mdi:test-tube
+
+    group.media:
+      <<: *customize
+      icon: mdi:theater
+
+    group.security:
+      <<: *customize
+      icon: mdi:security-home
+
+    group.scenes:
+      <<: *customize
+      icon: mdi:creation
+
+    group.system:
+      <<: *customize
+      icon: mdi:server
+
+    group.upstairs:
+      <<: *customize
+      icon: mdi:arrow-up-bold-circle-outline
+
+    group.weather:
+      <<: *customize
+      icon: mdi:weather-sunny
 
   ################################################
   ## Customize Global
   ################################################
   customize_glob:
     "group.all_*":
-      <<: *contained
+      <<: *customize
 
 
 #####################################################################
 ### Group
 #####################################################################
 group:
-  default_view:
+  home:
     name: Home
     view: yes
-    icon: mdi:castle
     entities:
       - group.travel_megs
       - group.travel_rick
@@ -90,34 +81,28 @@ group:
   security:
     name: Security
     view: yes
-    icon: mdi:security-home
     entities:
-      - group.security_override
+      - group.cameras
       - group.door_locks
       - group.sensors
-      - group.cameras
-      - group.breaches
 
 
   downstairs:
     name: Downstairs
     view: yes
-    icon: mdi:arrow-down-bold-circle-outline
     entities:
       - group.living_room
       - group.entry_lighting
-      - group.living_room_fan
+      - group.accent_lights
       - group.kitchen
       - group.dining_room
-      - group.accent_lights
-      - group.office
       - group.billiards_room
+      - group.office
 
 
   upstairs:
     name: Upstairs
     view: yes
-    icon: mdi:arrow-up-bold-circle-outline
     entities:
       - group.master_bedroom
       - group.master_bedroom_fan
@@ -129,7 +114,6 @@ group:
   climate:
     name: Climate
     view: yes
-    icon: mdi:air-conditioner
     entities:
       - group.upstairs_climate
       - group.upstairs_cooling
@@ -138,10 +122,26 @@ group:
       - group.downstairs_ecobee
 
 
+  scenes:
+    name: Scenes
+    view: yes
+    entities:
+      - group.lighting_scenes
+      - group.automation_override
+
+
+  exterior:
+    name: Exterior
+    view: yes
+    entities:
+      - group.porch
+      - group.yard
+      - group.pool
+
+
   weather:
     name: Weather
     view: yes
-    icon: mdi:weather-sunny
     entities:
       - sun.sun
       - sensor.moon
@@ -150,39 +150,19 @@ group:
       - group.precipitation
 
 
-  exterior:
-    name: Exterior
-    view: yes
-    icon: mdi:tree
-    entities:
-      - group.porch
-      - group.yard
-      - group.pool
-
-
-  scenes:
-    name: Scenes
-    icon: mdi:creation
-    view: yes
-    entities:
-      - group.lighting_scenes
-      #- group.light_and_switch_override
-
-
   media:
     name: Media
     view: yes
-    icon: mdi:theater
     entities:
       - group.living_room_tv
       - group.directv
       - group.onkyo_amp
-      - group.media_players
+      - media_player.kodi_living_room
+      - media_player.apple_tv
 
 
   system:
     name: System
-    icon: mdi:server
     view: yes
     entities:
       - updater.updater
@@ -194,7 +174,6 @@ group:
   lab:
     name: Lab
     view: yes
-    icon: mdi:test-tube
     entities:
       - group.triggers
       - group.test_conditions

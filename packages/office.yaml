@@ -30,7 +30,7 @@ homeassistant:
     ################################################
     group.office:
       friendly_name: "Office"
-      order: 9
+      order: 7
 
     ################################################
     ## Light
@@ -38,6 +38,13 @@ homeassistant:
     light.office_desk_lamp:
       friendly_name: "Desk Lamp"
       icon: mdi:lamp
+
+    ################################################
+    ## Media Player
+    ################################################
+    media_player.kodi_office:
+      <<: *contained
+      friendly_name: "Office Kodi"
 
     ################################################
     ## Sensor Node
@@ -85,6 +92,19 @@ group:
       - sensor.sn1_ldr
       - sensor.sn1_pir
       - light.sn1_led
+      - media_player.kodi_office
+
+
+#####################################################################
+### Media Player
+#####################################################################
+media_player:
+  - platform: kodi
+    host: !secret kodi_office
+    port: !secret kodi_port
+    name: kodi_office
+    username: !secret kodi_user
+    password: !secret kodi_password
 
 
 #####################################################################

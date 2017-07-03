@@ -34,7 +34,7 @@ homeassistant:
     ################################################
     group.upstairs_climate:
       <<: *contained
-      #order: 1
+      order: 2
 
     group.upstairs_cooling:
       <<: *contained
@@ -43,9 +43,6 @@ homeassistant:
     group.upstairs_heating:
       <<: *contained
       #order: 3
-
-    script.hvac_operating_mode:
-      <<: *contained
 
     ################################################
     ## Sensor

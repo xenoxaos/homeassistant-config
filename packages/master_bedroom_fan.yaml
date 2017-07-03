@@ -28,17 +28,17 @@ homeassistant:
     ################################################
     ## Group
     ################################################
-    group.mbr_fan_speed:
-      <<: *hidden
-
     group.master_bedroom_fan:
       <<: *contained
+      order: 2
+
+    group.mbr_fan_speed:
+      <<: *hidden
 
     ################################################
     ## Switch
     ################################################
     switch.master_bedroom_fan:
-      assumed_state: false
       friendly_name: "Master Bedroom Fan"
       icon: mdi:fan
 
@@ -183,7 +183,6 @@ script:
 automation:
   ## turn the master bed fan off at noon each day
   - alias: turn off master bedroom fan
-    hide_entity: True
     trigger:
       - platform: time
         at: '12:00:00'

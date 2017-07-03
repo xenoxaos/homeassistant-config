@@ -28,17 +28,17 @@ homeassistant:
     ################################################
     ## Group
     ################################################
-    group.weather:
+    group.weather_summary:
       <<: *contained
+      order: 1
 
     group.weather_details:
       <<: *contained
-
-    group.weather_summary:
-      <<: *contained
+      order: 2
 
     group.precipitation:
       <<: *contained
+      order: 3
 
     ################################################
     ## Input Boolean

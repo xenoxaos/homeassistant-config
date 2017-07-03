@@ -26,18 +26,6 @@ homeassistant:
         hidden: true
 
     ################################################
-    ## Group
-    ################################################
-    group.security_override:
-      <<: *contained
-
-    ################################################
-    ## Sensor
-    ################################################
-    sensor.time_brightness:
-      <<: *hidden
-
-    ################################################
     ## Binary Sensor
     ################################################
     binary_sensor.workday:
@@ -52,23 +40,6 @@ homeassistant:
     input_boolean.after_hours:
       <<: *hidden
 
-    input_boolean.rain:
-      <<: *contained
-
-
-#####################################################################
-### Group
-#####################################################################
-group:
-  Security Override:
-    control: hidden
-    entities:
-      - input_boolean.visitor_mode
-      - input_boolean.holiday
-      - input_boolean.dinner_time
-      - automation.away_mode
-      - automation.unlock_door_when_megan_arrives
-
 
 ################################################################
 ## Binary Sensor
@@ -79,47 +50,10 @@ binary_sensor:
     country: US
 
 
-################################################################
-## Sensor
-################################################################
-sensor:
-  ### Time Based Brightness
-  - platform: template
-    sensors:
-      time_brightness:
-        value_template: >-
-          {%- if now().strftime('%H%M')|int < 600 -%}
-            64
-          {%- elif now().strftime('%H%M')|int < 700 -%}
-            128
-          {%- elif now().strftime('%H%M')|int < 800 -%}
-            192
-          {%- elif now().strftime('%H%M')|int < 2000 -%}
-            255
-          {%- elif now().strftime('%H%M')|int < 2100 -%}
-            192
-          {%- elif now().strftime('%H%M')|int < 2200 -%}
-            128
-          {%- else -%}
-            64
-          {%- endif -%}
-
-#       warnings: false
-
-
 #####################################################################
 ### Input Boolean
 #####################################################################
 input_boolean:
-  visitor_mode:
-    name: Visitor Mode
-    initial: off
-    icon: mdi:account
-
-  holiday:
-    name: Holiday Mode
-    initial: off
-
   peak_hours:
     name: Peak Hours
     icon: mdi:clock
@@ -132,17 +66,12 @@ input_boolean:
     name: Bedtime
     icon: mdi:hotel
 
-  dinner_time:
-    name: Dinner Time
-    initial: off
-
 
 #####################################################################
 ### Automation
 #####################################################################
 automation:
   - alias: peak hours on
-    hide_entity: True
     trigger:
       - platform: time
         at: '15:00:00'
@@ -167,7 +96,6 @@ automation:
 
 
   - alias: peak hours off
-    hide_entity: True
     trigger:
       - platform: time
         at: '18:00:00'
@@ -189,7 +117,6 @@ automation:
 
 
   - alias: after hours on weekdays
-    hide_entity: True
     trigger:
       - platform: time
         at: '23:30:00'
@@ -210,7 +137,6 @@ automation:
 
 
   - alias: after hours off weekdays
-    hide_entity: True
     trigger:
       - platform: time
         at: '04:00:00'
@@ -231,8 +157,6 @@ automation:
 
 
   - alias: after hours on weekends
-    hide_entity: True
-
     trigger:
       - platform: time
         at: '01:00:00'
@@ -250,7 +174,6 @@ automation:
 
 
   - alias: after hours off weekends
-    hide_entity: True
     trigger:
       - platform: time
         at: '08:00:00'
@@ -268,7 +191,6 @@ automation:
 
 
   - alias: bedtime off weekdays
-    hide_entity: True
     trigger:
       - platform: time
         at: '04:00:00'
@@ -289,7 +211,6 @@ automation:
 
 
   - alias: bedtime off weekends
-    hide_entity: True
     trigger:
       - platform: time
         at: '08:00:00'

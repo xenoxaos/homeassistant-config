@@ -35,10 +35,34 @@ homeassistant:
     group.lighting_scenes:
       <<: *contained
 
+    group.automation_override:
+      <<: *contained
+
     group.interior_lights:
       haaska_name: "Interior Lights"
 
     group.stateless_lights:
+      <<: *hidden
+
+    ################################################
+    ## Input Boolean
+    ################################################
+    input_boolean.visitor_mode:
+      <<: *exposed
+      icon: mdi:account
+
+    input_boolean.holiday:
+      <<: *exposed
+      icon: mdi:snowman
+
+    input_boolean.dinner_time:
+      <<: *exposed
+      icon: mdi:food-fork-drink
+
+    ################################################
+    ## Sensor
+    ################################################
+    sensor.time_brightness:
       <<: *hidden
 
     ################################################
@@ -119,6 +143,15 @@ group:
       - script.company_mode
       - script.shutdown_lights
 
+  Automation Override:
+    control: hidden
+    entities:
+      - input_boolean.visitor_mode
+      - input_boolean.holiday
+      - input_boolean.dinner_time
+      - automation.away_mode
+      - automation.unlock_door_when_megan_arrives
+
   Interior Lights:
     entities:
       - group.accent_lights
@@ -137,6 +170,51 @@ group:
     entities:
       - switch.living_room_fan_light
       - switch.master_bedroom_fan_light
+
+
+#####################################################################
+### Input Boolean
+#####################################################################
+input_boolean:
+  visitor_mode:
+    name: Visitor Mode
+    initial: off
+
+  holiday:
+    name: Holiday Mode
+    initial: off
+
+  dinner_time:
+    name: Dinner Time
+    initial: off
+
+
+################################################################
+## Sensor
+################################################################
+sensor:
+  ### Time Based Brightness
+  - platform: template
+    sensors:
+      time_brightness:
+        value_template: >-
+          {%- if now().strftime('%H%M')|int < 600 -%}
+            64
+          {%- elif now().strftime('%H%M')|int < 700 -%}
+            128
+          {%- elif now().strftime('%H%M')|int < 800 -%}
+            192
+          {%- elif now().strftime('%H%M')|int < 2000 -%}
+            255
+          {%- elif now().strftime('%H%M')|int < 2100 -%}
+            192
+          {%- elif now().strftime('%H%M')|int < 2200 -%}
+            128
+          {%- else -%}
+            64
+          {%- endif -%}
+
+#       warnings: false
 
 
 #####################################################################

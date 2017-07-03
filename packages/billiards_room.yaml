@@ -31,7 +31,7 @@ homeassistant:
     group.billiards_room:
       <<: *contained
       friendly_name: "Billiards Room"
-      #order: 8
+      order: 6
 
     ################################################
     ## Switch

@@ -30,7 +30,7 @@ homeassistant:
     ################################################
     group.accent_lights:
       friendly_name: "Accent Lights"
-      #order: 3
+      order: 3
 
     ################################################
     ## Switch

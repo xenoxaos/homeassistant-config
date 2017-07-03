@@ -28,14 +28,17 @@ homeassistant:
     ################################################
     ## Group
     ################################################
-    group.onkyo_amp:
+    group.living_room_tv:
       <<: *contained
+      order: 1
 
     group.directv:
       <<: *contained
+      order: 2
 
-    group.living_room_tv:
+    group.onkyo_amp:
       <<: *contained
+      order: 3
 
     ################################################
     ## Media Player
@@ -44,9 +47,13 @@ homeassistant:
       <<: *contained
       friendly_name: "Living Room Kodi"
 
-    media_player.rnmcast:
+    media_player.apple_tv:
       <<: *contained
-      friendly_name: "Chromecast"
+      friendly_name: "Apple TV"
+
+#    media_player.rnmcast:
+#      <<: *contained
+#      friendly_name: "Chromecast"
 
     ################################################
     ## Switch
@@ -123,7 +130,6 @@ group:
       - switch.living_room_tv_volume
       - switch.living_room_tv_mute
       - input_select.living_room_tv_input
-      - media_player.kodi_living_room
 
   DirecTV:
     control: hidden
@@ -152,6 +158,11 @@ media_player:
     name: kodi_living_room
     username: !secret kodi_user
     password: !secret kodi_password
+
+  - platform: apple_tv
+    host: !secret appletv_host
+    name: apple_tv
+    login_id: !secret appletv_login_id
 
 
 #####################################################################

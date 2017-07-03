@@ -30,7 +30,7 @@ homeassistant:
     ################################################
     group.master_bedroom:
       <<: *contained
-      #order: 6
+      order: 1
 
     ################################################
     ## Light
@@ -42,6 +42,13 @@ homeassistant:
     light.master_sitting_lamp:
       friendly_name: "Master Bedroom Reading Lamp"
       icon: mdi:lamp
+
+    ################################################
+    ## Media Player
+    ################################################
+    media_player.kodi_bedroom:
+      <<: *contained
+      friendly_name: "Bedroom Kodi"
 
     ################################################
     ## Input Boolean
@@ -72,6 +79,18 @@ group:
       - light.master_sitting_lamp
       # humidifier
       - switch.switch_two
+
+
+#####################################################################
+### Media Player
+#####################################################################
+media_player:
+  - platform: kodi
+    host: !secret kodi_bedroom
+    port: !secret kodi_port
+    name: kodi_bedroom
+    username: !secret kodi_user
+    password: !secret kodi_password
 
 
 #####################################################################

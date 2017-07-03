@@ -1,0 +1,13 @@
+#####################################################################
+### RECORDER
+#####################################################################
+recorder:
+  db_url: !secret recorder_db_url
+  purge_days: 14
+  exclude:
+    domains:
+      - camera
+      - media_player
+      - notify
+
+#    entities:

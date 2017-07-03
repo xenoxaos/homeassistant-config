@@ -28,17 +28,16 @@ homeassistant:
     ################################################
     ## Group
     ################################################
-    group.entry_lighting:
-      <<: *contained
-      #order: 2
-
     group.living_room:
       <<: *contained
-      #order: 1
+      order: 1
+
+    group.entry_lighting:
+      <<: *contained
+      order: 2
 
     group.living_room_ceiling:
       <<: *contained
-
 
     ################################################
     ## Light
@@ -82,7 +81,8 @@ homeassistant:
       haaska_name: "Fan High"
 
     switch.living_room_fan_light:
-      haaska_name: "Fan Light"
+      assumed_state: false
+      icon: mdi:ceiling-light
 
     switch.living_room_fan_low:
       haaska_name: "Fan Low"
@@ -91,8 +91,7 @@ homeassistant:
       haaska_name: "Fan Medium"
 
     switch.living_room_fan:
-      assumed_state: false
-      haaska_name: "Living Room Fan"
+      icon: mdi:fan
 
     ################################################
     ## Input Select
@@ -293,7 +292,6 @@ scene:
 #####################################################################
 automation:
   - alias: turn on living room lamp at sunset
-    hide_entity: True
     trigger:
       - platform: sun
         event: sunset
@@ -375,7 +373,6 @@ automation:
 
 
   - alias: turn on living room scene at sunset
-    hide_entity: True
     trigger:
       - platform: sun
         event: sunset
@@ -401,7 +398,6 @@ automation:
 
 
   - alias: brighten the house once sun is up
-    hide_entity: True
     trigger:
       - platform: numeric_state
         entity_id: sun.sun
@@ -434,7 +430,6 @@ automation:
 
 
   - alias: turn off lights once sun is up high enough
-    hide_entity: True
     trigger:
       - platform: time
         at: '07:25:00'

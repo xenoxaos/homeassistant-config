@@ -32,13 +32,14 @@ homeassistant:
     ################################################
     ## Group
     ################################################
+    group.ha_status:
+      <<: *contained
+      order: 1
+
     group.downloads:
       <<: *contained
 
     group.speedtest:
-      <<: *contained
-
-    group.ha_status:
       <<: *contained
 
     ################################################

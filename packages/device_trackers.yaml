@@ -28,14 +28,13 @@ homeassistant:
     ################################################
     ## Group
     ################################################
-    group.family:
-        <<: *contained
-
     group.travel_rick:
         <<: *contained
+        order: 2
 
     group.travel_megs:
         <<: *contained
+        order: 1
 
 
     ################################################
@@ -113,17 +112,12 @@ device_tracker:
 ##  Group
 ################################################################
 group:
-  Family:
-    entities:
-      - device_tracker.iphone7
-      - device_tracker.iphwn666
-
   Travel Rick:
     entities:
       - device_tracker.iphwn666
       - sensor.ricks_eta
-      - sensor.rick_home_commute
-      - sensor.rick_work_commute
+      - sensor.ricks_home_commute
+      - sensor.ricks_office_commute
 
   Travel Megs:
     entities:
@@ -152,18 +146,18 @@ proximity:
 ###  Sensor
 #####################################################################
 sensor:
-## sensor: google travel time - Rick Work Commute
+## sensor: google travel time - Ricks Office Commute
   - platform: google_travel_time
-    name: Rick Work Commute
+    name: Ricks Office Commute
     api_key: !secret google_time_travel_api_key
     origin: Home
-    destination: Rick Work
+    destination: Ricks Office
 
 ## sensor: google travel time - Rick Home Commute
   - platform: google_travel_time
-    name: Rick Home Commute
+    name: Ricks Home Commute
     api_key: !secret google_time_travel_api_key
-    origin: Rick Work
+    origin: Ricks Office
     destination: Home
 
 ## sensor: google travel time - Megs Work Commute

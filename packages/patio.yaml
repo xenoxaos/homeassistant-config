@@ -1,6 +1,6 @@
 #####################################################################
 #    @package          :     patio
-#    @description      :     patio, audio, and associated automations, scenes, etc.
+#    @description      :     patio, fountains, and associated automations, scenes, etc.
 #####################################################################
 homeassistant:
   customize:
@@ -28,16 +28,13 @@ homeassistant:
     ################################################
     ## Group
     ################################################
-    group.exterior:
-      haaska_hidden: true
-
-    group.pool:
-      haaska_hidden: true
-
     group.yard:
+      <<: *exposed
       haaska_name: "Backyard"
+      order: 1
 
     group.exterior_lights:
+      <<: *exposed
       haaska_name: "Exterior Lights"
 
     ################################################

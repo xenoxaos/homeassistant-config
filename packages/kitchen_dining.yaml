@@ -88,7 +88,6 @@ group:
 #####################################################################
 automation:
   - alias: kitchen shade raised schedule
-    hide_entity: True
     trigger:
       - platform: sun
         event: sunrise
@@ -99,7 +98,6 @@ automation:
         entity_id: cover.kitchen_roller_shade_level
 
   - alias: kitchen shade lowered schedule
-    hide_entity: True
     trigger:
       - platform: time
         at: '21:00:00'

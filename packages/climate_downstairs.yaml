@@ -30,7 +30,7 @@ homeassistant:
     ################################################
     group.downstairs_climate:
       <<: *contained
-      #order: 1
+      order: 1
 
     group.downstairs_ecobee:
       <<: *contained
