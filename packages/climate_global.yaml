@@ -1,0 +1,105 @@
+############################################################################
+#    @package          :     climate_global
+#    @description      :     global climate automations.
+############################################################################
+automation:
+### Set Temperature Thresholds on away
+  - alias: set temperature thresholds on away
+    trigger:
+      - platform: state
+        entity_id: group.all_devices
+        from: 'home'
+        to: 'not_home'
+        for:
+          minutes: 15
+
+    condition:
+      - condition: state
+        entity_id: input_boolean.visitor_mode
+        state: 'off'
+
+    action:
+    ########################
+    ### Set Downstairs Away
+    ########################
+      - service: climate.set_hold_mode
+        data:
+          entity_id: climate.downstairs
+          hold_mode: 'away'
+
+    ########################
+    ### Set Upstairs Values
+    ########################
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_ac
+          value: 90
+
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_heat
+          value: 66
+
+
+### Set Temperature Thresholds upon return
+  - alias: set temperature thresholds on arrival
+    trigger:
+      platform: state
+      entity_id: group.all_devices
+      from: 'not_home'
+      to: 'home'
+      for:
+        minutes: 2
+
+    action:
+    ########################
+    ### Set Downstairs Values
+    ########################
+      - service: climate.ecobee_resume_program
+        data:
+          entity_id: climate.downstairs
+          resume_all: 'true'
+
+    ########################
+    ### Set Upstairs Values
+    ########################
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_ac
+          value: "{{ states.sensor.time_cool.state }}"
+
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_heat
+          value: "{{ states.sensor.time_heat.state }}"
+
+
+### Set Temperature Thresholds on peak hours
+  - alias: set temperature thresholds on peak hours
+    trigger:
+      - platform: state
+        entity_id: input_boolean.peak_hours
+        from: 'off'
+        to: 'on'
+
+    action:
+    ########################
+    ### Set Downstairs Values
+    ########################
+      - service: climate.set_hold_mode
+        data:
+          entity_id: climate.downstairs
+          hold_mode: 'away'
+
+    ########################
+    ### Set Upstairs Values
+    ########################
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_ac
+          value: "{{ states.sensor.time_cool.state }}"
+
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_heat
+          value: "{{ states.sensor.time_heat.state }}"

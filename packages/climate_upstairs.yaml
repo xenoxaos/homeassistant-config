@@ -76,6 +76,9 @@ homeassistant:
       <<: *contained
       icon: mdi:air-conditioner
 
+    sensor.time_cool:
+      <<: *contained
+
     ################################################
     ## Climate
     ################################################
@@ -223,10 +226,48 @@ sensor:
             Comfy
           {% endif %}
 
+  ### Time Based Cooling
+  - platform: template
+    sensors:
+      time_cool:
+        value_template: >-
+          {%- if now().strftime('%H%M')|int < 1000 -%}
+            81
+          {%- elif now().strftime('%H%M')|int < 1200 -%}
+            84
+          {%- elif now().strftime('%H%M')|int < 1500 -%}
+            87
+          {%- elif now().strftime('%H%M')|int < 1800 -%}
+            90
+          {%- elif now().strftime('%H%M')|int < 2359 -%}
+            83
+          {%- else -%}
+            83
+          {%- endif -%}
+
+  ### Time Based Heating
+  - platform: template
+    sensors:
+      time_heat:
+        value_template: >-
+          {%- if now().strftime('%H%M')|int < 800 -%}
+            71
+          {%- elif now().strftime('%H%M')|int < 1500 -%}
+            69
+          {%- elif now().strftime('%H%M')|int < 1800 -%}
+            67
+          {%- elif now().strftime('%H%M')|int < 2359 -%}
+            70
+          {%- else -%}
+            69
+          {%- endif -%}
+
+
 #####################################################################
 ### Script
 #####################################################################
 script:
+### Cool Upstairs 60 min
   cool_upstairs_60min:
     sequence:
       - service: climate.set_operation_mode
@@ -249,9 +290,9 @@ script:
       - service: input_slider.select_value
         data_template:
           entity_id: input_slider.upstairs_ac
-          value: 83
+          value: "{{ states.sensor.time_cool.state }}"
 
-## Heat Upstairs 60 min
+### Heat Upstairs 60 min
   heat_upstairs_60min:
     sequence:
       - service: climate.set_operation_mode
@@ -274,6 +315,158 @@ script:
       - service: input_slider.select_value
         data_template:
           entity_id: input_slider.upstairs_heat
-          value: 66
+          value: "{{ states.sensor.time_heat.state }}"
 
-# automation: (see automations folder)
+
+#####################################################################
+### Automation
+#####################################################################
+automation:
+### AC - Upstairs Climate Schedule
+  - alias: upstairs climate schedule
+    trigger:
+      - platform: time
+        minutes: '/5'
+        seconds: 00
+
+      - platform: homeassistant
+        event: start
+
+    condition:
+      - condition: state
+        entity_id: script.cool_upstairs_60min
+        state: 'off'
+
+      - condition: state
+        entity_id: script.heat_upstairs_60min
+        state: 'off'
+
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: group.all_devices
+            state: 'home'
+
+          - condition: state
+            entity_id: input_boolean.visitor_mode
+            state: 'on'
+
+    action:
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_ac
+          value: "{{ states.sensor.time_cool.state }}"
+
+      - service: input_slider.select_value
+        data_template:
+          entity_id: input_slider.upstairs_heat
+          value: "{{ states.sensor.time_heat.state }}"
+
+
+### AC - Upstairs Cooling Bedtime
+  - alias: upstairs cooling bedtime
+    trigger:
+      - platform: state
+        entity_id: script.bedtime
+        to: 'on'
+
+      - platform: state
+        entity_id: script.master_bedroom_night_time
+        to: 'on'
+
+    condition:
+      - condition: numeric_state
+        entity_id: sensor.upstairs_thermostat_temperature
+        above: 82
+
+      - condition: numeric_state
+        entity_id: sensor.pws_temp_f
+        above: 75
+
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: group.all_devices
+            state: 'home'
+
+          - condition: state
+            entity_id: input_boolean.visitor_mode
+            state: 'on'
+
+    action:
+      - service: script.cool_upstairs_60min
+
+
+### Upstairs AC temperature adjustment
+  - alias: upstairs ac temperature adjustment
+    trigger:
+      platform: state
+      entity_id: input_slider.upstairs_ac
+
+    action:
+      - service: climate.set_temperature
+        data_template:
+          entity_id: climate.upstairs_thermostat_cooling_1
+          temperature: '{{ states.input_slider.upstairs_ac.state | int }}'
+
+
+### Upstairs - Change Input slider adjust to match temperature (upstairs ac)
+  - alias: upstairs ac input slider
+    hide_entity: True
+    trigger:
+      platform: state
+      entity_id: sensor.hvac_upstairs_ac_setpoint
+
+    action:
+      service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_ac
+        value: "{{ states.sensor.hvac_upstairs_ac_setpoint.state | int }}"
+
+
+### Upstairs Heat temperature adjustment
+  - alias: upstairs heat temperature adjustment
+    trigger:
+      platform: state
+      entity_id: input_slider.upstairs_heat
+
+    action:
+      - service: climate.set_temperature
+        data_template:
+          entity_id: climate.upstairs_thermostat_heating_1
+          temperature: '{{ states.input_slider.upstairs_heat.state | int }}'
+          #temperature: '{{ trigger.to_state.state | int }}'
+
+
+### Upstairs - Change Input slider adjust to match temperature (upstairs heat)
+  - alias: upstairs heat input slider
+    hide_entity: True
+    trigger:
+      platform: state
+      entity_id: sensor.hvac_upstairs_heat_setpoint
+
+    action:
+      service: input_slider.select_value
+      data_template:
+        entity_id: input_slider.upstairs_heat
+        value: "{{ states.sensor.hvac_upstairs_heat_setpoint.state | int }}"
+
+
+### HEAT - Upstairs Bedtime
+  - alias: upstairs heating bedtime
+    trigger:
+      - platform: state
+        entity_id: script.bedtime
+        to: 'on'
+
+    condition:
+      - condition: numeric_state
+        entity_id: sensor.upstairs_thermostat_temperature
+        below: 69
+
+      - condition: numeric_state
+        entity_id: sensor.pws_temp_f
+        below: 57
+
+    action:
+      - service: script.heat_upstairs_60min

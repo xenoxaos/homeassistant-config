@@ -269,9 +269,10 @@ sensor:
           {% endif %}
 
 
-### Weather
+### Moon
   - platform: moon
 
+### Weather Underground
   - platform: wunderground
     api_key: !secret wu_api_key
     monitored_conditions:
@@ -298,6 +299,7 @@ sensor:
       - solarradiation
       - observation_time
 
+### Darksky
   - platform: darksky
     api_key: !secret forecast_api_key
     monitored_conditions:

@@ -69,13 +69,10 @@ homeassistant:
     ## Script
     ################################################
     script.morning_sequence:
-      hidden: true
-      icon: mdi:play-circle
+      <<: *hidden
 
     script.away:
       <<: *hidden
-      friendly_name: "Away Mode"
-      icon: mdi:play-circle
 
     script.company_mode:
       friendly_name: "Company Mode"

@@ -1,0 +1,112 @@
+############################################################################
+#    @package          :     climate_upstairs_mode
+#    @description      :     upstairs climate modes automations.
+############################################################################
+
+automation:
+### HVAC UPSTAIRS; SET AWESOME
+  - alias: hvac upstairs awesome
+    trigger:
+      - platform: state
+        entity_id: sensor.season
+
+      - platform: homeassistant
+        event: start
+
+    condition:
+      - condition: state
+        entity_id: sensor.season
+        state: 'Awesome'
+
+      - condition: numeric_state
+        entity_id: sensor.upstairs_thermostat_temperature
+        below: 80.5
+
+      - condition: numeric_state
+        entity_id: sensor.upstairs_thermostat_temperature
+        above: 66.5
+
+    action:
+      - service: script.turn_off
+        entity_id:
+          - script.cool_upstairs_60min
+          - script.heat_upstairs_60min
+
+      - service: climate.set_operation_mode
+        entity_id: climate.upstairs_thermostat_cooling_1
+        data:
+          operation_mode: 'Off'
+
+      - service: group.set_visibility
+        entity_id: group.upstairs_cooling
+        data:
+          visible: False
+
+      - service: group.set_visibility
+        entity_id: group.upstairs_heating
+        data:
+          visible: False
+
+
+### HVAC UPSTAIRS; SET COOL
+  - alias: hvac upstairs mode cool
+    hide_entity: True
+    trigger:
+      - platform: state
+        entity_id: sensor.season
+
+      - platform: homeassistant
+        event: start
+
+    condition:
+      - condition: state
+        entity_id: sensor.season
+        state: 'Summer'
+
+    action:
+      - service: group.set_visibility
+        entity_id: group.upstairs_cooling
+        data:
+          visible: True
+
+      - service: group.set_visibility
+        entity_id: group.upstairs_heating
+        data:
+          visible: False
+
+      - service: climate.set_operation_mode
+        entity_id: climate.upstairs_thermostat_cooling_1
+        data:
+          operation_mode: 'Cool'
+
+
+### HVAC UPSTAIRS; SET HEAT
+  - alias: hvac upstairs mode heat
+    hide_entity: True
+    trigger:
+      - platform: state
+        entity_id: sensor.season
+
+      - platform: homeassistant
+        event: start
+
+    condition:
+      - condition: state
+        entity_id: sensor.season
+        state: 'Winter'
+
+    action:
+      - service: group.set_visibility
+        entity_id: group.upstairs_heating
+        data:
+          visible: True
+
+      - service: group.set_visibility
+        entity_id: group.upstairs_cooling
+        data:
+          visible: False
+
+      - service: climate.set_operation_mode
+        entity_id: climate.upstairs_thermostat_cooling_1
+        data:
+          operation_mode: 'Heat'
