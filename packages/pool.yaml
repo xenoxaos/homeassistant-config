@@ -99,6 +99,7 @@ input_select:
 automation:
 ### Turn off the Pool Light and Reset Selection
   - alias: pool light reset selections
+    initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: state
@@ -122,6 +123,7 @@ automation:
 
 ### Pool Light Scene Selection
   - alias: 'Pool Scene'
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: input_select.pool_scene
@@ -157,6 +159,7 @@ automation:
 
 ### Pool Light Color Selection
   - alias: 'Pool Color'
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: input_select.pool_color

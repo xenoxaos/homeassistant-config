@@ -75,7 +75,6 @@ group:
       - group.travel_megs
       - group.travel_rick
       - group.device_status
-      - group.alerts
 
 
   security:

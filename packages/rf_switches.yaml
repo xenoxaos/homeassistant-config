@@ -148,7 +148,7 @@ sensor:
 #####################################################################
 automation:
   - alias: Save RF Switch State
-    initial_state: true
+    initial_state: 'on'
     hide_entity: true
     trigger:
       platform: state
@@ -166,7 +166,7 @@ automation:
 # Startup event - restores states of dropdowns, and RF Switches...etc
 #####################################################################
   - alias: Restore RF Switch Status on Startup
-    initial_state: true
+    initial_state: 'on'
     hide_entity: true
     trigger:
       platform: homeassistant

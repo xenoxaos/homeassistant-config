@@ -60,6 +60,10 @@ homeassistant:
       <<: *contained
       icon: mdi:chart-areaspline
 
+    sensor.ds_fan_state:
+      <<: *contained
+      icon: mdi:fan
+
     sensor.downstairs_humidity:
       <<: *contained
       icon: mdi:water-percent
@@ -81,13 +85,14 @@ homeassistant:
 group:
   Downstairs Climate:
     entities:
-      - sensor.ds_avg_temp
       - climate.downstairs
       - sensor.downstairs_temperature
       - sensor.living_room_temperature
       - sensor.office_temperature
       - sensor.front_entry_fibaro_multisensor_temperature
       - sensor.broadlink_sensor_temperature
+      - sensor.ds_avg_temp
+      - sensor.ds_fan_state
       - sensor.downstairs_humidity
 
   Downstairs Ecobee:
@@ -118,6 +123,12 @@ sensor:
         unit_of_measurement: "F"
         value_template: >-
           {{ ((float(states.sensor.downstairs_temperature.state) + float(states.sensor.living_room_temperature.state) + float(states.sensor.office_temperature.state) + float(states.sensor.front_entry_fibaro_multisensor_temperature.state) + float(states.sensor.broadlink_sensor_temperature.state)) / 5) | round(1) }}
+
+  - platform: template
+    sensors:
+      ds_fan_state:
+        friendly_name: "Downstairs Fan State"
+        value_template: "{{ (states.climate.downstairs.attributes|default({})).fan|default('unknown') }}"
 
 
   ################################################
@@ -168,6 +179,7 @@ script:
 #####################################################################
 automation:
   - alias: downstairs cooling schedule
+    initial_state: 'on'
     trigger:
       - platform: time
         at: '06:00:00'
@@ -191,6 +203,7 @@ automation:
 
 
   - alias: downstairs climate sleep mode
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: script.bedtime

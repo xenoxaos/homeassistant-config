@@ -50,12 +50,12 @@ homeassistant:
       friendly_name: "Megs"
       entity_picture: /local/megs.jpg
 
-    sensor.rick_work_commute:
+    sensor.ricks_office_commute:
       <<: *contained
       friendly_name: "Rick Commute to Work"
       icon: mdi:car
 
-    sensor.rick_home_commute:
+    sensor.ricks_home_commute:
       <<: *contained
       friendly_name: "Rick Commute Home"
       icon: mdi:car
@@ -215,6 +215,7 @@ sensor:
 automation:
 ## Away Mode
   - alias: Away Mode
+    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.all_devices
@@ -228,6 +229,7 @@ automation:
 
 ## Away Cancel
   - alias: Away Mode Cancel
+    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.all_devices

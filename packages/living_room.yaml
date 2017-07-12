@@ -74,6 +74,10 @@ homeassistant:
       <<: *contained
       icon: mdi:white-balance-incandescent
 
+    light.foyer_lights_level:
+      friendly_name: "Foyer Lights"
+      icon: mdi:ceiling-light
+
     ################################################
     ## Switch
     ################################################
@@ -116,6 +120,7 @@ group:
     entities:
       - switch.living_room_fan
       - input_select.living_room_fan_speed
+      - light.foyer_lights_level
       - light.living_room_lamp
       - group.living_room_ceiling
       - switch.living_room_fan_light
@@ -184,6 +189,11 @@ switch:
 scene:
   - name: Living Room Bright
     entities:
+      light.foyer_lights_level:
+        state: on
+        brightness: 255
+        transition: 5
+
       group.entry_lighting:
         state: on
         brightness: 255
@@ -206,6 +216,11 @@ scene:
 
   - name: Living Room Normal
     entities:
+      light.foyer_lights_level:
+        state: on
+        brightness: 255
+        transition: 5
+
       light.kitchen_entry:
         state: on
         brightness: 200
@@ -233,6 +248,11 @@ scene:
 
   - name: Living Room Dim
     entities:
+      light.foyer_lights_level:
+        state: on
+        brightness: 150
+        transition: 5
+
       light.kitchen_entry:
         state: on
         brightness: 150
@@ -261,6 +281,11 @@ scene:
 
   - name: Living Room Cloudy
     entities:
+      light.foyer_lights_level:
+        state: on
+        brightness: 255
+        transition: 5
+
       light.kitchen_entry:
         state: on
         brightness: 90
@@ -291,7 +316,8 @@ scene:
 ### Automation
 #####################################################################
 automation:
-  - alias: turn on living room lamp at sunset
+  - alias: turn on living room lights at sunset
+    initial_state: 'on'
     trigger:
       - platform: sun
         event: sunset
@@ -304,51 +330,16 @@ automation:
           brightness: 255
           transition: 600
 
-
-  - alias: turn off living room lamp weekdays
-    trigger:
-      platform: time
-      at: '23:00:00'
-
-    condition:
-      - condition: state
-        entity_id: light.living_room_lamp
-        state: 'on'
-
-      - condition: time
-        weekday:
-          - sun
-          - mon
-          - tue
-          - wed
-          - thu
-
-    action:
-      - service: light.turn_off
+      - service: light.turn_on
         data:
-          entity_id: light.living_room_lamp
-          transition: 10
+          entity_id: light.foyer_lights_level
+          brightness: 255
+          transition: 120
 
 
-  - alias: turn off living room lamp weekends
-    trigger:
-      platform: time
-      at: '01:30:00'
-
-    condition:
-      condition: time
-      weekday:
-        - sat
-        - sun
-
-    action:
-      - service: light.turn_off
-        data:
-          entity_id: light.living_room_lamp
-          transition: 10
-
-
+  ### Turn off the living room lamp if we leave during the day
   - alias: turn off living room lamp away
+    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.all_devices
@@ -372,7 +363,9 @@ automation:
         entity_id: light.living_room_lamp
 
 
+  ### Set the Living Room scene at sunset
   - alias: turn on living room scene at sunset
+    initial_state: 'on'
     trigger:
       - platform: sun
         event: sunset
@@ -397,7 +390,9 @@ automation:
         entity_id: scene.living_room_normal
 
 
+  ### Brighten up the house in the morning
   - alias: brighten the house once sun is up
+    initial_state: 'on'
     trigger:
       - platform: numeric_state
         entity_id: sun.sun
@@ -429,7 +424,9 @@ automation:
         entity_id: group.accent_lights
 
 
+  ### Turn off the lights in the morning once sun is up high enough
   - alias: turn off lights once sun is up high enough
+    initial_state: 'on'
     trigger:
       - platform: time
         at: '07:25:00'
@@ -449,7 +446,9 @@ automation:
         entity_id: group.interior_lights
 
 
+  ### Turn on some lights when we arrive home
   - alias: turn on lights upon arrival
+    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.all_devices
@@ -484,8 +483,9 @@ automation:
       - service: scene.turn_on
         entity_id: scene.living_room_normal
 
-
+  ### Turn on some lights when it is too cloudy
   - alias: turn on living room scene if cloudy
+    initial_state: 'on'
     trigger:
       - platform: numeric_state
         entity_id: sensor.front_entry_fibaro_multisensor_luminance
@@ -536,6 +536,7 @@ automation:
 
   ### Turn off lights after rain has stopped
   - alias: rain has stopped
+    initial_state: 'on'
     trigger:
       - platform: numeric_state
         entity_id: sensor.dark_sky_precip_intensity
@@ -572,6 +573,7 @@ automation:
 
   ### Living Room Ceiling Fan
   - alias: living room fan speed selector
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: input_select.living_room_fan_speed

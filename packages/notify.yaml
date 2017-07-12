@@ -25,22 +25,6 @@ homeassistant:
         <<: *contained
         hidden: true
 
-    ################################################
-    ## Group
-    ################################################
-    group.alerts:
-      <<: *contained
-      order: 4
-
-
-#####################################################################
-### Group
-#####################################################################
-group:
-  Alerts:
-    entities:
-      - sensor.gitter_messages
-
 
 #####################################################################
 ### Notify
@@ -74,11 +58,3 @@ ios:
             behavior: 'textInput'
             textInputButtonTitle: 'Silencio!'
             textInputPlaceholder: 'Placeholder'
-
-
-#####################################################################
-### Sensor
-#####################################################################
-sensor:
-  - platform: gitter
-    api_key: !secret gitter_api_key

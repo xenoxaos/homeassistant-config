@@ -5,6 +5,7 @@
 automation:
 ### Set Temperature Thresholds on away
   - alias: set temperature thresholds on away
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: group.all_devices
@@ -43,6 +44,7 @@ automation:
 
 ### Set Temperature Thresholds upon return
   - alias: set temperature thresholds on arrival
+    initial_state: 'on'
     trigger:
       platform: state
       entity_id: group.all_devices
@@ -76,6 +78,7 @@ automation:
 
 ### Set Temperature Thresholds on peak hours
   - alias: set temperature thresholds on peak hours
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: input_boolean.peak_hours

@@ -48,10 +48,6 @@ homeassistant:
       friendly_name: "Patio Lights"
       icon: mdi:white-balance-incandescent
 
-    switch.fountains_switch:
-      friendly_name: "Fountains"
-      icon: mdi:beach
-
 
 #####################################################################
 ### Group
@@ -76,68 +72,9 @@ group:
 ### Automation
 #####################################################################
 automation:
-### FOUNTAINS ON
-  - alias: turn on fountains
-    trigger:
-      - platform: sun
-        event: sunrise
-        offset: '01:30:00'
-
-      - platform: state
-        entity_id: group.all_devices
-        from: 'not_home'
-        to: 'home'
-
-    condition:
-      - condition: numeric_state
-        entity_id: sensor.pws_wind_mph
-        below: 10
-
-      - condition: state
-        entity_id: input_boolean.rain
-        state: 'off'
-
-      - condition: sun
-        before: sunset
-
-      - condition: state
-        entity_id: group.all_devices
-        state: 'home'
-
-    action:
-      - service: switch.turn_on
-        data:
-          entity_id: switch.fountains_switch
-
-
-### FOUNTAINS OFF
-  - alias: turn off fountains
-    hide_entity: True
-    trigger:
-      - platform: sun
-        event: sunset
-        offset: '00:05:00'
-
-      - platform: state
-        entity_id: input_boolean.rain
-        from: 'off'
-        to: 'on'
-        for:
-          minutes: 5
-
-    condition:
-      - condition: state
-        entity_id: switch.fountains_switch
-        state: 'on'
-
-    action:
-      - service: switch.turn_off
-        data:
-          entity_id: switch.fountains_switch
-
-
 ### Turn off the Party Lights - Weekdays
   - alias: turn off party lights weekdays
+    initial_state: 'on'
     trigger:
       platform: time
       at: '00:00:00'
@@ -163,6 +100,7 @@ automation:
 
 ### Turn off the Party Lights - Weekends
   - alias: turn off party lights weekends
+    initial_state: 'on'
     trigger:
       platform: time
       at: '02:00:00'

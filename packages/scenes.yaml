@@ -32,17 +32,30 @@ homeassistant:
     ################################################
     ## Group
     ################################################
+    group.operational_modes:
+      <<: *contained
+      order: 1
+
     group.lighting_scenes:
       <<: *contained
+      order: 2
 
     group.automation_override:
       <<: *contained
+      order: 3
 
     group.interior_lights:
       haaska_name: "Interior Lights"
 
     group.stateless_lights:
       <<: *hidden
+
+    ################################################
+    ## Input Boolean
+    ################################################
+    automation.upstairs_climate_schedule:
+      <<: *contained
+      friendly_name: "Upstairs Climate Schedule"
 
     ################################################
     ## Input Boolean
@@ -127,25 +140,30 @@ homeassistant:
 ### Group
 #####################################################################
 group:
+  Operational Modes:
+    control: hidden
+    entities:
+      - input_boolean.visitor_mode
+      - input_boolean.holiday
+      - script.company_mode
+
   Lighting Scenes:
     control: hidden
     entities:
-      - script.bedtime
       - scene.morning
+      - input_boolean.dinner_time
+      - script.bedtime
       - scene.movie_time
       - scene.living_room_dim
       - scene.living_room_cloudy
       - scene.living_room_normal
       - scene.living_room_bright
-      - script.company_mode
       - script.shutdown_lights
 
   Automation Override:
     control: hidden
     entities:
-      - input_boolean.visitor_mode
-      - input_boolean.holiday
-      - input_boolean.dinner_time
+      - automation.upstairs_climate_schedule
       - automation.away_mode
       - automation.unlock_door_when_megan_arrives
 
@@ -153,9 +171,11 @@ group:
     entities:
       - group.accent_lights
       - light.entryway_lights
+      - light.foyer_lights_level
       - light.family_room_lights
+      - light.master_bed_entry_level
       - light.master_bedroom
-      - light.master_sitting_lamp
+      - light.master_bed_ceiling_level
       - light.office_desk_lamp
       - light.master_bedroom_chandelier_level
       - switch.billiards_room_lights_switch
@@ -220,6 +240,10 @@ sensor:
 scene:
   - name: Morning
     entities:
+      light.foyer_lights_level:
+        state: on
+        brightness: 255
+        transition: 5
 
   # turn on the master bedroom chandelier
       light.master_bedroom_chandelier_level:
@@ -259,6 +283,12 @@ scene:
 script:
   morning_sequence:
     sequence:
+
+    - service: light.turn_on
+      data:
+        entity_id: light.foyer_lights_level
+        brightness: 255
+        transition: 30
 
 # turn on master bed chandelier
     - service: light.turn_on
@@ -306,10 +336,6 @@ script:
   bedtime:
     sequence:
     - service: lock.lock
-
-    - service: input_boolean.turn_on
-      data:
-        entity_id: input_boolean.bedtime
 
 ### Turn off outlets and devices
     - service: homeassistant.turn_off
@@ -433,6 +459,7 @@ script:
 automation:
 ### Weekday Wakeup
   - alias: weekday morning wakeup
+    initial_state: 'on'
     trigger:
       - platform: event
         event_type: good_morning

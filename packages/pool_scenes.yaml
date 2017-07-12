@@ -42,46 +42,46 @@ script:
 
   ## wait before initiating the sequence
     - delay:
-        seconds: 2
+        seconds: 3
 
   ## initiate sequence - pause briefly between cycles
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: 1
+        seconds: 2
 
   ## 1 - Color Cycle
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 2 - Party Mode
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 3 - Romance
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 4 - Caribbean
     - service: switch.turn_on
@@ -104,13 +104,13 @@ script:
 
   ## wait before initiating the sequence
     - delay:
-        seconds: 2
+        seconds: 3
 
   ## initiate sequence - pause briefly between cycles
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: 1
+        seconds: 2
 
   ## 1 - Color Cycle
     - service: switch.turn_on
@@ -133,24 +133,24 @@ script:
 
   ## wait before initiating the sequence
     - delay:
-        seconds: 2
+        seconds: 3
 
   ## initiate sequence - pause briefly between cycles
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: 1
+        seconds: 2
 
   ## 1 - Color Cycle
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 2 - Party Mode
     - service: switch.turn_on
@@ -173,57 +173,57 @@ script:
 
   ## wait before initiating the sequence
     - delay:
-        seconds: 2
+        seconds: 3
 
   ## initiate sequence - pause briefly between cycles
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: 1
+        seconds: 2
 
   ## 1 - Color Cycle
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 2 - Party Mode
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 3 - Romance
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 4 - Caribbean
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 5 - Patriotic
     - service: switch.turn_on
@@ -246,35 +246,35 @@ script:
 
   ## wait before initiating the sequence
     - delay:
-        seconds: 2
+        seconds: 3
 
   ## initiate sequence - pause briefly between cycles
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: 1
+        seconds: 2
 
   ## 1 - Color Cycle
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 2 - Party Mode
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 3 - Romance
     - service: switch.turn_on
@@ -297,79 +297,79 @@ script:
 
   ## wait before initiating the sequence
     - delay:
-        seconds: 2
+        seconds: 3
 
   ## initiate sequence - pause briefly between cycles
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: 1
+        seconds: 2
 
   ## 1 - Color Cycle
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 2 - Party Mode
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 3 - Romance
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 4 - Caribbean
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 5 - Patriotic
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 6 - CA Sunset
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 7 - Royal
     - service: switch.turn_on
@@ -392,68 +392,68 @@ script:
 
   ## wait before initiating the sequence
     - delay:
-        seconds: 2
+        seconds: 3
 
   ## initiate sequence - pause briefly between cycles
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: 1
+        seconds: 2
 
   ## 1 - Color Cycle
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 2 - Party Mode
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 3 - Romance
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 4 - Caribbean
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 5 - Patriotic
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
     - service: switch.turn_off
       entity_id: switch.pool_light_switch
     - delay:
-        seconds: .3
+        seconds: .5
 
   ## 6 - CA Sunset
     - service: switch.turn_on

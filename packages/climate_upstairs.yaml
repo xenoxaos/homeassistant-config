@@ -231,7 +231,7 @@ sensor:
     sensors:
       time_cool:
         value_template: >-
-          {%- if now().strftime('%H%M')|int < 1000 -%}
+          {%- if now().strftime('%H%M')|int < 900 -%}
             81
           {%- elif now().strftime('%H%M')|int < 1200 -%}
             84
@@ -239,8 +239,10 @@ sensor:
             87
           {%- elif now().strftime('%H%M')|int < 1800 -%}
             90
+          {%- elif now().strftime('%H%M')|int < 2000 -%}
+            82
           {%- elif now().strftime('%H%M')|int < 2359 -%}
-            83
+            78
           {%- else -%}
             83
           {%- endif -%}
@@ -324,9 +326,10 @@ script:
 automation:
 ### AC - Upstairs Climate Schedule
   - alias: upstairs climate schedule
+    initial_state: 'on'
     trigger:
       - platform: time
-        minutes: '/5'
+        minutes: '/31'
         seconds: 00
 
       - platform: homeassistant
@@ -365,13 +368,10 @@ automation:
 
 ### AC - Upstairs Cooling Bedtime
   - alias: upstairs cooling bedtime
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: script.bedtime
-        to: 'on'
-
-      - platform: state
-        entity_id: script.master_bedroom_night_time
         to: 'on'
 
     condition:
@@ -399,6 +399,7 @@ automation:
 
 ### Upstairs AC temperature adjustment
   - alias: upstairs ac temperature adjustment
+    initial_state: 'on'
     trigger:
       platform: state
       entity_id: input_slider.upstairs_ac
@@ -407,11 +408,13 @@ automation:
       - service: climate.set_temperature
         data_template:
           entity_id: climate.upstairs_thermostat_cooling_1
-          temperature: '{{ states.input_slider.upstairs_ac.state | int }}'
+          temperature: '{{ trigger.to_state.state | int }}'
+          #temperature: '{{ states.input_slider.upstairs_ac.state | int }}'
 
 
 ### Upstairs - Change Input slider adjust to match temperature (upstairs ac)
   - alias: upstairs ac input slider
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -426,6 +429,7 @@ automation:
 
 ### Upstairs Heat temperature adjustment
   - alias: upstairs heat temperature adjustment
+    initial_state: 'on'
     trigger:
       platform: state
       entity_id: input_slider.upstairs_heat
@@ -434,12 +438,14 @@ automation:
       - service: climate.set_temperature
         data_template:
           entity_id: climate.upstairs_thermostat_heating_1
-          temperature: '{{ states.input_slider.upstairs_heat.state | int }}'
-          #temperature: '{{ trigger.to_state.state | int }}'
+          temperature: '{{ trigger.to_state.state | int }}'
+          #temperature: '{{ states.input_slider.upstairs_heat.state | int }}'
+
 
 
 ### Upstairs - Change Input slider adjust to match temperature (upstairs heat)
   - alias: upstairs heat input slider
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -454,6 +460,7 @@ automation:
 
 ### HEAT - Upstairs Bedtime
   - alias: upstairs heating bedtime
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: script.bedtime

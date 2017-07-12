@@ -195,6 +195,7 @@ sensor:
 automation:
   ### Humidor is low - notify to refill
   - alias: humidor_refill
+    initial_state: 'on'
     trigger:
       - platform: numeric_state
         entity_id: sensor.sn1_humidity
@@ -216,6 +217,7 @@ automation:
 
   ### Humidor OK - reset notification and indicator
   - alias: humidor_ok
+    initial_state: 'on'
     trigger:
       - platform: numeric_state
         entity_id: sensor.sn1_humidity
@@ -237,6 +239,7 @@ automation:
 
   ### Turn off the lamp when OFF is selected
   - alias: RGB Select Off
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -256,6 +259,7 @@ automation:
 
   ### Reset input selection when lamp is turned off
   - alias: RGB Reset Off
+    initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: state
@@ -272,6 +276,7 @@ automation:
 
   ### RGB Select Cool
   - alias: RGB Cool
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -294,6 +299,7 @@ automation:
 
   ### RGB Select Warm
   - alias: RGB Warm
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -315,6 +321,7 @@ automation:
 
   ### RGB Select Warm Dim
   - alias: RGB Warm Dim
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -336,6 +343,7 @@ automation:
 
   ### RGB Select Blue
   - alias: RGB Blue
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -358,6 +366,7 @@ automation:
 
   ### RGB Select Cyan
   - alias: RGB Cyan
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -380,6 +389,7 @@ automation:
 
   ### RGB Select Green
   - alias: RGB Green
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -402,6 +412,7 @@ automation:
 
   ### RGB Select Pink
   - alias: RGB Pink
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -424,6 +435,7 @@ automation:
 
   ### RGB Select Red
   - alias: RGB Red
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -446,6 +458,7 @@ automation:
 
   ### RGB Select Violet
   - alias: RGB Violet
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -468,6 +481,7 @@ automation:
 
   ### RGB Select Yellow
   - alias: RGB Yellow
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state
@@ -490,6 +504,7 @@ automation:
 
   ### RGB Select Random
   - alias: random_flux_rgb
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state

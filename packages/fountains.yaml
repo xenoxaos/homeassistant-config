@@ -39,6 +39,7 @@ homeassistant:
 automation:
 ### FOUNTAINS ON
   - alias: turn on fountains
+    initial_state: 'on'
     trigger:
       - platform: sun
         event: sunrise
@@ -73,7 +74,7 @@ automation:
 
 ### FOUNTAINS OFF
   - alias: turn off fountains
-    hide_entity: True
+    initial_state: 'on'
     trigger:
       - platform: sun
         event: sunset

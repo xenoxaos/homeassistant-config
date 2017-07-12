@@ -194,6 +194,7 @@ sensor:
 automation:
   ### Auto Notify when HA has an update available
   - alias: notify update
+    initial_state: 'on'
     trigger:
       platform: state
       entity_id: updater.updater
@@ -212,6 +213,7 @@ automation:
 
   ### Send notification after home assistant has restarted
   - alias: Startup Notification
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: homeassistant

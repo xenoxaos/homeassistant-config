@@ -37,11 +37,11 @@ homeassistant:
     ################################################
     lock.bathroom_entry_locked:
       <<: *contained
-      friendly_name: "Beach Bathroom Door"
+      friendly_name: "Beach Bathroom Door Lock"
 
     lock.south_entry_locked:
       <<: *contained
-      friendly_name: "South Door"
+      friendly_name: "South Entry Door Lock"
 
     ################################################
     ## Script
@@ -70,10 +70,10 @@ group:
     entities:
       - lock.bathroom_entry_locked
       - sensor.lock_beach_door_status
-      - sensor.lock_beach_battery
       - lock.south_entry_locked
       - sensor.lock_south_door_status
-      - sensor.lock_south_battery
+
+
 
 
 #####################################################################
@@ -83,7 +83,7 @@ sensor:
   - platform: template
     sensors:
       lock_beach_door_status:
-        friendly_name: "Beach Door Status"
+        friendly_name: "Beach Bathroom Door Status"
         value_template: >-
           {% set state = states('sensor.bathroom_entry_alarm_type') %}
           {% set user = states('sensor.bathroom_entry_alarm_level') %}
@@ -115,10 +115,8 @@ sensor:
           {% endif %}
 
 
-  - platform: template
-    sensors:
       lock_south_door_status:
-        friendly_name: "South Door Status"
+        friendly_name: "South Entry Door Status"
         value_template: >-
           {% set state = states('sensor.south_entry_alarm_type') %}
           {% set user = states('sensor.south_entry_alarm_level') %}
@@ -182,6 +180,7 @@ script:
 #####################################################################
 automation:
   - alias: unlock door when megan arrives
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: device_tracker.iphone7
@@ -197,6 +196,7 @@ automation:
 
 
   - alias: notify if unlocked by code
+    initial_state: 'on'
     hide_entity: True
     trigger:
       platform: state

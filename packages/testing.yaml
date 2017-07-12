@@ -152,6 +152,7 @@ script:
 automation:
   ### Test Condition 1
   - alias: test input_boolean condition 1
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: input_boolean.state_change
@@ -205,6 +206,7 @@ automation:
 
   ### Test Condition 2
   - alias: test input_boolean condition 2
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: input_boolean.state_change
@@ -243,6 +245,7 @@ automation:
 
   ### Test Condition 3
   - alias: test input_boolean condition 3
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: input_boolean.state_change
@@ -281,6 +284,7 @@ automation:
 
   ### input_boolean test
   - alias: test input_boolean
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: input_boolean.state_change

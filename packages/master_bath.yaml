@@ -81,6 +81,7 @@ group:
 automation:
 ## Raise master bath shades
   - alias: master bath shade raised schedule
+    initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: time
@@ -92,6 +93,7 @@ automation:
 
 ## Lower master bath shades
   - alias: master bath shade lowered schedule
+    initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: sun

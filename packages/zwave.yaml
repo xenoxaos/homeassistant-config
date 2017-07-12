@@ -28,11 +28,14 @@ zwave:
     lock:
       polling_intensity: 1
 
+    switch:
+      polling_intensity: 1
+
   ################################################
   ## Global Config
   ################################################
   device_config_glob:
-    "cover.*_switch":
+    "zwave.somfy_unknown*":
       ignored: true
 
     "cover.*_level":

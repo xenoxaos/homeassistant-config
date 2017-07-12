@@ -6,6 +6,7 @@
 automation:
 ### HVAC UPSTAIRS; SET AWESOME
   - alias: hvac upstairs awesome
+    initial_state: 'on'
     trigger:
       - platform: state
         entity_id: sensor.season
@@ -50,6 +51,7 @@ automation:
 
 ### HVAC UPSTAIRS; SET COOL
   - alias: hvac upstairs mode cool
+    initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: state
@@ -82,6 +84,7 @@ automation:
 
 ### HVAC UPSTAIRS; SET HEAT
   - alias: hvac upstairs mode heat
+    initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: state
