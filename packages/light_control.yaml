@@ -76,7 +76,7 @@ homeassistant:
 ### Automation
 #####################################################################
 automation:
-  - alias: light_control_reset
+  - alias: Light Control Reset
     initial_state: 'on'
     trigger:
       - platform: time

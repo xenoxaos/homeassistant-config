@@ -53,13 +53,6 @@ homeassistant:
     ################################################
     ## Input Boolean
     ################################################
-    automation.upstairs_climate_schedule:
-      <<: *contained
-      friendly_name: "Upstairs Climate Schedule"
-
-    ################################################
-    ## Input Boolean
-    ################################################
     input_boolean.visitor_mode:
       <<: *exposed
       icon: mdi:account
@@ -163,9 +156,8 @@ group:
   Automation Override:
     control: hidden
     entities:
-      - automation.upstairs_climate_schedule
-      - automation.away_mode
-      - automation.unlock_door_when_megan_arrives
+      - automation.away_mode_on
+      - automation.south_door_unlock_on_arrival
 
   Interior Lights:
     entities:
@@ -281,77 +273,70 @@ scene:
 ### Script
 #####################################################################
 script:
+  ### Morning Wakeup Sequence
   morning_sequence:
     sequence:
-
     - service: light.turn_on
       data:
         entity_id: light.foyer_lights_level
         brightness: 255
         transition: 30
 
-# turn on master bed chandelier
     - service: light.turn_on
-      entity_id: light.master_bedroom_chandelier_level
       data:
+        entity_id: light.master_bedroom_chandelier_level
         brightness: 50
 
-### Turn on the accent lights
-    - service: switch.turn_on
+    - service: homeassistant.turn_on
       entity_id: group.accent_lights
 
     - delay:
         minutes: 7
 
-# turn on the living room lamp
     - service: light.turn_on
-      entity_id: light.living_room_lamp
       data:
+        entity_id: light.living_room_lamp
         brightness: 220
         transition: 60
 
     - delay:
         minutes: 7
 
-# turn on the living room lights
     - service: light.turn_on
-      entity_id:
-        - light.entryway_lights
-        - group.living_room_ceiling
       data:
+        entity_id:
+          - light.entryway_lights
+          - group.living_room_ceiling
         brightness: 140
         transition: 120
 
     - delay:
         minutes: 7
 
-# turn on the kitchen lights
     - service: light.turn_on
-      entity_id: light.kitchen_lights_level
       data:
+        entity_id: light.kitchen_lights_level
         brightness: 170
 
 
-### Bedtime
+  ### Bedtime Mode Sequence
   bedtime:
     sequence:
+    # lock up
     - service: lock.lock
 
-### Turn off outlets and devices
+    # turn off all the "things"
     - service: homeassistant.turn_off
       entity_id: group.things
 
-### Turn off the billiards room lights
     - service: switch.turn_off
       entity_id: switch.billiards_room
 
-### Set master bedroom chandelier to dim
     - service: light.turn_on
-      entity_id: light.master_bedroom_chandelier_level
       data:
+        entity_id: light.master_bedroom_chandelier_level
         brightness: 50
 
-### Turn on the under-bed lights
     - service: light.turn_on
       data:
         entity_id: light.under_bed_lights
@@ -360,48 +345,43 @@ script:
     - delay:
         minutes: 5
 
-### dim master bed chandelier
     - service: light.turn_on
-      entity_id: light.master_bedroom_chandelier_level
       data:
+        entity_id: light.master_bedroom_chandelier_level
         brightness: 40
 
     - delay:
         minutes: 7
 
-### turn_off master bed chandelier
     - service: light.turn_off
-      entity_id: light.master_bedroom_chandelier_level
       data:
+        entity_id: light.master_bedroom_chandelier_level
         transition: 60
 
-# turn off all remaining lights
     - service: homeassistant.turn_off
       entity_id: group.interior_lights
 
     - delay:
         minutes: 1.5
 
-### Turn off the under-bed lights
     - service: light.turn_off
       entity_id: light.under_bed_lights
 
 
-### Away
+  ### Away Mode Sequence
   away:
     sequence:
-
-# lock up
+    # lock up
     - service: lock.lock
 
-# turn off all lights (except porch)
+    # turn off all lights (except porch)
     - service: homeassistant.turn_off
       entity_id: group.interior_lights
 
     - service: homeassistant.turn_off
       entity_id: group.exterior_lights
 
-# turn off all the "things"
+    # turn off all the "things"
     - service: homeassistant.turn_off
       entity_id: group.things
 
@@ -417,7 +397,7 @@ script:
         message: "It appears nobody's home; away mode activated."
 
 
-### Company Mode
+  ### Company Mode Sequence
   company_mode:
     sequence:
     - service: switch.turn_on
@@ -428,27 +408,22 @@ script:
 
     - service: lock.unlock
 
-## turn on the kitchen Lights
     - service: light.turn_on
-      entity_id: light.kitchen_lights_level
       data:
+        entity_id: light.kitchen_lights_level
         brightness: 175
 
-## turn on the dining room light
     - service: light.turn_on
-      entity_id: light.dining_room_chandelier_level
       data:
+        entity_id: light.dining_room_chandelier_level
         brightness: 130
 
-## turn on the Billiards Room lights
     - service: switch.turn_on
       entity_id: switch.billiards_room_lights_switch
 
-## turn on the party lights
     - service: switch.turn_on
       entity_id: switch.patio_party_lights_switch
 
-## turn on the pool light
     - service: switch.turn_on
       entity_id: switch.pool_light_switch
 
@@ -457,13 +432,10 @@ script:
 ### Automation
 #####################################################################
 automation:
-### Weekday Wakeup
-  - alias: weekday morning wakeup
+  ### Weekday Wakeup
+  - alias: Morning Sequence
     initial_state: 'on'
     trigger:
-      - platform: event
-        event_type: good_morning
-
       - platform: time
         at: '05:55:00'
 
@@ -476,13 +448,9 @@ automation:
         entity_id: input_boolean.holiday
         state: 'off'
 
-      - condition: time
-        weekday:
-          - mon
-          - tue
-          - wed
-          - thu
-          - fri
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: 'on'
 
     action:
       - service: script.morning_sequence

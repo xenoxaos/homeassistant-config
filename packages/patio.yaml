@@ -73,7 +73,7 @@ group:
 #####################################################################
 automation:
 ### Turn off the Party Lights - Weekdays
-  - alias: turn off party lights weekdays
+  - alias: Patio Party Lights Off Weekdays
     initial_state: 'on'
     trigger:
       platform: time
@@ -99,7 +99,7 @@ automation:
 
 
 ### Turn off the Party Lights - Weekends
-  - alias: turn off party lights weekends
+  - alias: Patio Party Lights Off Weekends
     initial_state: 'on'
     trigger:
       platform: time

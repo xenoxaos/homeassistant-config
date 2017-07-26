@@ -70,7 +70,7 @@ homeassistant:
       friendly_name: "Megs Commute Home"
       icon: mdi:car
 
-    sensor.rick_eta_home:
+    sensor.ricks_eta_home:
       <<: *contained
       friendly_name: "Ricks ETA"
       icon: mdi:timer
@@ -146,44 +146,39 @@ proximity:
 ###  Sensor
 #####################################################################
 sensor:
-## sensor: google travel time - Ricks Office Commute
+
   - platform: google_travel_time
     name: Ricks Office Commute
     api_key: !secret google_time_travel_api_key
     origin: Home
     destination: Ricks Office
 
-## sensor: google travel time - Rick Home Commute
   - platform: google_travel_time
     name: Ricks Home Commute
     api_key: !secret google_time_travel_api_key
     origin: Ricks Office
     destination: Home
 
-## sensor: google travel time - Megs Work Commute
   - platform: google_travel_time
     name: Megs Work Commute
     api_key: !secret google_time_travel_api_key
     origin: Home
     destination: Megs Work
 
-## sensor: google travel time - Megs Home Commute
   - platform: google_travel_time
     name: Megs Home Commute
     api_key: !secret google_time_travel_api_key
     origin: Megs Work
     destination: Home
 
-## tracker for ETA Home
   - platform: google_travel_time
     name: Megs ETA Home
     api_key: !secret google_time_travel_api_key
     origin: device_tracker.iphone7
     destination: Home
 
-## tracker for ETA Home
   - platform: google_travel_time
-    name: Rick ETA Home
+    name: Ricks ETA Home
     api_key: !secret google_time_travel_api_key
     origin: device_tracker.iphwn666
     destination: Home
@@ -193,10 +188,10 @@ sensor:
       ricks_eta:
         friendly_name: "Rick's ETA"
         value_template: >-
-          {% if is_state('sensor.rick_eta_home', '0') %}
+          {% if is_state('sensor.ricks_eta_home', '0') %}
             Home
           {% else %}
-            {{ states('sensor.rick_eta_home') }}
+            {{ states('sensor.ricks_eta_home') }}
           {% endif %}
 
       megs_eta:
@@ -213,8 +208,8 @@ sensor:
 ###  Automation
 #####################################################################
 automation:
-## Away Mode
-  - alias: Away Mode
+  ### Away Mode On
+  - alias: Away Mode On
     initial_state: 'on'
     trigger:
       platform: state
@@ -227,7 +222,8 @@ automation:
     action:
       - service: script.away
 
-## Away Cancel
+
+  ### Away Mode Cancel
   - alias: Away Mode Cancel
     initial_state: 'on'
     trigger:

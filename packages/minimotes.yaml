@@ -1,6 +1,6 @@
 #####################################################################
-#    @package          :     minimotes
-#    @description      :     minimotes and associated automations, etc.
+#    @package          :     Minimotes
+#    @description      :     Minimotes and associated automations, etc.
 #####################################################################
 
 
@@ -8,15 +8,15 @@
 ### Automation
 #####################################################################
 automation:
-  ### Aeotec zwave minimote #1: zwave.living_room_minimote
-  - alias: minimote 1 button 1 short
+  ### Aeotec zwave Minimote #1: zwave.living_room_Minimote
+  - alias: Minimote 1 Button 1 Short
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_minimote
+          entity_id: zwave.living_room_Minimote
           scene_id: 1
 
     action:
@@ -24,14 +24,14 @@ automation:
         entity_id: scene.living_room_normal
 
   ###
-  - alias: minimote 1 button 1 long
+  - alias: Minimote 1 Button 1 Long
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_minimote
+          entity_id: zwave.living_room_Minimote
           scene_id: 2
 
     action:
@@ -39,14 +39,14 @@ automation:
         entity_id: scene.living_room_bright
 
   ###
-  - alias: minimote 1 button 2 short
+  - alias: Minimote 1 Button 2 Short
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_minimote
+          entity_id: zwave.living_room_Minimote
           scene_id: 3
 
     action:
@@ -57,14 +57,14 @@ automation:
         entity_id: light.kitchen_lights_level
 
   ###
-  - alias: minimote 1 button 2 long
+  - alias: Minimote 1 Button 2 Long
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_minimote
+          entity_id: zwave.living_room_Minimote
           scene_id: 4
 
     action:
@@ -72,14 +72,14 @@ automation:
         entity_id: scene.living_room_dim
 
   ###
-  - alias: minimote 1 button 3 short
+  - alias: Minimote 1 Button 3 Short
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_minimote
+          entity_id: zwave.living_room_Minimote
           scene_id: 5
 
     action:
@@ -90,14 +90,14 @@ automation:
           brightness: 150
 
   ###
-  - alias: minimote 1 button 3 long
+  - alias: Minimote 1 Button 3 Long
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_minimote
+          entity_id: zwave.living_room_Minimote
           scene_id: 6
 
     action:
@@ -108,14 +108,14 @@ automation:
           brightness: 255
 
   ###
-  - alias: minimote 1 button 4 short
+  - alias: Minimote 1 Button 4 Short
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_minimote
+          entity_id: zwave.living_room_Minimote
           scene_id: 7
 
     action:
@@ -124,29 +124,29 @@ automation:
           entity_id: light.kitchen_lights_level
 
   ###
-  - alias: minimote 1 button 4 long
+  - alias: Minimote 1 Button 4 Long
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_minimote
+          entity_id: zwave.living_room_Minimote
           scene_id: 8
 
     action:
       - service: script.bedtime
 
 
-  ### Aeotec zwave minimote #2: zwave.master_bedroom_minimote
-  - alias: minimote 2 button 1 short
+  ### Aeotec zwave Minimote #2: zwave.master_bedroom_Minimote
+  - alias: Minimote 2 Button 1 Short
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_minimote
+          entity_id: zwave.master_bedroom_Minimote
           scene_id: 1
 
     action:
@@ -157,14 +157,14 @@ automation:
           entity_id: light.under_bed_lights
 
   ###
-  - alias: minimote 2 button 1 long
+  - alias: Minimote 2 Button 1 Long
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_minimote
+          entity_id: zwave.master_bedroom_Minimote
           scene_id: 2
 
     action:
@@ -177,28 +177,28 @@ automation:
           entity_id: light.under_bed_lights
 
   ###
-  - alias: minimote 2 button 2 short
+  - alias: Minimote 2 Button 2 Short
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_minimote
+          entity_id: zwave.master_bedroom_Minimote
           scene_id: 3
 
     action:
       - service: script.mbr_night_light
 
   ###
-  - alias: minimote 2 button 2 long
+  - alias: Minimote 2 Button 2 Long
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_minimote
+          entity_id: zwave.master_bedroom_Minimote
           scene_id: 4
 
     action:
@@ -207,14 +207,14 @@ automation:
           entity_id: script.bedtime
 
   ###
-  - alias: minimote 2 button 3 short
+  - alias: Minimote 2 Button 3 Short
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_minimote
+          entity_id: zwave.master_bedroom_Minimote
           scene_id: 5
 
     action:
@@ -223,14 +223,14 @@ automation:
           entity_id: scene.early_morning
 
   ###
-  - alias: minimote 2 button 3 long
+  - alias: Minimote 2 Button 3 Long
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_minimote
+          entity_id: zwave.master_bedroom_Minimote
           scene_id: 6
 
     action:
@@ -239,32 +239,32 @@ automation:
           entity_id: script.cool_upstairs_120min
 
   ###
-  - alias: minimote 2 button 4 short
+  - alias: Minimote 2 Button 4 Short
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_minimote
+          entity_id: zwave.master_bedroom_Minimote
           scene_id: 7
 
     action:
       - service: script.mbr_fan_speed_step_low
 
   ###
-  - alias: minimote 2 button 4 long
+  - alias: Minimote 2 Button 4 Long
     initial_state: 'on'
     hide_entity: True
     trigger:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_minimote
+          entity_id: zwave.master_bedroom_Minimote
           scene_id: 8
 
     action:
       - service: script.mbr_fan_speed_step_high
 
 
-  ### Aeotec zwave minimote #3: aeotec_dsa03202_minimote_31
+  ### Aeotec zwave Minimote #3: aeotec_dsa03202_Minimote_31

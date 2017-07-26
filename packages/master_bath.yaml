@@ -79,8 +79,8 @@ group:
 ### Automation
 #####################################################################
 automation:
-## Raise master bath shades
-  - alias: master bath shade raised schedule
+  ### master bath shade raised schedule
+  - alias: Master Bath Shade Up
     initial_state: 'on'
     hide_entity: True
     trigger:
@@ -91,8 +91,8 @@ automation:
       - service: cover.open_cover
         entity_id: cover.master_bath_roller_shades_level
 
-## Lower master bath shades
-  - alias: master bath shade lowered schedule
+  ### master bath shade lowered schedule
+  - alias: Master Bath Shade Down
     initial_state: 'on'
     hide_entity: True
     trigger:

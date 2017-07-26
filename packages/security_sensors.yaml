@@ -88,6 +88,9 @@ group:
     entities:
       - binary_sensor.living_room_occupancy
       - binary_sensor.office_occupancy
+      - binary_sensor.upstairs_occupancy
+      - binary_sensor.kids_room_occupancy
+      - binary_sensor.guest_room_occupancy
       - sensor.front_entry_motion
       - sensor.kitchen_ptz_motion_detected
       - sensor.north_ptz_motion_detected
@@ -120,26 +123,26 @@ sensor:
 
 ### Amcrest Camera Sensors
   - platform: amcrest
-    host: !secret north_ptz_host
-    port: !secret north_ptz_port
-    name: "North PTZ"
-    username: !secret camera_user
-    password: !secret camera_password
-    monitored_conditions:
-      - motion_detector
-  #    - sdcard
-  #    - ptz_preset
-
-  - platform: amcrest
-    host: !secret kitchen_ptz_host
-    port: !secret kitchen_ptz_port
-    name: "Kitchen PTZ"
-    username: !secret camera_user
-    password: !secret camera_password
-    monitored_conditions:
-      - motion_detector
-  #    - sdcard
-  #    - ptz_preset
+#    host: !secret north_ptz_host
+#    port: !secret north_ptz_port
+#    name: "North PTZ"
+#    username: !secret camera_user
+#    password: !secret camera_password
+#    monitored_conditions:
+#      - motion_detector
+#  #    - sdcard
+#  #    - ptz_preset
+#
+#  - platform: amcrest
+#    host: !secret kitchen_ptz_host
+#    port: !secret kitchen_ptz_port
+#    name: "Kitchen PTZ"
+#    username: !secret camera_user
+#    password: !secret camera_password
+#    monitored_conditions:
+#      - motion_detector
+#  #    - sdcard
+#  #    - ptz_preset
 
 
 ### Crime Reports

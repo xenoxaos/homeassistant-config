@@ -65,7 +65,6 @@ homeassistant:
       icon: mdi:weather-night
 
     script.master_bedroom_night_time:
-      friendly_name: "Master Bedroom Night Time"
       icon: mdi:weather-night
 
 #####################################################################
@@ -103,11 +102,15 @@ media_player:
 script:
   ### Master Bedroom Night Time Mode
   master_bedroom_night_time:
+    alias: "Master Bedroom Night Time"
     sequence:
+    - service: switch.turn_on
+      entity_id: switch.master_bedroom_fan
+
     - service: light.turn_on
       entity_id: light.master_bedroom_chandelier_level
       data:
-        brightness: 65
+        brightness: 55
 
     - service: light.turn_on
       entity_id: light.master_sitting_lamp
@@ -119,6 +122,23 @@ script:
       data:
         entity_id: light.under_bed_lights
         rgb_color: [0,55,55]
+
+    - service: light.turn_on
+      entity_id: light.master_bed_entry_level
+      data:
+        brightness: 50
+
+    - service: light.turn_on
+      data:
+        entity_id: light.foyer_lights_level
+        brightness: 128
+        transition: 30
+
+    - delay:
+        minutes: 4
+
+    - service: light.turn_off
+      entity_id: light.master_bed_entry_level
 
 
   ### Night Light Mode
@@ -156,18 +176,36 @@ script:
 ### Automation
 #####################################################################
 automation:
-  - alias: Turn off Humidifier
+  ### Turn off Humidifier
+  - alias: Master Bedroom Humidifier Off
     initial_state: 'on'
-    hide_entity: True
+    hide_entity: true
     trigger:
-      platform: time
-      at: '06:45:00'
+      - platform: time
+        at: '06:45:00'
 
     condition:
-      condition: state
-      entity_id: switch.humidifier
-      state: 'on'
+      - condition: state
+        entity_id: switch.humidifier
+        state: 'on'
 
     action:
-      service: switch.turn_off
-      entity_id: switch.humidifier
+      - service: switch.turn_off
+        entity_id: switch.humidifier
+
+
+  ### Auto set light brightness levels
+  - alias: Master Bedroom Time Brightness
+    initial_state: 'on'
+    trigger:
+      platform: state
+      entity_id:
+        - light.master_bed_ceiling_level
+        - light.master_bed_entry_level
+      to: 'on'
+
+    action:
+      - service: light.turn_on
+        data_template:
+          entity_id: "{{ trigger.entity_id }}"
+          brightness: "{{ states.sensor.time_brightness.state }}"

@@ -125,7 +125,6 @@ group:
       - sensor.ram_free
       - sensor.disk_free_home
       - sensor.last_boot
-      - sensor.gitter
 
 
 #####################################################################
@@ -193,8 +192,9 @@ sensor:
 #####################################################################
 automation:
   ### Auto Notify when HA has an update available
-  - alias: notify update
+  - alias: Notify Update
     initial_state: 'on'
+    hide_entity: true
     trigger:
       platform: state
       entity_id: updater.updater
@@ -214,7 +214,7 @@ automation:
   ### Send notification after home assistant has restarted
   - alias: Startup Notification
     initial_state: 'on'
-    hide_entity: True
+    hide_entity: true
     trigger:
       platform: homeassistant
       event: start

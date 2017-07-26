@@ -28,13 +28,17 @@ homeassistant:
     ################################################
     ## Group
     ################################################
-    group.living_room:
+    group.living_room_fan:
       <<: *contained
       order: 1
 
-    group.entry_lighting:
+    group.living_room_lighting:
       <<: *contained
       order: 2
+
+    group.entry_lighting:
+      <<: *contained
+      order: 3
 
     group.living_room_ceiling:
       <<: *contained
@@ -81,12 +85,8 @@ homeassistant:
     ################################################
     ## Switch
     ################################################
-    switch.living_room_fan_high:
-      haaska_name: "Fan High"
-
-    switch.living_room_fan_light:
-      assumed_state: false
-      icon: mdi:ceiling-light
+    switch.living_room_fan:
+      icon: mdi:fan
 
     switch.living_room_fan_low:
       haaska_name: "Fan Low"
@@ -94,8 +94,12 @@ homeassistant:
     switch.living_room_fan_medium:
       haaska_name: "Fan Medium"
 
-    switch.living_room_fan:
-      icon: mdi:fan
+    switch.living_room_fan_high:
+      haaska_name: "Fan High"
+
+    switch.living_room_fan_light:
+      assumed_state: false
+      icon: mdi:ceiling-light
 
     ################################################
     ## Input Select
@@ -111,21 +115,23 @@ homeassistant:
 group:
   Entry Lighting:
     entities:
+      - light.foyer_lights_level
       - light.south_entry
-      - light.kitchen_entry
       - light.center_entry
+      - light.kitchen_entry
 
-  Living Room:
+  Living Room Lighting:
+    control: hidden
+    entities:
+      - light.living_room_lamp
+      - group.living_room_ceiling
+
+  Living Room Fan:
     control: hidden
     entities:
       - switch.living_room_fan
       - input_select.living_room_fan_speed
-      - light.foyer_lights_level
-      - light.living_room_lamp
-      - group.living_room_ceiling
       - switch.living_room_fan_light
-      ## roomba charger
-      - switch.switch_four
 
   Living Room Ceiling:
     entities:
@@ -141,7 +147,7 @@ group:
 input_select:
   ### Living Room Ceiling Fan Speed
   living_room_fan_speed:
-    name: Living  Room Fan
+    name: Living Room Fan
     initial: "Select an option..."
     options:
       - "Select an option..."
@@ -316,12 +322,13 @@ scene:
 ### Automation
 #####################################################################
 automation:
-  - alias: turn on living room lights at sunset
+  ### Always turn on the living room lamp at sunset
+  - alias: Living Room Lamp On
     initial_state: 'on'
     trigger:
       - platform: sun
         event: sunset
-        offset: '-00:15:00'
+        offset: '-00:20:00'
 
     action:
       - service: light.turn_on
@@ -330,15 +337,9 @@ automation:
           brightness: 255
           transition: 600
 
-      - service: light.turn_on
-        data:
-          entity_id: light.foyer_lights_level
-          brightness: 255
-          transition: 120
-
 
   ### Turn off the living room lamp if we leave during the day
-  - alias: turn off living room lamp away
+  - alias: Living Room Lamp Away
     initial_state: 'on'
     trigger:
       platform: state
@@ -363,13 +364,13 @@ automation:
         entity_id: light.living_room_lamp
 
 
-  ### Set the Living Room scene at sunset
-  - alias: turn on living room scene at sunset
+  ### Set the Living Room Normal scene at sunset
+  - alias: Living Room Normal Scene Schedule
     initial_state: 'on'
     trigger:
       - platform: sun
         event: sunset
-        offset: '-00:05:00'
+        offset: '-00:10:00'
 
     condition:
       - condition: template
@@ -391,7 +392,7 @@ automation:
 
 
   ### Brighten up the house in the morning
-  - alias: brighten the house once sun is up
+  - alias: Living Room Bright Morning
     initial_state: 'on'
     trigger:
       - platform: numeric_state
@@ -417,15 +418,21 @@ automation:
         data:
           brightness: 255
 
+      - delay:
+          minutes: 5
+
       - service: light.turn_off
         entity_id: light.master_bedroom_chandelier_level
+
+      - delay:
+          minutes: 10
 
       - service: homeassistant.turn_off
         entity_id: group.accent_lights
 
 
   ### Turn off the lights in the morning once sun is up high enough
-  - alias: turn off lights once sun is up high enough
+  - alias: Living Room Off Morning
     initial_state: 'on'
     trigger:
       - platform: time
@@ -443,11 +450,11 @@ automation:
 
     action:
       - service: homeassistant.turn_off
-        entity_id: group.interior_lights
+        entity_id: group.living_room_lighting
 
 
   ### Turn on some lights when we arrive home
-  - alias: turn on lights upon arrival
+  - alias: Living Room On Arrival
     initial_state: 'on'
     trigger:
       platform: state
@@ -484,7 +491,7 @@ automation:
         entity_id: scene.living_room_normal
 
   ### Turn on some lights when it is too cloudy
-  - alias: turn on living room scene if cloudy
+  - alias: Living Room On Cloudy
     initial_state: 'on'
     trigger:
       - platform: numeric_state
@@ -535,7 +542,7 @@ automation:
 
 
   ### Turn off lights after rain has stopped
-  - alias: rain has stopped
+  - alias: Living Room Off Cloudy
     initial_state: 'on'
     trigger:
       - platform: numeric_state
@@ -565,14 +572,14 @@ automation:
 
     action:
       - service: homeassistant.turn_off
-        entity_id: group.living_room
+        entity_id: group.living_room_lighting
 
       - service: homeassistant.turn_off
         entity_id: group.entry_lighting
 
 
   ### Living Room Ceiling Fan
-  - alias: living room fan speed selector
+  - alias: Living Room Ceiling Fan Speed Select
     initial_state: 'on'
     trigger:
       - platform: state

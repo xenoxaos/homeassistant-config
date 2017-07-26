@@ -214,6 +214,7 @@ group:
       - sensor.pws_solarradiation
       - sensor.pws_uv
       - sensor.pws_visibility_mi
+      - camera.weather
 
 
 #####################################################################

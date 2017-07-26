@@ -3,10 +3,6 @@
 #    @description      :     climate_upstairs, and associated automations, scenes, etc.
 ############################################################################
 homeassistant:
-  customize_glob:
-    "sensor.hvac*mode":
-      icon: mdi:nest-thermostat
-
   customize:
     ################################################
     ## Node Anchors
@@ -34,80 +30,51 @@ homeassistant:
     ################################################
     group.upstairs_climate:
       <<: *contained
-      order: 2
+      order: 3
 
-    group.upstairs_cooling:
+    group.upstairs_ecobee:
       <<: *contained
-      #order: 2
+      order: 4
 
-    group.upstairs_heating:
+    script.ecobee_us_home:
       <<: *contained
-      #order: 3
+      friendly_name: "Ecobee Upstairs Home"
+      entity_picture: /local/ecobee.png
 
-    ################################################
-    ## Sensor
-    ################################################
-    sensor.upstairs_thermostat_temperature:
+    script.ecobee_us_away:
       <<: *contained
-      friendly_name: "Upstairs Temp"
+      friendly_name: "Ecobee Upstairs Away"
+      entity_picture: /local/ecobee.png
 
-    sensor.hvac_upstairs_op_state:
+    script.ecobee_us_evening:
       <<: *contained
-      icon: mdi:air-conditioner
+      friendly_name: "Ecobee Upstairs Evening"
+      entity_picture: /local/ecobee.png
 
-    sensor.hvac_upstairs_fan:
+    script.ecobee_us_sleep:
+      <<: *contained
+      friendly_name: "Ecobee Upstairs Sleep"
+      entity_picture: /local/ecobee.png
+
+    script.ecobee_us_resume:
+      <<: *contained
+      friendly_name: "Ecobee Upstairs Resume"
+      entity_picture: /local/ecobee.png
+
+    sensor.us_avg_temp:
+      <<: *contained
+      icon: mdi:chart-areaspline
+
+    sensor.us_fan_state:
       <<: *contained
       icon: mdi:fan
 
-    sensor.hvac_upstairs_ac_setpoint:
+    sensor.upstairs_humidity:
       <<: *contained
-      icon: mdi:snowflake
+      icon: mdi:water-percent
 
-    sensor.hvac_upstairs_heat_setpoint:
+    sensor.us_climate_mode:
       <<: *contained
-      icon: mdi:fire
-
-    sensor.upstairs_thermostat_statistics_mean:
-      <<: *contained
-      friendly_name: Upstairs Thermostat Mean Temp
-      icon: mdi:chart-areaspline
-
-    sensor.hvac_upstairs_climate:
-      <<: *contained
-      icon: mdi:air-conditioner
-
-    sensor.time_cool:
-      <<: *contained
-
-    ################################################
-    ## Climate
-    ################################################
-    climate.upstairs_thermostat_cooling_1:
-      <<: *contained
-      friendly_name: "Upstairs Cooling Setpoint"
-
-    climate.upstairs_thermostat_heating_1:
-      <<: *contained
-      friendly_name: "Upstairs Heating Setpoint"
-
-    ################################################
-    ## Script
-    ################################################
-    script.heat_upstairs_60min:
-      friendly_name: "Upstairs Quick Heating"
-      entity_picture: /local/flame.png
-
-    script.cool_upstairs_60min:
-      friendly_name: "Upstairs Quick Cooling"
-      entity_picture: /local/snowflake.png
-
-    ################################################
-    ## Input_Slider
-    ################################################
-    input_slider.upstairs_heat:
-      icon: mdi:nest-thermostat
-
-    input_slider.upstairs_ac:
       icon: mdi:nest-thermostat
 
 
@@ -117,232 +84,97 @@ homeassistant:
 group:
   Upstairs Climate:
     entities:
-      - sensor.upstairs_thermostat_temperature
-      - sensor.hvac_upstairs_op_state
-      - sensor.hvac_upstairs_mode
-      - sensor.us_climate_control
-      - sensor.hvac_upstairs_fan
-      - sensor.upstairs_thermostat_statistics_mean
+      - climate.upstairs
+      - sensor.upstairs_temperature
+      - sensor.kids_room_temperature
+      - sensor.guest_room_temperature
+      - sensor.us_avg_temp
+      - sensor.upstairs_humidity
 
-  Upstairs Heating:
+  Upstairs Ecobee:
+    control: hidden
     entities:
-      - sensor.hvac_upstairs_heat_setpoint
-      - input_slider.us_low
-      - input_slider.upstairs_heat
-      - script.heat_upstairs_60min
-
-  Upstairs Cooling:
-    entities:
-      - sensor.hvac_upstairs_ac_setpoint
-      - input_slider.us_high
-      - input_slider.upstairs_ac
-      - script.cool_upstairs_60min
-
-
-#####################################################################
-### Input Slider
-#####################################################################
-input_slider:
-  ### Upstairs Heat Temp Adjustment
-  upstairs_heat:
-    name: "Upstairs Heat"
-    initial: 68
-    min: 60
-    max: 90
-    step: 1
-
-  ### Upstairs AC Temp Adjustment
-  upstairs_ac:
-    name: "Upstairs AC"
-    initial: 83
-    min: 60
-    max: 90
-    step: 1
-
-  ### Upstairs Low Temp trigger - "at what temp is COLD triggered?"
-  us_low:
-    name: "Upstairs Low"
-    initial: 69
-    min: 60
-    max: 90
-    step: 1
-
-  ### Upstairs High Temp trigger - "at what temp is HOT triggered?"
-  us_high:
-    name: "Upstairs High"
-    initial: 83
-    min: 60
-    max: 90
-    step: 1
+      - sensor.us_climate_mode
+      - sensor.us_fan_state
+      - script.ecobee_us_home
+      - script.ecobee_us_away
+      - script.ecobee_us_sleep
+      - script.ecobee_us_resume
 
 
 #####################################################################
 ### Sensor
 #####################################################################
 sensor:
-## Median Temperature Upstairs
-  - platform: statistics
-    entity_id: sensor.upstairs_thermostat_temperature
-    name: Upstairs Thermostat Statistics
-
   - platform: template
     sensors:
-      hvac_upstairs_mode:
-        friendly_name: "Upstairs Thermostat Mode"
-        value_template: "{{ states('climate.upstairs_thermostat_cooling_1') }}"
-
-      hvac_upstairs_op_state:
-        friendly_name: "Upstairs HVAC State"
-        value_template: "{{ (states.climate.upstairs_thermostat_cooling_1.attributes|default({})).operating_state|default('unknown') }}"
-
-      hvac_upstairs_fan:
-        friendly_name: "Upstairs HVAC Fan"
-        value_template: "{{ (states.climate.upstairs_thermostat_cooling_1.attributes|default({})).fan_state|default('unknown') }}"
-
-      hvac_upstairs_ac_setpoint:
-        friendly_name: "Upstairs AC Setpoint"
-        value_template: "{{ (states.climate.upstairs_thermostat_cooling_1.attributes|default({})).temperature|default('unknown') }}"
-
-      hvac_upstairs_heat_setpoint:
-        friendly_name: "Upstairs Heat Setpoint"
-        value_template: "{{ (states.climate.upstairs_thermostat_heating_1.attributes|default({})).temperature|default('unknown') }}"
-
-## Upstairs Climate Control
-  - platform: template
-    sensors:
-      us_climate_control:
-        friendly_name: "Upstairs Climate Control"
+      us_avg_temp:
+        friendly_name: "Upstairs Average Temperature"
+        unit_of_measurement: "F"
         value_template: >-
-          {% set temperature = states('sensor.upstairs_thermostat_temperature')|float(none) %}
-          {% set us_low = states.input_slider.us_low.state|default(68)|float %}
-          {% set us_high = states.input_slider.us_high.state|default(81)|float %}
-          {% if temperature is none %}
-            {{ states('sensor.upstairs_thermostat_temperature') }}
-          {% elif temperature < us_low %}
-            Cold
-          {% elif temperature > us_high %}
-            Hot
-          {% else %}
-            Comfy
-          {% endif %}
+          {{ ((float(states.sensor.upstairs_temperature.state) + float(states.sensor.kids_room_temperature.state) + float(states.sensor.guest_room_temperature.state)) / 3) | round(1) }}
 
-  ### Time Based Cooling
   - platform: template
     sensors:
-      time_cool:
-        value_template: >-
-          {%- if now().strftime('%H%M')|int < 900 -%}
-            81
-          {%- elif now().strftime('%H%M')|int < 1200 -%}
-            84
-          {%- elif now().strftime('%H%M')|int < 1500 -%}
-            87
-          {%- elif now().strftime('%H%M')|int < 1800 -%}
-            90
-          {%- elif now().strftime('%H%M')|int < 2000 -%}
-            82
-          {%- elif now().strftime('%H%M')|int < 2359 -%}
-            78
-          {%- else -%}
-            83
-          {%- endif -%}
+      us_climate_mode:
+        friendly_name: "Upstairs HVAC Mode"
+        value_template: "{{ (states.climate.upstairs.attributes|default({})).mode|default('unknown') }}"
 
-  ### Time Based Heating
   - platform: template
     sensors:
-      time_heat:
-        value_template: >-
-          {%- if now().strftime('%H%M')|int < 800 -%}
-            71
-          {%- elif now().strftime('%H%M')|int < 1500 -%}
-            69
-          {%- elif now().strftime('%H%M')|int < 1800 -%}
-            67
-          {%- elif now().strftime('%H%M')|int < 2359 -%}
-            70
-          {%- else -%}
-            69
-          {%- endif -%}
+      us_fan_state:
+        friendly_name: "Upstairs HVAC Fan State"
+        value_template: "{{ (states.climate.upstairs.attributes|default({})).fan|default('unknown') }}"
 
 
 #####################################################################
 ### Script
 #####################################################################
 script:
-### Cool Upstairs 60 min
-  cool_upstairs_60min:
+  ecobee_us_home:
     sequence:
-      - service: climate.set_operation_mode
-        entity_id: climate.upstairs_thermostat_cooling_1
+      - service: climate.set_hold_mode
         data:
-          operation_mode: 'Cool'
+          entity_id: climate.upstairs
+          hold_mode: 'home'
 
-      - service: input_slider.select_value
-        data_template:
-          entity_id: input_slider.upstairs_ac
-          value: 75
-
-      - service: notify.ios_iphwn666
-        data:
-          title: "HVAC Event"
-          message: "Cooling Upstairs for 1 hour starting at {{ states('sensor.date__time') }}"
-
-      - delay: 01:00
-
-      - service: input_slider.select_value
-        data_template:
-          entity_id: input_slider.upstairs_ac
-          value: "{{ states.sensor.time_cool.state }}"
-
-### Heat Upstairs 60 min
-  heat_upstairs_60min:
+  ecobee_us_away:
     sequence:
-      - service: climate.set_operation_mode
-        entity_id: climate.upstairs_thermostat_heating_1
+      - service: climate.set_hold_mode
         data:
-          operation_mode: 'Heat'
+          entity_id: climate.upstairs
+          hold_mode: 'away'
 
-      - service: input_slider.select_value
-        data_template:
-          entity_id: input_slider.upstairs_heat
-          value: 86
-
-      - service: notify.ios_iphwn666
+  ecobee_us_sleep:
+    sequence:
+      - service: climate.set_hold_mode
         data:
-          title: "HVAC Event"
-          message: "Upstairs Quick Heat started at {{ states('sensor.date__time') }}"
+          entity_id: climate.upstairs
+          hold_mode: 'sleep'
 
-      - delay: 01:00
-
-      - service: input_slider.select_value
-        data_template:
-          entity_id: input_slider.upstairs_heat
-          value: "{{ states.sensor.time_heat.state }}"
+  ecobee_us_resume:
+    sequence:
+      - service: climate.ecobee_resume_program
+        data:
+          entity_id: climate.upstairs
+          resume_all: 'true'
 
 
 #####################################################################
 ### Automation
 #####################################################################
 automation:
-### AC - Upstairs Climate Schedule
-  - alias: upstairs climate schedule
+  ### Home Mode Weekdays
+  - alias: Climate Upstairs Home Schedule Weekdays
     initial_state: 'on'
     trigger:
       - platform: time
-        minutes: '/31'
-        seconds: 00
-
-      - platform: homeassistant
-        event: start
+        at: '07:00:00'
 
     condition:
       - condition: state
-        entity_id: script.cool_upstairs_60min
-        state: 'off'
-
-      - condition: state
-        entity_id: script.heat_upstairs_60min
-        state: 'off'
+        entity_id: binary_sensor.workday_sensor
+        state: 'on'
 
       - condition: or
         conditions:
@@ -355,33 +187,24 @@ automation:
             state: 'on'
 
     action:
-      - service: input_slider.select_value
-        data_template:
-          entity_id: input_slider.upstairs_ac
-          value: "{{ states.sensor.time_cool.state }}"
-
-      - service: input_slider.select_value
-        data_template:
-          entity_id: input_slider.upstairs_heat
-          value: "{{ states.sensor.time_heat.state }}"
+      - service: climate.set_hold_mode
+        data:
+          entity_id: climate.upstairs
+          hold_mode: 'home'
 
 
-### AC - Upstairs Cooling Bedtime
-  - alias: upstairs cooling bedtime
+  ### Home Mode Weekends
+  - alias: Climate Upstairs Home Schedule Weekends
     initial_state: 'on'
     trigger:
-      - platform: state
-        entity_id: script.bedtime
-        to: 'on'
+      - platform: time
+        at: '09:00:00'
 
     condition:
-      - condition: numeric_state
-        entity_id: sensor.upstairs_thermostat_temperature
-        above: 82
-
-      - condition: numeric_state
-        entity_id: sensor.pws_temp_f
-        above: 75
+      - condition: time
+        weekday:
+          - sat
+          - sun
 
       - condition: or
         conditions:
@@ -394,86 +217,84 @@ automation:
             state: 'on'
 
     action:
-      - service: script.cool_upstairs_60min
+      - service: climate.set_hold_mode
+        data:
+          entity_id: climate.upstairs
+          hold_mode: 'home'
 
 
-### Upstairs AC temperature adjustment
-  - alias: upstairs ac temperature adjustment
+  ### Sleep Mode Weekdays
+  - alias: Climate Upstairs Sleep Schedule Weekdays
     initial_state: 'on'
     trigger:
-      platform: state
-      entity_id: input_slider.upstairs_ac
-
-    action:
-      - service: climate.set_temperature
-        data_template:
-          entity_id: climate.upstairs_thermostat_cooling_1
-          temperature: '{{ trigger.to_state.state | int }}'
-          #temperature: '{{ states.input_slider.upstairs_ac.state | int }}'
-
-
-### Upstairs - Change Input slider adjust to match temperature (upstairs ac)
-  - alias: upstairs ac input slider
-    initial_state: 'on'
-    hide_entity: True
-    trigger:
-      platform: state
-      entity_id: sensor.hvac_upstairs_ac_setpoint
-
-    action:
-      service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.upstairs_ac
-        value: "{{ states.sensor.hvac_upstairs_ac_setpoint.state | int }}"
-
-
-### Upstairs Heat temperature adjustment
-  - alias: upstairs heat temperature adjustment
-    initial_state: 'on'
-    trigger:
-      platform: state
-      entity_id: input_slider.upstairs_heat
-
-    action:
-      - service: climate.set_temperature
-        data_template:
-          entity_id: climate.upstairs_thermostat_heating_1
-          temperature: '{{ trigger.to_state.state | int }}'
-          #temperature: '{{ states.input_slider.upstairs_heat.state | int }}'
-
-
-
-### Upstairs - Change Input slider adjust to match temperature (upstairs heat)
-  - alias: upstairs heat input slider
-    initial_state: 'on'
-    hide_entity: True
-    trigger:
-      platform: state
-      entity_id: sensor.hvac_upstairs_heat_setpoint
-
-    action:
-      service: input_slider.select_value
-      data_template:
-        entity_id: input_slider.upstairs_heat
-        value: "{{ states.sensor.hvac_upstairs_heat_setpoint.state | int }}"
-
-
-### HEAT - Upstairs Bedtime
-  - alias: upstairs heating bedtime
-    initial_state: 'on'
-    trigger:
-      - platform: state
-        entity_id: script.bedtime
-        to: 'on'
+      - platform: time
+        at: '20:30:00'
 
     condition:
-      - condition: numeric_state
-        entity_id: sensor.upstairs_thermostat_temperature
-        below: 69
+      - condition: time
+        weekday:
+          - mon
+          - tue
+          - wed
+          - thu
+          - sun
 
-      - condition: numeric_state
-        entity_id: sensor.pws_temp_f
-        below: 57
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: group.all_devices
+            state: 'home'
+
+          - condition: state
+            entity_id: input_boolean.visitor_mode
+            state: 'on'
 
     action:
-      - service: script.heat_upstairs_60min
+      - service: climate.set_hold_mode
+        data:
+          entity_id: climate.upstairs
+          hold_mode: 'sleep'
+
+
+  ### Sleep Mode Weekends
+  - alias: Climate Upstairs Sleep Schedule Weekends
+    initial_state: 'on'
+    trigger:
+      - platform: time
+        at: '22:00:00'
+
+    condition:
+      - condition: time
+        weekday:
+          - fri
+          - sat
+
+      - condition: or
+        conditions:
+          - condition: state
+            entity_id: group.all_devices
+            state: 'home'
+
+          - condition: state
+            entity_id: input_boolean.visitor_mode
+            state: 'on'
+
+    action:
+      - service: climate.set_hold_mode
+        data:
+          entity_id: climate.upstairs
+          hold_mode: 'sleep'
+
+
+  ### Peak Hours Mode
+  - alias: Climate Upstairs Peak Hours
+    initial_state: 'on'
+    trigger:
+      - platform: time
+        at: '12:00:00'
+
+    action:
+      - service: climate.set_hold_mode
+        data:
+          entity_id: climate.upstairs
+          hold_mode: 'away'

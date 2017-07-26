@@ -1,0 +1,7 @@
+#####################################################################
+#    @package          :     Ecobee
+#    @description      :     Ecobee Thermostats configuration
+#####################################################################
+ecobee:
+  api_key: !secret ecobee_api_key
+  hold_temp: True

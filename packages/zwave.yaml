@@ -21,9 +21,9 @@ zwave:
   ################################################
   device_config_domain:
     light:
-      polling_intensity: 1
       refresh_value: true
-      delay: 3
+#      polling_intensity: 1
+#      delay: 3
 
     lock:
       polling_intensity: 1

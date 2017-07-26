@@ -47,10 +47,6 @@ homeassistant:
       <<: *contained
       friendly_name: "Foyer Multisensor Battery"
 
-    sensor.upstairs_thermostat_battery:
-      <<: *contained
-      friendly_name: "Upstairs Thermostat Battery"
-
     sensor.iphwn666_battery_level:
       <<: *contained
       friendly_name: "Rick's Phone Battery"
@@ -99,7 +95,6 @@ group:
       - sensor.lock_south_battery
       - sensor.lock_beach_battery
       - sensor.entry_multisensor_battery
-      - sensor.upstairs_thermostat_battery
 
 
 #####################################################################
@@ -157,27 +152,6 @@ sensor:
         unit_of_measurement: '%'
         icon_template: >-
           {% set battery_level = states('sensor.entry_multisensor_battery')|int('unknown') %}
-          {% if battery_level == 'unknown' %}
-            mdi:battery-unknown
-          {% else %}
-            {% set battery_round = (battery_level|int / 10)|int * 10 %}
-            {% if battery_round >= 100 %}
-              mdi:battery
-            {% elif battery_round > 0 %}
-              mdi:battery-{{ battery_round }}
-            {% else %}
-              mdi:battery-alert
-            {% endif %}
-          {% endif %}
-
-
-### Upstairs Thermostat Battery
-      upstairs_thermostat_battery:
-        entity_id: zwave.upstairs_thermostat
-        value_template: "{{ (states.zwave.upstairs_thermostat.attributes|default).battery_level|default|int('unknown') }}"
-        unit_of_measurement: '%'
-        icon_template: >-
-          {% set battery_level = states('sensor.upstairs_thermostat_battery')|int('unknown') %}
           {% if battery_level == 'unknown' %}
             mdi:battery-unknown
           {% else %}

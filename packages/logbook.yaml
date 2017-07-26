@@ -9,21 +9,14 @@ logbook:
       - media_player
 
     entities:
-      - binary_sensor.fibaro_system_fgms001_motion_sensor_sensor_22_0
-      - sensor.fibaro_system_fgms001_motion_sensor_burglar_22_10
-      - sensor.fibaro_system_fgms001_motion_sensor_general_22_0
-      - sensor.fibaro_system_fgms001_motion_sensor_alarm_level_22_1
-      - sensor.fibaro_system_fgms001_motion_sensor_alarm_type_22_0
-      - sensor.fibaro_system_fgms001_motion_sensor_seismic_intensity_22_25
-      - sensor.fibaro_system_fgms001_motion_sensor_sourcenodeid_22_2
-      - sensor.fibaro_system_fgms001_motion_sensor_luminance_22_3
-      - sensor.fibaro_system_fgms001_motion_sensor_temperature_22_1
-      - sensor.last_boot
-      - sensor.date__time
+      - sensor.front_entry_fibaro_multisensor_sourcenodeid
+      - sensor.front_entry_fibaro_multisensor_alarm_level
+      - sensor.front_entry_fibaro_multisensor_alarm_type
+      - sensor.front_entry_fibaro_multisensor_burglar
       - sensor.megs_eta
       - sensor.ricks_eta
       - sensor.megs_eta_home
-      - sensor.rick_eta_home
+      - sensor.ricks_eta_home
       - sensor.dark_sky_cloud_coverage
       - sensor.dark_sky_daily_summary
       - sensor.dark_sky_nearest_storm_distance

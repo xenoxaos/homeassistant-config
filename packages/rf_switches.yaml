@@ -60,12 +60,16 @@ homeassistant:
     ################################################
     sensor.rf_switch_one:
       <<: *hidden
+
     sensor.rf_switch_two:
       <<: *hidden
+
     sensor.rf_switch_three:
       <<: *hidden
+
     sensor.rf_switch_four:
       <<: *hidden
+
     sensor.rf_switch_five:
       <<: *hidden
 
@@ -147,7 +151,7 @@ sensor:
 #  Automation - Saves Switch State to MQTT
 #####################################################################
 automation:
-  - alias: Save RF Switch State
+  - alias: RF Switches State Save
     initial_state: 'on'
     hide_entity: true
     trigger:
@@ -165,7 +169,7 @@ automation:
 #####################################################################
 # Startup event - restores states of dropdowns, and RF Switches...etc
 #####################################################################
-  - alias: Restore RF Switch Status on Startup
+  - alias: RF Switch State Restore
     initial_state: 'on'
     hide_entity: true
     trigger:
@@ -173,7 +177,7 @@ automation:
       event: start
     action:
       - delay:
-          minutes: 1      
+          minutes: 1
       - service_template: >
           {%- if states.sensor.rf_switch_one.state | lower == "on" -%}
               homeassistant.turn_on

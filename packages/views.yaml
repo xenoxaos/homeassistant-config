@@ -75,6 +75,7 @@ group:
       - group.travel_megs
       - group.travel_rick
       - group.device_status
+      - group.traffic_report
 
 
   security:
@@ -90,7 +91,8 @@ group:
     name: Downstairs
     view: yes
     entities:
-      - group.living_room
+      - group.living_room_fan
+      - group.living_room_lighting
       - group.entry_lighting
       - group.accent_lights
       - group.kitchen
@@ -108,17 +110,17 @@ group:
       - group.master_bed_lights
       - group.master_bath
       - media_player.kodi_bedroom
+      - group.nursery_wall
 
 
   climate:
     name: Climate
     view: yes
     entities:
-      - group.upstairs_climate
-      - group.upstairs_cooling
-      - group.upstairs_heating
       - group.downstairs_climate
       - group.downstairs_ecobee
+      - group.upstairs_climate
+      - group.upstairs_ecobee
 
 
   scenes:

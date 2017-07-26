@@ -37,8 +37,8 @@ homeassistant:
 ### Automation
 #####################################################################
 automation:
-### FOUNTAINS ON
-  - alias: turn on fountains
+  ### Turn on the fountains at sunup
+  - alias: Fountains On
     initial_state: 'on'
     trigger:
       - platform: sun
@@ -72,8 +72,8 @@ automation:
           entity_id: switch.fountains_switch
 
 
-### FOUNTAINS OFF
-  - alias: turn off fountains
+### Turn off the fountains at sunset
+  - alias: Fountains Off
     initial_state: 'on'
     trigger:
       - platform: sun

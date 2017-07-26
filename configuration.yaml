@@ -11,6 +11,11 @@ config:
 conversation:
 #discovery:
 frontend:
+  themes:
+    dark:
+      primary-color: "#485F6B"
 sun:
 updater:
 history:
+
+

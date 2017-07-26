@@ -77,17 +77,11 @@ group:
 
 
 #####################################################################
-### Script
-#####################################################################
-#script:
-### see scripts folder
-
-
-#####################################################################
 ### Automation
 #####################################################################
 automation:
-  - alias: kitchen shade raised schedule
+  ### Raise the kitchen shade
+  - alias: Kitchen Shade Up
     initial_state: 'on'
     trigger:
       - platform: sun
@@ -98,7 +92,8 @@ automation:
       - service: cover.open_cover
         entity_id: cover.kitchen_roller_shade_level
 
-  - alias: kitchen shade lowered schedule
+  ### Lower the kitchen shade
+  - alias: Kitchen Shade Down
     initial_state: 'on'
     trigger:
       - platform: time

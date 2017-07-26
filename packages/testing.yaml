@@ -151,8 +151,9 @@ script:
 #####################################################################
 automation:
   ### Test Condition 1
-  - alias: test input_boolean condition 1
+  - alias: Test Input Boolean Condition 1
     initial_state: 'on'
+    hide_entity: true
     trigger:
       - platform: state
         entity_id: input_boolean.state_change
@@ -160,19 +161,6 @@ automation:
         to: 'on'
 
     condition:
-    #    - condition: numeric_state
-    #      entity_id: sensor.upstairs_thermostat_temperature
-    #      below: 72
-
-    #    - condition: time
-    #      weekday:
-    #        - mon
-    #        - tue
-    #        - wed
-    #        - thu
-    #        - fri
-    #        - sun
-
       - condition: state
         entity_id: input_boolean.condition_3
         state: 'on'
@@ -205,8 +193,9 @@ automation:
 
 
   ### Test Condition 2
-  - alias: test input_boolean condition 2
+  - alias: Test Input Boolean Condition 2
     initial_state: 'on'
+    hide_entity: true
     trigger:
       - platform: state
         entity_id: input_boolean.state_change
@@ -244,8 +233,9 @@ automation:
 
 
   ### Test Condition 3
-  - alias: test input_boolean condition 3
+  - alias: Test Input Boolean Condition 3
     initial_state: 'on'
+    hide_entity: true
     trigger:
       - platform: state
         entity_id: input_boolean.state_change
@@ -280,19 +270,3 @@ automation:
         data:
           entity_id: input_select.rgb_light
           option: "Violet"
-
-
-  ### input_boolean test
-  - alias: test input_boolean
-    initial_state: 'on'
-    trigger:
-      - platform: state
-        entity_id: input_boolean.state_change
-        from: 'on'
-        to: 'off'
-
-    action:
-      - service: input_select.select_option
-        data:
-          entity_id: input_select.rgb_light
-          option: "Off"

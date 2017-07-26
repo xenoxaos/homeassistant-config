@@ -66,8 +66,9 @@ input_boolean:
 ### Automation
 #####################################################################
 automation:
-  - alias: peak hours on
+  - alias: Peak Hours On
     initial_state: 'on'
+    hide_entity: true
     trigger:
       - platform: time
         at: '15:00:00'
@@ -91,8 +92,9 @@ automation:
           entity_id: input_boolean.peak_hours
 
 
-  - alias: peak hours off
+  - alias: Peak Hours Off
     initial_state: 'on'
+    hide_entity: true
     trigger:
       - platform: time
         at: '18:00:00'
@@ -113,8 +115,9 @@ automation:
           entity_id: input_boolean.peak_hours
 
 
-  - alias: after hours on weekdays
+  - alias: After Hours On Weekdays
     initial_state: 'on'
+    hide_entity: true
     trigger:
       - platform: time
         at: '23:30:00'
@@ -134,8 +137,9 @@ automation:
           entity_id: input_boolean.after_hours
 
 
-  - alias: after hours off weekdays
+  - alias: After Hours Off Weekdays
     initial_state: 'on'
+    hide_entity: true
     trigger:
       - platform: time
         at: '04:00:00'
@@ -155,8 +159,9 @@ automation:
           entity_id: input_boolean.after_hours
 
 
-  - alias: after hours on weekends
+  - alias: After Hours On Weekends
     initial_state: 'on'
+    hide_entity: true
     trigger:
       - platform: time
         at: '01:00:00'
@@ -173,8 +178,9 @@ automation:
           entity_id: input_boolean.after_hours
 
 
-  - alias: after hours off weekends
+  - alias: After Hours Off Weekends
     initial_state: 'on'
+    hide_entity: true
     trigger:
       - platform: time
         at: '08:00:00'

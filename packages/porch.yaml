@@ -38,7 +38,7 @@ group:
 #####################################################################
 automation:
 ### Turn on the porch lights at sunset
-  - alias: porch lights on at sunset
+  - alias: Porch Lights On
     initial_state: 'on'
     trigger:
       - platform: sun
@@ -51,7 +51,7 @@ automation:
 
 
   ### Turn off the porch lights
-  - alias: porch lights off at sunrise
+  - alias: Porch Lights Off
     initial_state: 'on'
     trigger:
       - platform: sun

@@ -32,6 +32,9 @@ homeassistant:
       <<: *contained
       order: 1
 
+    group.traffic_report:
+      <<: *contained
+
 
 #####################################################################
 ### Group
@@ -48,62 +51,91 @@ group:
       - sensor.kitchen_ptz_sd_used
       - sensor.north_ptz_sd_used
 
+  Traffic Report:
+    entities:
+      - camera.east_valley_traffic
+      - camera.inbound_traffic
+      - camera.downtown_traffic
+      - camera.ramp_traffic
 
 #####################################################################
 ### Camera
 #####################################################################
 camera:
-## FRONT DOOR
   - platform: generic
     still_image_url: !secret front_door_url
     name: Front Door
     username: !secret camera_user
     password: !secret camera_password
 
-## GATE
   - platform: generic
     still_image_url: !secret north_gate_url
     name: Gate
     username: !secret camera_user
     password: !secret camera_password
 
-### Generic configuration for Amcrest Cameras - retire once Amcrest component is working properly
-## NORTH PTZ
   - platform: generic
-    still_image_url: !secret north_ptz_url
+    still_image_url: !secret ev_image_url
+    name: East Valley Traffic
+
+  - platform: generic
+    still_image_url: !secret ib_image_url
+    name: Inbound Traffic
+
+  - platform: generic
+    still_image_url: !secret dt_image_url
+    name: Downtown Traffic
+
+  - platform: generic
+    still_image_url: !secret 10_ramp_url
+    name: Ramp Traffic
+
+  - platform: generic
+    still_image_url: !secret doppler_url
+    name: Weather
+
+#####################################################################
+### Amcrest
+#####################################################################
+amcrest:
+  ### NORTH PTZ
+  - host: !secret north_ptz_host
     name: North PTZ
     username: !secret camera_user
     password: !secret camera_password
-    authentication: digest
+    port: !secret north_ptz_port
+    resolution: low
+    stream_source: rtsp
+    sensors:
+      - motion_detector
 
-## KITCHEN PTZ
-  - platform: generic
-    still_image_url: !secret kitchen_ptz_url
+  ### KITCHEN PTZ
+  - host: !secret kitchen_ptz_host
     name: Kitchen PTZ
     username: !secret camera_user
     password: !secret camera_password
-    authentication: digest
+    port: !secret kitchen_ptz_port
+    resolution: low
+    stream_source: rtsp
+    sensors:
+      - motion_detector
 
-### Amcrest configuration - currently using "generic" for stability
+
+### Generic configuration for Amcrest Cameras - retire once Amcrest component is working properly
 ### NORTH PTZ
-#  - platform: amcrest
+#  - platform: generic
+#    still_image_url: !secret north_ptz_url
 #    name: North PTZ
-#    host: !secret north_ptz_host
-#    port: !secret north_ptz_port
-#    resolution: high
-#    stream_source: mjpeg
 #    username: !secret camera_user
 #    password: !secret camera_password
+#    authentication: digest
 #
 ### KITCHEN PTZ
-#  - platform: amcrest
+#  - platform: generic
+#    still_image_url: !secret kitchen_ptz_url
 #    name: Kitchen PTZ
-#    host: !secret kitchen_ptz_host
-#    port: !secret kitchen_ptz_port
-#    resolution: high
-#    stream_source: mjpeg
 #    username: !secret camera_user
 #    password: !secret camera_password
+#    authentication: digest
 
 
-#automation:
