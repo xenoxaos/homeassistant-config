@@ -480,8 +480,8 @@ automation:
         entity_id: scene.living_room_bright
 
       - service: light.turn_on
-        entity_id: light.kitchen_lights_level
         data:
+          entity_id: light.kitchen_lights_level
           brightness: 255
 
       - delay:

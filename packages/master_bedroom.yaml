@@ -108,13 +108,13 @@ script:
       entity_id: switch.master_bedroom_fan
 
     - service: light.turn_on
-      entity_id: light.master_bedroom_chandelier_level
       data:
+        entity_id: light.master_bedroom_chandelier_level
         brightness: 55
 
     - service: light.turn_on
-      entity_id: light.master_sitting_lamp
       data:
+        entity_id: light.master_sitting_lamp
         brightness: 50
         transition: 3
 
@@ -124,18 +124,18 @@ script:
         rgb_color: [0,55,55]
 
     - service: light.turn_on
-      entity_id: light.master_bed_entry_level
       data:
+        entity_id: light.master_bed_entry_level
         brightness: 50
 
     - service: light.turn_on
       data:
         entity_id: light.foyer_lights_level
-        brightness: 128
-        transition: 30
+        brightness: 90
+        transition: 10
 
     - delay:
-        minutes: 4
+        minutes: 5
 
     - service: light.turn_off
       entity_id: light.master_bed_entry_level
@@ -151,25 +151,24 @@ script:
         rgb_color: [0,60,60]
 
     - service: light.turn_on
-      entity_id: light.master_sitting_lamp
       data:
+        entity_id: light.master_sitting_lamp
         brightness: 40
-        transition: 5
+        transition: 3
 
     - delay:
         minutes: 4
 
     - service: light.turn_off
-      entity_id: light.master_sitting_lamp
       data:
-        transition: 10
+        entity_id: light.master_sitting_lamp
+        transition: 5
 
     - delay:
         minutes: 1
 
     - service: light.turn_off
-      data:
-        entity_id: light.under_bed_lights
+      entity_id: light.under_bed_lights
 
 
 #####################################################################

@@ -149,6 +149,7 @@ group:
       - group.weather_summary
       - group.weather_details
       - group.precipitation
+      #- group.river_info
 
 
   media:

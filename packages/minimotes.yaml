@@ -16,7 +16,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_Minimote
+          entity_id: zwave.living_room_minimote
           scene_id: 1
 
     action:
@@ -31,7 +31,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_Minimote
+          entity_id: zwave.living_room_minimote
           scene_id: 2
 
     action:
@@ -46,7 +46,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_Minimote
+          entity_id: zwave.living_room_minimote
           scene_id: 3
 
     action:
@@ -64,7 +64,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_Minimote
+          entity_id: zwave.living_room_minimote
           scene_id: 4
 
     action:
@@ -79,7 +79,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_Minimote
+          entity_id: zwave.living_room_minimote
           scene_id: 5
 
     action:
@@ -97,7 +97,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_Minimote
+          entity_id: zwave.living_room_minimote
           scene_id: 6
 
     action:
@@ -115,7 +115,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_Minimote
+          entity_id: zwave.living_room_minimote
           scene_id: 7
 
     action:
@@ -131,7 +131,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.living_room_Minimote
+          entity_id: zwave.living_room_minimote
           scene_id: 8
 
     action:
@@ -146,7 +146,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_Minimote
+          entity_id: zwave.master_bedroom_minimote
           scene_id: 1
 
     action:
@@ -164,7 +164,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_Minimote
+          entity_id: zwave.master_bedroom_minimote
           scene_id: 2
 
     action:
@@ -184,7 +184,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_Minimote
+          entity_id: zwave.master_bedroom_minimote
           scene_id: 3
 
     action:
@@ -198,7 +198,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_Minimote
+          entity_id: zwave.master_bedroom_minimote
           scene_id: 4
 
     action:
@@ -214,7 +214,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_Minimote
+          entity_id: zwave.master_bedroom_minimote
           scene_id: 5
 
     action:
@@ -230,7 +230,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_Minimote
+          entity_id: zwave.master_bedroom_minimote
           scene_id: 6
 
     action:
@@ -246,7 +246,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_Minimote
+          entity_id: zwave.master_bedroom_minimote
           scene_id: 7
 
     action:
@@ -260,7 +260,7 @@ automation:
       - platform: event
         event_type: zwave.scene_activated
         event_data:
-          entity_id: zwave.master_bedroom_Minimote
+          entity_id: zwave.master_bedroom_minimote
           scene_id: 8
 
     action:

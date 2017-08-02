@@ -143,6 +143,7 @@ input_select:
     initial: "Select an option..."
     options:
       - "Select an option..."
+      - "Off"
       - "1"
       - "2"
       - "3"
@@ -267,7 +268,7 @@ automation:
       - service: input_select.select_option
         data_template:
           entity_id: input_select.master_bedroom_fan_speed
-          option: "{{ states.input_select.master_bedroom_fan_speed.state }}"
+          option: "{{ states.trigger.to_state.state }}"
 
 
   ### master_bedroom_fan_auto
@@ -279,6 +280,10 @@ automation:
         to: 'on'
 
     condition:
+      - condition: state
+        entity_id: switch.master_bedroom_fan
+        state: 'off'
+
       - condition: numeric_state
         entity_id: sensor.upstairs_temperature
         above: 71

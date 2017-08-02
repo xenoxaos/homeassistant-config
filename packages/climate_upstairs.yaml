@@ -228,7 +228,7 @@ automation:
     initial_state: 'on'
     trigger:
       - platform: time
-        at: '20:30:00'
+        at: '20:00:00'
 
     condition:
       - condition: time
@@ -261,7 +261,7 @@ automation:
     initial_state: 'on'
     trigger:
       - platform: time
-        at: '22:00:00'
+        at: '21:00:00'
 
     condition:
       - condition: time
