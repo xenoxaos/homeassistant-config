@@ -32,6 +32,10 @@ homeassistant:
       <<: *contained
       order: 3
 
+    group.door_sensors:
+      <<: *contained
+      order: 4
+
     ################################################
     ## Sensor
     ################################################
@@ -44,6 +48,12 @@ homeassistant:
       <<: *contained
       friendly_name: "Front Entry Light Sensor"
       icon: mdi:white-balance-sunny
+
+    sensor.front_door_state:
+      <<: *contained
+      friendly_name: "Front Door"
+      #icon: mdi:home-outline
+      entity_picture: /local/door-open-blue-128.ico
 
     sensor.kitchen_ptz_motion_detected:
       <<: *contained
@@ -97,6 +107,9 @@ group:
       - sensor.front_entry_fibaro_multisensor_luminance
       - sensor.crime
 
+  Door Sensors:
+    entities:
+      - sensor.front_door_state
 
 #####################################################################
 ### Sensor
@@ -120,6 +133,19 @@ sensor:
             {{ state|title }}
           {% endif %}
 
+### Front Door status
+  - platform: template
+    sensors:
+      front_door_state:
+        value_template: >-
+          {% set state = states('sensor.front_door_access_control') %}
+          {% if state == '22' %}
+            Open
+          {% elif state == '23' %}
+            Closed
+          {% else %}
+            {{ state|title }}
+          {% endif %}
 
 ### Amcrest Camera Sensors
   - platform: amcrest

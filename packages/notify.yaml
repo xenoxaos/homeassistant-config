@@ -34,6 +34,11 @@ notify:
     name: pushbullet
     api_key: !secret pushbullet_api_key
 
+  - platform: ecobee
+    name: downstairs_ecobee
+
+  - platform: ecobee
+    name: upstairs_ecobee
 
 #####################################################################
 ### iOS

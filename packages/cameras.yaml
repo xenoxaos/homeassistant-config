@@ -28,9 +28,21 @@ homeassistant:
     ################################################
     ## Group
     ################################################
-    group.cameras:
+    group.camera_front_door:
       <<: *contained
       order: 1
+
+    group.camera_north_gate:
+      <<: *contained
+      order: 2
+
+    group.camera_north_ptz:
+      <<: *contained
+      order: 3
+
+    group.camera_kitchen_ptz:
+      <<: *contained
+      order: 4
 
     group.traffic_report:
       <<: *contained
@@ -40,12 +52,28 @@ homeassistant:
 ### Group
 #####################################################################
 group:
-  Cameras:
+  camera_front_door:
+    name: Front Door Camera
     entities:
       - camera.front_door
-      - camera.gate
+
+  camera_north_gate:
+    name: North Gate Camera
+    entities:
+      - camera.north_gate
+
+  camera_north_ptz:
+    name: North PTZ Camera
+    entities:
       - camera.north_ptz
+
+  camera_kitchen_ptz:
+    name: Kitchen PTZ Camera
+    entities:
       - camera.kitchen_ptz
+
+  Camera Status:
+    entities:
       - sensor.kitchen_ptz_ptz_preset
       - sensor.north_ptz_ptz_preset
       - sensor.kitchen_ptz_sd_used
@@ -70,7 +98,7 @@ camera:
 
   - platform: generic
     still_image_url: !secret north_gate_url
-    name: Gate
+    name: North Gate
     username: !secret camera_user
     password: !secret camera_password
 

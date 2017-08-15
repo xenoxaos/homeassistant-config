@@ -179,6 +179,78 @@ homeassistant:
       <<: *contained
       friendly_name: "Visibility"
 
+    sensor.yw_tomorrow_condition:
+      <<: *contained
+      friendly_name: "Tomorrows Weather"
+
+    sensor.yw_tomorrow_temperature_max:
+      <<: *contained
+      friendly_name: "Tomorrows High"
+
+    sensor.yw_tomorrow_temperature_min:
+      <<: *contained
+      friendly_name: "Tomorrows Low"
+
+    sensor.yw_day2_condition:
+      <<: *contained
+      friendly_name: "Day 2 Conditions"
+
+    sensor.yw_day2_temperature_max:
+      <<: *contained
+      friendly_name: "Day 2 High"
+
+    sensor.yw_day2_temperature_min:
+      <<: *contained
+      friendly_name: "Day 2 Low"
+
+    sensor.yw_day3_condition:
+      <<: *contained
+      friendly_name: "Day 3 Conditions"
+
+    sensor.yw_day3_temperature_max:
+      <<: *contained
+      friendly_name: "Day 3 High"
+
+    sensor.yw_day3_temperature_min:
+      <<: *contained
+      friendly_name: "Day 3 Low"
+
+    sensor.yweather_condition:
+      <<: *contained
+      friendly_name: "Expected Conditions"
+
+    sensor.yweather_current:
+      <<: *contained
+      friendly_name: "Currently"
+
+    sensor.yweather_humidity:
+      <<: *contained
+      friendly_name: "Humidity"
+
+    sensor.yweather_pressure:
+      <<: *contained
+      friendly_name: "Pressure"
+
+    sensor.yweather_temperature:
+      <<: *contained
+      friendly_name: "Temperature"
+
+    sensor.yweather_temperature_max:
+      <<: *contained
+      friendly_name: "Todays High"
+
+    sensor.yweather_temperature_min:
+      <<: *contained
+      friendly_name: "Todays Low"
+
+    sensor.yweather_visibility:
+      <<: *contained
+      friendly_name: "Visibility"
+
+    sensor.yweather_wind_speed:
+      <<: *contained
+      friendly_name: "Wind Speed"
+
 
 #####################################################################
 ### Group
@@ -189,10 +261,14 @@ group:
       - sensor.season
       - input_slider.season_summer
       - input_slider.season_winter
-      - sensor.pws_weather
+      - sensor.yweather_current
+      #- sensor.pws_weather
       - sensor.dark_sky_daily_summary
-      - sensor.pws_temp_f
-      - sensor.pws_feelslike_string
+      - sensor.yweather_temperature
+      - sensor.yweather_temperature_max
+      - sensor.yweather_temperature_min
+      #- sensor.pws_temp_f
+      #- sensor.pws_feelslike_string
       - sensor.pws_wind_string
       - sensor.pws_relative_humidity
       - sensor.pws_dewpoint_string
@@ -215,6 +291,23 @@ group:
       - sensor.pws_uv
       - sensor.pws_visibility_mi
       - camera.weather
+
+  3 Day Forecast:
+    entities:
+      - sensor.yweather_condition
+      - sensor.yw_tomorrow_condition
+      - sensor.yw_tomorrow_temperature_max
+      - sensor.yw_tomorrow_temperature_min
+      - sensor.yw_day2_condition
+      - sensor.yw_day2_temperature_max
+      - sensor.yw_day2_temperature_min
+      - sensor.yw_day3_condition
+      - sensor.yw_day3_temperature_max
+      - sensor.yw_day3_temperature_min
+      #- sensor.yweather_humidity
+      #- sensor.yweather_pressure
+      #- sensor.yweather_visibility
+      #- sensor.yweather_wind_speed
 
 
 #####################################################################
@@ -310,6 +403,45 @@ sensor:
       - precip_intensity
       - precip_probability
       - precip_intensity_max
+
+### Yahoo Weather
+  - platform: yweather
+    woeid: !secret woeid
+    monitored_conditions:
+      - weather
+      - weather_current
+      - temp_min
+      - temp_max
+      - wind_speed
+      - pressure
+      - visibility
+      - humidity
+      - temperature
+
+### Yahoo Forecast
+  - platform: yweather
+    forecast: 1
+    name: yw_tomorrow
+    monitored_conditions:
+      - weather
+      - temp_min
+      - temp_max
+
+  - platform: yweather
+    forecast: 2
+    name: yw_day2
+    monitored_conditions:
+      - weather
+      - temp_min
+      - temp_max
+
+  - platform: yweather
+    forecast: 3
+    name: yw_day3
+    monitored_conditions:
+      - weather
+      - temp_min
+      - temp_max
 
 
 #####################################################################

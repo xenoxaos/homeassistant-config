@@ -40,6 +40,10 @@ homeassistant:
       <<: *customize
       icon: mdi:security-home
 
+    group.cameras:
+      <<: *customize
+      icon: mdi:cctv
+
     group.scenes:
       <<: *customize
       icon: mdi:creation
@@ -82,10 +86,18 @@ group:
     name: Security
     view: yes
     entities:
-      - group.cameras
       - group.door_locks
       - group.sensors
+      - group.door_sensors
 
+  cameras:
+    name: Cameras
+    view: yes
+    entities:
+      - group.camera_front_door
+      - group.camera_north_gate
+      - group.camera_north_ptz
+      - group.camera_kitchen_ptz
 
   downstairs:
     name: Downstairs
@@ -128,6 +140,7 @@ group:
     view: yes
     entities:
       - group.lighting_scenes
+      - group.operational_modes
       - group.automation_override
 
 
@@ -149,6 +162,7 @@ group:
       - group.weather_summary
       - group.weather_details
       - group.precipitation
+      - group.3_day_forecast
       #- group.river_info
 
 

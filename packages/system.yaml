@@ -36,8 +36,8 @@ homeassistant:
       <<: *contained
       order: 1
 
-    group.downloads:
-      <<: *contained
+#    group.downloads:
+#      <<: *contained
 
     group.speedtest:
       <<: *contained
@@ -71,27 +71,27 @@ homeassistant:
       friendly_name: "Upload"
       icon: mdi:arrow-up
 
-    sensor.sab_disk:
+    sensor.sabnzbd_disk:
       <<: *contained
       friendly_name: "Total Storage"
       icon: mdi:harddisk
 
-    sensor.sab_disk_free:
+    sensor.sabnzbd_disk_free:
       <<: *contained
       friendly_name: "Storage Remaining"
       icon: mdi:chart-pie
 
-    sensor.sab_queue:
+    sensor.sabnzbd_queue:
       <<: *contained
       friendly_name: "Queued for Download"
       icon: mdi:clipboard-arrow-down
 
-    sensor.sab_speed:
+    sensor.sabnzbd_speed:
       <<: *contained
       friendly_name: "DL Speed"
       icon: mdi:speedometer
 
-    sensor.sab_status:
+    sensor.sabnzbd_status:
       <<: *contained
       friendly_name: "Current State"
       icon: mdi:check
@@ -109,11 +109,11 @@ group:
 
   Downloads:
     entities:
-      - sensor.sab_disk
-      - sensor.sab_disk_free
-      - sensor.sab_queue
-      - sensor.sab_speed
-      - sensor.sab_status
+      - sensor.sabnzbd_disk
+      - sensor.sabnzbd_disk_free
+      - sensor.sabnzbd_queue
+      - sensor.sabnzbd_speed
+      - sensor.sabnzbd_status
 
   HA Status:
     entities:
@@ -174,7 +174,7 @@ sensor:
 
   ### SABNZBD
   - platform: sabnzbd
-    name: SAB
+    name: SABNZBD
     api_key: !secret sabnzb_api_key
     host: !secret sabnzb_host
     port: !secret sabnzb_port

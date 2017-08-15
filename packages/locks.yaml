@@ -205,7 +205,7 @@ automation:
       to: '19'
 
     action:
-      - service: notify.ios_iphwn666
+      - service: notify.notify
         data:
           title: "Door Unlocked"
           message: "South Door {{ states.sensor.lock_south_door_status.state }}"

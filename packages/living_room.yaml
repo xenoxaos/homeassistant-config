@@ -450,7 +450,7 @@ automation:
 
     action:
       - service: homeassistant.turn_off
-        entity_id: group.living_room_lighting
+        entity_id: group.interior_lights
 
 
   ### Turn on some lights when we arrive home
